@@ -12,6 +12,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Targetly', style: TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+      ),
       backgroundColor: Color(0xFFF6F7FB),
       body: SafeArea(
         child: SingleChildScrollView(

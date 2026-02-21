@@ -15,11 +15,14 @@ class BuildTodaySummary extends StatelessWidget {
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 12),
-          BuildTodaySummaryItem(icon: Icons.people, text: 'new client added'),
+          BuildTodaySummaryItem(
+            icon: Icons.people,
+            text: 'new client added 12',
+          ),
           const SizedBox(height: 6),
           BuildTodaySummaryItem(
             icon: Icons.monetization_on,
-            text: 'sales today 450',
+            text: 'sales today 4500',
           ),
         ],
       ),
