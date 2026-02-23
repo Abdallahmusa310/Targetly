@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_card.dart';
+import 'package:targetly/ui/screens/clintes_screen/widgets/clients_list.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/search_feild.dart';
 
 class ClientsScreen extends StatelessWidget {
@@ -18,10 +18,7 @@ class ClientsScreen extends StatelessWidget {
           children: [
             SearchFeild(),
             SizedBox(height: 16),
-            ClinetCard(),
-            ClinetCard(),
-            ClinetCard(),
-            ClinetCard(),
+            Expanded(child: ClientsList()),
           ],
         ),
       ),
