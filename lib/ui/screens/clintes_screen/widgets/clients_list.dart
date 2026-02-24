@@ -9,7 +9,7 @@ class ClientsList extends StatelessWidget {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
-        return ClinetCard();
+        return const ClinetCard();
       },
       itemCount: 10,
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/calender.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/report_summary.dart';
+import 'package:targetly/ui/shared/floating_action_boutton.dart';
 
 class ReportsScreen extends StatelessWidget {
   const ReportsScreen({super.key});
@@ -60,6 +61,15 @@ class ReportsScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: SharedFloatingActionButton(
+        lable: Text('Generate Report'),
+        tooltip: 'Generate Report',
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Shared Floating Action Button Pressed')),
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clients_list.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/search_feild.dart';
+import 'package:targetly/ui/shared/floating_action_boutton.dart';
 
 class ClientsScreen extends StatelessWidget {
   const ClientsScreen({super.key});
@@ -21,6 +22,14 @@ class ClientsScreen extends StatelessWidget {
             Expanded(child: ClientsList()),
           ],
         ),
+      ),
+      floatingActionButton: SharedFloatingActionButton(
+        lable: Icon(Icons.add),
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Shared Floating Action Button Pressed')),
+          );
+        },
       ),
     );
   }
