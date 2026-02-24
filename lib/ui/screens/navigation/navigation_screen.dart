@@ -51,7 +51,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             },
 
             selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withOpacity(0.6),
+            unselectedItemColor: Colors.white.withValues(alpha: 0.6),
           ),
         ),
       ),

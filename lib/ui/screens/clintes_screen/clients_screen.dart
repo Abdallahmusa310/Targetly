@@ -25,9 +25,13 @@ class ClientsScreen extends StatelessWidget {
       ),
       floatingActionButton: SharedFloatingActionButton(
         lable: Icon(Icons.add),
+        tooltip: 'Add Client',
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Shared Floating Action Button Pressed')),
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Form(child: Column());
+            },
           );
         },
       ),

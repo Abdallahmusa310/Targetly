@@ -35,7 +35,7 @@ class BuildTargetCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: 0.65,
               minHeight: 6,
-              backgroundColor: Colors.white.withOpacity(0.3),
+              backgroundColor: Colors.white.withValues(alpha: 0.3),
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ),
