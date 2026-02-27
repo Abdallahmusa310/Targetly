@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SearchFeild extends StatelessWidget {
-  const SearchFeild({super.key});
+class SharedTextFeild extends StatelessWidget {
+  const SharedTextFeild({
+    super.key,
+    required this.hintText,
+    required this.prefixIcon,
+  });
+  final String hintText;
+  final Widget prefixIcon;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        hintText: "Search clients...",
-        prefixIcon: const Icon(Icons.search),
+        hintText: hintText,
+        prefixIcon: prefixIcon,
 
         filled: true,
         fillColor: Colors.white,
