@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Sharedboutton extends StatelessWidget {
-  const Sharedboutton({super.key});
+  const Sharedboutton({super.key, required this.text});
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class Sharedboutton extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          'Sign In',
+          text,
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,

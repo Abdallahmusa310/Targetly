@@ -16,21 +16,18 @@ class Header extends StatelessWidget {
           left: 0,
           right: 0,
           bottom: -130,
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  'assets/targetly icon.png',
-                  width: 180,
-                  height: 180,
-                  fit: BoxFit.cover,
-                ),
+          child: Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                'assets/targetly icon.png',
+                width: 180,
+                height: 180,
+                fit: BoxFit.cover,
               ),
-            ],
+            ),
           ),
         ),
-        const SizedBox(height: 100),
       ],
     );
   }

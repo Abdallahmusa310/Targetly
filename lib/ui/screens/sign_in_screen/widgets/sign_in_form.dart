@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 
-class AuthForm extends StatelessWidget {
-  const AuthForm({super.key});
+class SignInForm extends StatelessWidget {
+  const SignInForm({super.key});
 
   @override
   Widget build(BuildContext context) {
