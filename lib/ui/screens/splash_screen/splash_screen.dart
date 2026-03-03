@@ -1,7 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:targetly/ui/screens/navigation/navigation_screen.dart';
+import 'package:targetly/ui/screens/sign_in_screen/sign_in_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
       duration: 500,
       splashIconSize: 900,
       centered: true,
-      nextScreen: NavigationScreen(),
+      nextScreen: SignInScreen(),
     );
   }
 }

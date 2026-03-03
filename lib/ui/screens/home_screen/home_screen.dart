@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/header.dart';
-
 import 'package:targetly/ui/screens/home_screen/widgets/quick_ation_list.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/recent_activity.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/stat_list.dart';

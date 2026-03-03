@@ -5,28 +5,35 @@ class SharedTextFeild extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.prefixIcon,
+    this.hintStyle,
+    this.suffixIcon,
   });
+
   final String hintText;
+  final Widget? suffixIcon;
   final Widget prefixIcon;
+  final TextStyle? hintStyle;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
         hintText: hintText,
+        hintStyle: hintStyle,
         prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
 
         filled: true,
-        fillColor: Colors.white,
+        fillColor: Color(0xffF3F3FC),
 
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+          borderSide: BorderSide(color: Color(0xffF3F3FC), width: 1),
         ),
 
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: Color(0xFF5B5F97), width: 1.5),
+          borderSide: const BorderSide(color: Color(0xFF5B5F97), width: 2),
         ),
       ),
     );
