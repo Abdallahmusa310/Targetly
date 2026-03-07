@@ -5,28 +5,24 @@ class SignUpPrompt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Already have an account? ',
-              style: TextStyle(color: Color(0xff8F92C2)),
+        const Text(
+          'Already have an account? ',
+          style: TextStyle(color: Color(0xff8F92C2)),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/sign-in');
+          },
+          child: const Text(
+            'Sign In',
+            style: TextStyle(
+              color: Color(0xff6A5AE0),
+              fontWeight: FontWeight.bold,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/sign-in');
-              },
-              child: Text(
-                'Sign In',
-                style: TextStyle(
-                  color: Color(0xff6A5AE0),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ],
     );

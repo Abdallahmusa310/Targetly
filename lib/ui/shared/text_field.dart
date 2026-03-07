@@ -5,18 +5,27 @@ class SharedTextFeild extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.prefixIcon,
+    required this.obscureText,
     this.hintStyle,
     this.suffixIcon,
+    this.validator,
+    this.controller,
   });
 
   final String hintText;
   final Widget? suffixIcon;
   final Widget prefixIcon;
   final TextStyle? hintStyle;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: hintStyle,

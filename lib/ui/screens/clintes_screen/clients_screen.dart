@@ -18,6 +18,7 @@ class ClientsScreen extends StatelessWidget {
         child: Column(
           children: [
             SharedTextFeild(
+              obscureText: false,
               hintText: 'Search clients...',
               prefixIcon: Icon(Icons.search),
             ),
@@ -42,16 +43,19 @@ class ClientsScreen extends StatelessWidget {
                         children: [
                           const SizedBox(height: 15),
                           SharedTextFeild(
+                            obscureText: false,
                             hintText: 'Client Name',
                             prefixIcon: Icon(Icons.person),
                           ),
                           SizedBox(height: 16),
                           SharedTextFeild(
+                            obscureText: false,
                             hintText: 'Client phone',
                             prefixIcon: Icon(Icons.phone),
                           ),
                           SizedBox(height: 16),
                           SharedTextFeild(
+                            obscureText: false,
                             hintText: 'Client id',
                             prefixIcon: Icon(Icons.key),
                           ),

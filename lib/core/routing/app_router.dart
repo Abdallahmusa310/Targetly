@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:targetly/core/const/string.dart';
 import 'package:targetly/ui/screens/clintes_screen/clients_screen.dart';
 import 'package:targetly/ui/screens/home_screen/home_screen.dart';
+import 'package:targetly/ui/screens/navigation/navigation_screen.dart';
 import 'package:targetly/ui/screens/reports_screen/reports_screen.dart';
 import 'package:targetly/ui/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:targetly/ui/screens/sign_up_screen/sign_up_screen.dart';
@@ -12,6 +13,8 @@ class AppRouter {
     switch (settings.name) {
       case AppRoutes.splashScreen:
         return MaterialPageRoute(builder: (_) => SplashScreen());
+      case AppRoutes.navigationScreen:
+        return MaterialPageRoute(builder: (_) => NavigationScreen());
       case AppRoutes.homeScreen:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case AppRoutes.clientsScreen:

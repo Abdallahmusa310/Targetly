@@ -4,9 +4,15 @@ import 'package:targetly/ui/screens/sign_in_screen/widgets/header.dart';
 import 'package:targetly/ui/screens/sign_in_screen/widgets/sign_in_prompt.dart';
 import 'package:targetly/ui/shared/boutton.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +41,16 @@ class SignInScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 16, color: Color(0xff8F92C2)),
                     ),
                     const SizedBox(height: 16),
-                    const SignInForm(),
+                    SignInForm(formKey: formKey),
                     const SizedBox(height: 30),
-                    Sharedboutton(text: 'Sign In'),
+                    InkWell(
+                      child: Sharedboutton(text: 'Sign In'),
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          Navigator.pushNamed(context, '/navigation');
+                        }
+                      },
+                    ),
                     const SizedBox(height: 20),
                     SignInPrompt(),
                   ],

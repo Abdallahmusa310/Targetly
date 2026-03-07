@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1058300006721",
+    "project_id": "targetly-2ff93",
+    "storage_bucket": "targetly-2ff93.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058300006721:android:e4af6af36e497fd55811c0",
+        "android_client_info": {
+          "package_name": "com.example.targetly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKHmzrYrVpAYjtUwi5blBIn9b7MOPefJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
