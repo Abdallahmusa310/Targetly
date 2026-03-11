@@ -7,11 +7,16 @@ class SignInPrompt extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text(
-          'Forget Password?',
-          style: TextStyle(
-            color: Color(0xff2B1E5E),
-            fontWeight: FontWeight.w500,
+        InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, '/reset-password');
+          },
+          child: const Text(
+            'Forget Password?',
+            style: TextStyle(
+              color: Color(0xff2B1E5E),
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
 

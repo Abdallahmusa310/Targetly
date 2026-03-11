@@ -7,24 +7,48 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-    final credential = await auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      final credential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    return credential.user;
+      return credential.user;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'weak-password':
+          throw 'Password is too weak';
+        case 'email-already-in-use':
+          throw 'Email already exists';
+        case 'invalid-email':
+          throw 'Invalid email format';
+        default:
+          throw 'Something went wrong';
+      }
+    }
   }
 
   Future<User?> signIn({
     required String email,
     required String password,
   }) async {
-    final credential = await auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      final credential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    return credential.user;
+      return credential.user;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'user-not-found':
+        case 'wrong-password':
+        case 'invalid-credential':
+          throw 'Password or email is incorrect';
+        default:
+          throw 'Something went wrong';
+      }
+    }
   }
 
   Future<void> resetPassword({required String email}) async {

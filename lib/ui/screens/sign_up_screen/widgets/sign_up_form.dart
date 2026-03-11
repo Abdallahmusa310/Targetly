@@ -8,7 +8,7 @@ class SignUpForm extends StatefulWidget {
     required this.emailcontroller,
     required this.passwordcontroller,
   });
-  final Key formKey;
+  final GlobalKey<FormState> formKey;
   final TextEditingController? emailcontroller;
   final TextEditingController? passwordcontroller;
 
@@ -118,6 +118,8 @@ class _SignUpFormState extends State<SignUpForm> {
             validator: (confirmPassword) {
               if (confirmPassword == null || confirmPassword.isEmpty) {
                 return "Please confirm your password";
+              } else if (confirmPassword != widget.passwordcontroller?.text) {
+                return "Passwords do not match";
               }
               return null;
             },

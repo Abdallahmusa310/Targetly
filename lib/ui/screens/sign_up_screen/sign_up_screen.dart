@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
 import 'package:targetly/ui/screens/sign_in_screen/widgets/header.dart';
@@ -56,33 +55,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     InkWell(
                       child: Sharedboutton(text: 'Create Account'),
                       onTap: () async {
-                        if (formKey.currentState!.validate()) {
-                          try {
-                            await authService.signUp(
+                        try {
+                          if (formKey.currentState!.validate()) {
+                            final user = await authService.signUp(
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
                             );
-
-                            Navigator.pushNamed(context, '/navigation');
-                          } on FirebaseAuthException catch (e) {
-                            if (e.code == 'weak-password') {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Password is too weak'),
-                                ),
-                              );
-                            } else if (e.code == 'email-already-in-use') {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Email already exists'),
-                                ),
+                            if (user != null) {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                '/navigation',
                               );
                             }
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())),
-                            );
                           }
+                        } catch (e) {
+                          ScaffoldMessenger.of(
+                            context,
+                          ).showSnackBar(SnackBar(content: Text(e.toString())));
                         }
                       },
                     ),
