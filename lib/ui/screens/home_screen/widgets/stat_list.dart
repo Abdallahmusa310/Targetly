@@ -8,18 +8,18 @@ class StatList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        buildStatCard(
-          'Comission',
-          '1500',
-          Icon(Icons.monetization_on, color: Colors.white),
-          Color(0xFF5B5F97),
+        BuildStatCard(
+          title: 'Comission',
+          value: '1500',
+          icon: Icon(Icons.monetization_on, color: Colors.white),
+          color: Color(0xFF5B5F97),
         ),
         SizedBox(width: 16),
-        buildStatCard(
-          'clintes',
-          '350',
-          Icon(Icons.people, color: Colors.white),
-          Color.fromARGB(255, 13, 157, 201),
+        BuildStatCard(
+          title: 'clintes',
+          value: '350',
+          icon: Icon(Icons.people, color: Colors.white),
+          color: Color.fromARGB(255, 13, 157, 201),
         ),
       ],
     );

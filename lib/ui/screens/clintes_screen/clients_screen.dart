@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clients_list.dart';
+import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_sheet.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 import 'package:targetly/ui/shared/floating_action_boutton.dart';
 
@@ -15,7 +16,7 @@ class ClientsScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
+        child: const Column(
           children: [
             SharedTextFeild(
               obscureText: false,
@@ -34,42 +35,7 @@ class ClientsScreen extends StatelessWidget {
           showModalBottomSheet(
             context: context,
             builder: (context) {
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Form(
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 15),
-                          SharedTextFeild(
-                            obscureText: false,
-                            hintText: 'Client Name',
-                            prefixIcon: Icon(Icons.person),
-                          ),
-                          SizedBox(height: 16),
-                          SharedTextFeild(
-                            obscureText: false,
-                            hintText: 'Client phone',
-                            prefixIcon: Icon(Icons.phone),
-                          ),
-                          SizedBox(height: 16),
-                          SharedTextFeild(
-                            obscureText: false,
-                            hintText: 'Client id',
-                            prefixIcon: Icon(Icons.key),
-                          ),
-                          SizedBox(height: 16),
-                          SharedFloatingActionButton(
-                            onPressed: () {},
-                            lable: Text('Add Client'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              );
+              return const ClinetSheet();
             },
           );
         },

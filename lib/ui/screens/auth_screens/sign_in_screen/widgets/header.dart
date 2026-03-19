@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:targetly/ui/screens/sign_in_screen/widgets/waves.dart';
+import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/waves.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});

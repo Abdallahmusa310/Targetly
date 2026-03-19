@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
-import 'package:targetly/ui/screens/sign_in_screen/widgets/header.dart';
+import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/header.dart';
 import 'package:targetly/ui/shared/boutton.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 

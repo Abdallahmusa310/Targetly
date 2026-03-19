@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
-import 'package:targetly/ui/screens/sign_in_screen/widgets/sign_in_form.dart';
-import 'package:targetly/ui/screens/sign_in_screen/widgets/header.dart';
-import 'package:targetly/ui/screens/sign_in_screen/widgets/sign_in_prompt.dart';
+import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/header.dart';
+import 'package:targetly/ui/screens/auth_screens/sign_up_screen/widgets/sign_up_form.dart';
+import 'package:targetly/ui/screens/auth_screens/sign_up_screen/widgets/sign_up_prompt.dart';
 import 'package:targetly/ui/shared/boutton.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final AuthService authService = AuthService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,13 +27,13 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             children: [
               const Header(),
-              const SizedBox(height: 100),
+              const SizedBox(height: 80),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
                     const Text(
-                      'Welcome Back!',
+                      'Create Account',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -40,22 +42,22 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Please sign in to continue',
+                      'Sign up to get started',
                       style: TextStyle(fontSize: 16, color: Color(0xff8F92C2)),
                     ),
                     const SizedBox(height: 16),
-                    SignInForm(
+                    SignUpForm(
                       formKey: formKey,
                       emailcontroller: emailController,
                       passwordcontroller: passwordController,
                     ),
                     const SizedBox(height: 30),
                     InkWell(
-                      child: Sharedboutton(text: 'Sign In'),
+                      child: Sharedboutton(text: 'Create Account'),
                       onTap: () async {
                         try {
                           if (formKey.currentState!.validate()) {
-                            final user = await AuthService().signIn(
+                            final user = await authService.signUp(
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
                             );
@@ -74,7 +76,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    SignInPrompt(),
+                    const SignUpPrompt(),
                   ],
                 ),
               ),

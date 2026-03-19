@@ -7,4 +7,5 @@ class AppRoutes {
   static const String signInScreen = '/sign-in';
   static const String signUpScreen = '/sign-up';
   static const String resetPasswordScreen = '/reset-password';
+  static const String authGate = '/auth-gate';
 }
