@@ -6,11 +6,13 @@ class QuickActionCard extends StatelessWidget {
     required this.iconcard,
     required this.textcard,
     required this.iconcolor,
+    required this.ontap,
   });
 
   final Widget iconcard;
   final String textcard;
   final Color iconcolor;
+  final void Function() ontap;
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +26,7 @@ class QuickActionCard extends StatelessWidget {
             child: CircleAvatar(
               radius: 20,
               backgroundColor: iconcolor,
-              child: IconButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('تم الحفظ بنجاح'),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                },
-                icon: iconcard,
-              ),
+              child: IconButton(onPressed: ontap, icon: iconcard),
             ),
           ),
 

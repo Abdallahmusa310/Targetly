@@ -7,41 +7,66 @@ class ClinetSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Form(
-            child: Column(
-              children: [
-                const SizedBox(height: 15),
-                SharedTextFeild(
-                  obscureText: false,
-                  hintText: 'Client Name',
-                  prefixIcon: Icon(Icons.person),
-                ),
-                SizedBox(height: 16),
-                SharedTextFeild(
-                  obscureText: false,
-                  hintText: 'Client phone',
-                  prefixIcon: Icon(Icons.phone),
-                ),
-                SizedBox(height: 16),
-                SharedTextFeild(
-                  obscureText: false,
-                  hintText: 'Client id',
-                  prefixIcon: Icon(Icons.key),
-                ),
-                SizedBox(height: 16),
-                SharedFloatingActionButton(
-                  onPressed: () {},
-                  lable: Text('Add Client'),
-                ),
-              ],
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    return Form(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  SharedTextFeild(
+                    validator: (name) {
+                      if (name == null || name.isEmpty) {
+                        return "Enter your email";
+                      }
+                      return null;
+                    },
+                    obscureText: false,
+                    hintText: 'Client Name',
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                  SizedBox(height: 16),
+                  SharedTextFeild(
+                    validator: (clinetphone) {
+                      if (clinetphone == null || clinetphone.isEmpty) {
+                        return 'Enter client phone';
+                      }
+                      return null;
+                    },
+                    obscureText: false,
+                    hintText: 'Client phone',
+                    prefixIcon: Icon(Icons.phone),
+                  ),
+                  SizedBox(height: 16),
+                  SharedTextFeild(
+                    validator: (clinetid) {
+                      if (clinetid == null || clinetid.isEmpty) {
+                        return 'Enter client phone';
+                      }
+                      return null;
+                    },
+                    obscureText: false,
+                    hintText: 'Client id',
+                    prefixIcon: Icon(Icons.key),
+                  ),
+                  SizedBox(height: 16),
+                  SharedFloatingActionButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    lable: Text('Add Client'),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

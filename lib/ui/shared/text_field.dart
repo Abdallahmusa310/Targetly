@@ -37,7 +37,10 @@ class SharedTextFeild extends StatelessWidget {
 
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Color(0xffF3F3FC), width: 1),
+          borderSide: BorderSide(
+            color: Color.fromARGB(255, 171, 171, 253),
+            width: 1,
+          ),
         ),
 
         focusedBorder: OutlineInputBorder(
