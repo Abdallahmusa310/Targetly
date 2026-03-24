@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:targetly/ui/shared/floating_action_boutton.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 
-class TargetSheet extends StatelessWidget {
+class TargetSheet extends StatefulWidget {
   const TargetSheet({super.key});
 
   @override
+  State<TargetSheet> createState() => _TargetSheetState();
+}
+
+class _TargetSheetState extends State<TargetSheet> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(16),
           child: Form(
+            key: formKey,
             child: Column(
               children: [
                 const SizedBox(height: 15),

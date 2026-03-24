@@ -9,6 +9,8 @@ class ClinetSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Form(
+      key: formKey,
+
       child: Column(
         children: [
           Padding(
@@ -58,6 +60,7 @@ class ClinetSheet extends StatelessWidget {
                       if (formKey.currentState!.validate()) {
                         Navigator.pop(context);
                       }
+                      return null;
                     },
                     lable: Text('Add Client'),
                   ),
