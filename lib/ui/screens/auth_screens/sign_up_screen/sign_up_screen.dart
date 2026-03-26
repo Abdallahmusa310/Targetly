@@ -52,8 +52,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       passwordcontroller: passwordController,
                     ),
                     const SizedBox(height: 30),
-                    InkWell(
-                      child: Sharedboutton(text: 'Create Account'),
+                    Sharedboutton(
+                      text: 'Create Account',
                       onTap: () async {
                         try {
                           if (formKey.currentState!.validate()) {

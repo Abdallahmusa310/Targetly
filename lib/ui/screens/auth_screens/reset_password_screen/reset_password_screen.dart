@@ -55,7 +55,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ),
                     ),
                     SizedBox(height: 16),
-                    InkWell(
+                    Sharedboutton(
+                      text: 'Reset Password',
                       onTap: () async {
                         try {
                           if (formKey.currentState!.validate()) {
@@ -74,7 +75,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           ).showSnackBar(SnackBar(content: Text(e.toString())));
                         }
                       },
-                      child: Sharedboutton(text: 'Reset Password'),
                     ),
                   ],
                 ),

@@ -50,8 +50,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       passwordcontroller: passwordController,
                     ),
                     const SizedBox(height: 30),
-                    InkWell(
-                      child: Sharedboutton(text: 'Sign In'),
+                    Sharedboutton(
+                      text: 'Sign In',
                       onTap: () async {
                         try {
                           if (formKey.currentState!.validate()) {

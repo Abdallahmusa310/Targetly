@@ -29,6 +29,7 @@ class SelectPeriod extends StatelessWidget {
         const SizedBox(height: 20),
         Sharedboutton(
           text: 'Generate Report',
+          onTap: () {},
           borderRadius: 12,
           width: double.infinity,
           height: 50,

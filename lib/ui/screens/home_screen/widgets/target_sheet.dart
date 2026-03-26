@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:targetly/ui/shared/floating_action_boutton.dart';
+import 'package:targetly/ui/shared/boutton.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 
 class TargetSheet extends StatefulWidget {
@@ -47,14 +47,7 @@ class _TargetSheetState extends State<TargetSheet> {
                   prefixIcon: Icon(Icons.percent),
                 ),
                 SizedBox(height: 16),
-                SharedFloatingActionButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      Navigator.pop(context);
-                    }
-                  },
-                  lable: Text('Set target'),
-                ),
+                Sharedboutton(text: 'set target', onTap: () {}),
               ],
             ),
           ),
@@ -63,3 +56,9 @@ class _TargetSheetState extends State<TargetSheet> {
     );
   }
 }
+
+
+
+// if (formKey.currentState!.validate()) {
+//                       Navigator.pop(context);
+//                     }

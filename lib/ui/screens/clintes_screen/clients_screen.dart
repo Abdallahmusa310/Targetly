@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clients_list.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_sheet.dart';
+import 'package:targetly/ui/shared/boutton.dart';
 import 'package:targetly/ui/shared/text_field.dart';
-import 'package:targetly/ui/shared/floating_action_boutton.dart';
 
 class ClientsScreen extends StatelessWidget {
   const ClientsScreen({super.key});
@@ -28,10 +28,9 @@ class ClientsScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: SharedFloatingActionButton(
-        lable: Icon(Icons.add),
-        tooltip: 'Add Client',
-        onPressed: () {
+      floatingActionButton: Sharedboutton(
+        text: 'Add clinet',
+        onTap: () {
           showModalBottomSheet(
             context: context,
             builder: (context) {
