@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_details.dart';
 
 class ClinetCard extends StatelessWidget {
-  const ClinetCard({super.key});
+  const ClinetCard({super.key, required this.clinetModel});
+  final ClinetModel clinetModel;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class ClinetCard extends StatelessWidget {
           ),
           context: context,
           builder: (context) {
-            return ClinetDetails();
+            return ClinetDetails(clinetModel: clinetModel);
           },
         );
       },
@@ -61,7 +63,7 @@ class ClinetCard extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              'Client Name',
+                              clinetModel.clinetname,
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -78,7 +80,7 @@ class ClinetCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              'clinet ID: 12345',
+                              clinetModel.clinetid,
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -89,7 +91,7 @@ class ClinetCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        '+1 234 567 890',
+                        clinetModel.clinetphone,
                         style: TextStyle(color: Colors.grey.shade600),
                       ),
                     ],

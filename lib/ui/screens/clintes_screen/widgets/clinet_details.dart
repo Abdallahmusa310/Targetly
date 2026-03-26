@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:targetly/data/models/client_model.dart';
 
 class ClinetDetails extends StatelessWidget {
-  const ClinetDetails({super.key});
+  const ClinetDetails({super.key, required this.clinetModel});
+  final ClinetModel clinetModel;
 
   @override
   Widget build(BuildContext context) {
@@ -10,13 +12,13 @@ class ClinetDetails extends StatelessWidget {
       padding: EdgeInsetsGeometry.all(32),
       child: Column(
         children: [
-          Text('clinet name : abdallah ali '),
+          Text('clinet name :${clinetModel.clinetname} '),
           SizedBox(height: 4),
-          Text('clinet code : mAz5452'),
+          Text('clinet id : ${clinetModel.clinetid}'),
           SizedBox(height: 4),
-          Text('clinet fees : 15,000'),
+          Text('clinet fees : ${clinetModel.clinetfees}'),
           SizedBox(height: 4),
-          Text('clinet phone : 15,000'),
+
           SizedBox(height: 4),
           InkWell(
             onTap: () {
@@ -38,7 +40,8 @@ class ClinetDetails extends StatelessWidget {
                           icon: Row(
                             children: [
                               const Icon(Icons.call, color: Colors.blue),
-                              Text('clinet phone : 0102868195236'),
+                              SizedBox(width: 4),
+                              Text('clinet phone : ${clinetModel.clinetphone}'),
                             ],
                           ),
                         ),
@@ -50,7 +53,8 @@ class ClinetDetails extends StatelessWidget {
                                 FontAwesomeIcons.whatsapp,
                                 color: Colors.green,
                               ),
-                              Text('clinet phone : 0102868195236'),
+                              SizedBox(width: 4),
+                              Text('clinet phone : ${clinetModel.clinetphone}'),
                             ],
                           ),
                         ),
@@ -61,11 +65,10 @@ class ClinetDetails extends StatelessWidget {
               );
             },
             child: Text(
-              'clinet phone : 0102868195236',
+              'clinet phone : ${clinetModel.clinetphone}',
               style: TextStyle(decoration: TextDecoration.underline),
             ),
           ),
-          SizedBox(height: 4),
         ],
       ),
     );

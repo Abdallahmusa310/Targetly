@@ -8,6 +8,18 @@ part 'clinet_state.dart';
 class ClinetCubit extends Cubit<ClinetState> {
   ClinetCubit() : super(ClinetInitial());
 
+  Future<void> fetchClients() async {
+    try {
+      emit(Clinetloading());
+
+      final clients = HiveManager.clients.values.toList();
+
+      emit(Clinetsucsess(clients));
+    } catch (e) {
+      emit(Clinetfailed(e.toString()));
+    }
+  }
+
   Future<void> addClient(ClinetModel client) async {
     try {
       emit(Clinetloading());
