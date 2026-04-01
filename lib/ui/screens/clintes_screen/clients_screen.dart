@@ -31,12 +31,17 @@ class _ClientsScreenState extends State<ClientsScreen> {
             ),
             body: Padding(
               padding: const EdgeInsets.all(16),
-              child: const Column(
+              child: Column(
                 children: [
                   SharedTextFeild(
                     obscureText: false,
-                    hintText: 'Search clients...',
+                    hintText: 'Search by id or phone...',
                     prefixIcon: Icon(Icons.search),
+                    onChanged: (value) {
+                      BlocProvider.of<ClinetCubit>(
+                        context,
+                      ).searchClients(value);
+                    },
                   ),
                   SizedBox(height: 16),
                   Expanded(child: ClientsList()),

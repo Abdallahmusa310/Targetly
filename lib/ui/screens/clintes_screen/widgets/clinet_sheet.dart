@@ -14,7 +14,6 @@ class ClinetSheet extends StatefulWidget {
 
 class _ClinetSheetState extends State<ClinetSheet> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   final TextEditingController clientname = TextEditingController();
   final TextEditingController clientphone = TextEditingController();
   final TextEditingController clientfees = TextEditingController();

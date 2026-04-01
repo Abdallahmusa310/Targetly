@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:targetly/data/models/client_model.dart';
+import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/ui/screens/clintes_screen/widgets/call_client.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_details.dart';
+import 'package:targetly/ui/screens/clintes_screen/widgets/edit_client_sheet.dart';
 
 class ClinetCard extends StatelessWidget {
   const ClinetCard({super.key, required this.clinetModel});
@@ -30,14 +33,33 @@ class ClinetCard extends StatelessWidget {
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) {},
+              onPressed: (_) {
+                final cubit = context.read<ClinetCubit>();
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
+                      child: BlocProvider.value(
+                        value: cubit,
+                        child: EditClientSheet(client: clinetModel),
+                      ),
+                    );
+                  },
+                );
+              },
               backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
               icon: Icons.edit,
               label: 'Edit',
             ),
             SlidableAction(
-              onPressed: (context) {},
+              onPressed: (context) {
+                BlocProvider.of<ClinetCubit>(context).deleteClient(clinetModel);
+              },
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               icon: Icons.delete,
@@ -98,21 +120,7 @@ class ClinetCard extends StatelessWidget {
                   ),
                 ),
 
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.call, color: Colors.blue),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        FontAwesomeIcons.whatsapp,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
+                CallClient(clinetModel: clinetModel),
               ],
             ),
           ),

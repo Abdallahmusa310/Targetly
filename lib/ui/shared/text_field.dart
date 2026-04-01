@@ -11,7 +11,6 @@ class SharedTextFeild extends StatelessWidget {
     this.validator,
     this.controller,
     this.onChanged,
-    this.onSaved,
   });
 
   final String hintText;
@@ -22,7 +21,6 @@ class SharedTextFeild extends StatelessWidget {
   final TextEditingController? controller;
   final bool obscureText;
   final void Function(String)? onChanged;
-  final void Function(String?)? onSaved;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,6 @@ class SharedTextFeild extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       onChanged: onChanged,
-      onSaved: onSaved,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: hintStyle,

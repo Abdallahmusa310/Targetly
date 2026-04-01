@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:targetly/data/models/client_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClinetDetails extends StatelessWidget {
   const ClinetDetails({super.key, required this.clinetModel});
@@ -8,6 +9,9 @@ class ClinetDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Uri whatsapp = Uri.parse(
+      'https://wa.me/+02${clinetModel.clinetphone}',
+    );
     return Padding(
       padding: EdgeInsetsGeometry.all(32),
       child: Column(
@@ -36,7 +40,13 @@ class ClinetDetails extends StatelessWidget {
                     child: Column(
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            final Uri uri = Uri(
+                              scheme: 'tel',
+                              path: clinetModel.clinetphone,
+                            );
+                            await launchUrl(uri);
+                          },
                           icon: Row(
                             children: [
                               const Icon(Icons.call, color: Colors.blue),
@@ -46,7 +56,9 @@ class ClinetDetails extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await launchUrl(whatsapp);
+                          },
                           icon: Row(
                             children: [
                               const FaIcon(

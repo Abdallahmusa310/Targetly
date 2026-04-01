@@ -5,13 +5,13 @@ part 'client_model.g.dart';
 @HiveType(typeId: 0)
 class ClinetModel extends HiveObject {
   @HiveField(0)
-  final String clinetname;
+  String clinetname;
   @HiveField(1)
-  final String clinetphone;
+  String clinetphone;
   @HiveField(2)
-  final String clinetid;
+  String clinetid;
   @HiveField(3)
-  final String clinetfees;
+  String clinetfees;
 
   ClinetModel({
     required this.clinetname,
