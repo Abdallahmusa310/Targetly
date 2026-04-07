@@ -10,46 +10,64 @@ class QuickAtionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 80,
-      child: ListView(
+      child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        children: [
-          QuickActionCard(
-            ontap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return const ClinetSheet();
-                },
-              );
-            },
-            textcard: 'Add client',
-            iconcard: Icon(Icons.add, color: Colors.white),
-            iconcolor: Color(0xFF5B5F97),
-          ),
-          QuickActionCard(
-            ontap: () {
-              Navigator.pushNamed(context, '/reports');
-            },
-            textcard: 'View report',
-            iconcard: Icon(Icons.assessment, color: Colors.white),
-            iconcolor: Color.fromARGB(255, 13, 157, 201),
-          ),
-          QuickActionCard(
-            ontap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return const TargetSheet();
-                },
-              );
-            },
-            textcard: 'update target',
-            iconcard: Icon(Icons.arrow_circle_up, color: Colors.white),
-            iconcolor: Color(0xFF5B5F97),
-          ),
-        ],
+        child: Row(
+          children: [
+            QuickActionCard(
+              ontap: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
+                      child: ClinetSheet(),
+                    );
+                  },
+                );
+              },
+              textcard: 'Add client',
+              iconcard: Icon(Icons.add, color: Colors.white),
+              iconcolor: Color(0xFF5B5F97),
+            ),
+            QuickActionCard(
+              ontap: () {
+                Navigator.pushNamed(context, '/reports');
+              },
+              textcard: 'View report',
+              iconcard: Icon(Icons.assessment, color: Colors.white),
+              iconcolor: Color.fromARGB(255, 13, 157, 201),
+            ),
+            QuickActionCard(
+              ontap: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom,
+                        ),
+                        child: const TargetSheet(),
+                      ),
+                    );
+                  },
+                );
+              },
+              textcard: 'update target',
+              iconcard: Icon(Icons.arrow_circle_up, color: Colors.white),
+              iconcolor: Color(0xFF5B5F97),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+// abali2792004@gmail.com

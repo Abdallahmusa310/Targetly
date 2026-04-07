@@ -16,7 +16,7 @@ class ClinetDetails extends StatelessWidget {
       padding: EdgeInsetsGeometry.all(32),
       child: Column(
         children: [
-          Text('clinet name :${clinetModel.clinetname} '),
+          Text('clinet name :${clinetModel.clinetname}'),
           SizedBox(height: 4),
           Text('clinet id : ${clinetModel.clinetid}'),
           SizedBox(height: 4),

@@ -18,7 +18,6 @@ class _EditClientSheetState extends State<EditClientSheet> {
       phoneController,
       feesController,
       idController;
-  String? clientname, clientphone, clientfees, clientid;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -58,9 +57,6 @@ class _EditClientSheetState extends State<EditClientSheet> {
                 obscureText: false,
                 hintText: 'Client Name',
                 prefixIcon: const Icon(Icons.person),
-                onChanged: (value) {
-                  clientname = value;
-                },
               ),
 
               const SizedBox(height: 16),
@@ -74,9 +70,7 @@ class _EditClientSheetState extends State<EditClientSheet> {
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  clientphone = value;
-                },
+
                 obscureText: false,
                 hintText: 'Client phone',
                 prefixIcon: const Icon(Icons.phone),
@@ -93,9 +87,7 @@ class _EditClientSheetState extends State<EditClientSheet> {
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  clientid = value;
-                },
+
                 obscureText: false,
                 hintText: 'Client id',
                 prefixIcon: const Icon(Icons.key),
@@ -112,9 +104,7 @@ class _EditClientSheetState extends State<EditClientSheet> {
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  clientfees = value;
-                },
+
                 obscureText: false,
                 hintText: 'Client fees',
                 prefixIcon: const Icon(Icons.money),
@@ -127,13 +117,10 @@ class _EditClientSheetState extends State<EditClientSheet> {
                 text: 'Save',
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    widget.client.clinetname =
-                        clientname ?? widget.client.clinetname;
-                    widget.client.clinetphone =
-                        clientphone ?? widget.client.clinetphone;
-                    widget.client.clinetfees =
-                        clientfees ?? widget.client.clinetfees;
-                    widget.client.clinetid = clientid ?? widget.client.clinetid;
+                    widget.client.clinetname = nameController!.text;
+                    widget.client.clinetphone = phoneController!.text;
+                    widget.client.clinetfees = feesController!.text;
+                    widget.client.clinetid = idController!.text;
                     widget.client.save();
 
                     BlocProvider.of<ClinetCubit>(context).fetchClients();
@@ -146,5 +133,14 @@ class _EditClientSheetState extends State<EditClientSheet> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    nameController?.dispose();
+    phoneController?.dispose();
+    idController?.dispose();
+    feesController?.dispose();
+    super.dispose();
   }
 }

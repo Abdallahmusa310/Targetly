@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/header.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/quick_ation_list.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/recent_activity.dart';
@@ -6,8 +9,20 @@ import 'package:targetly/ui/screens/home_screen/widgets/stat_list.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/target_card.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/today_summary.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<TargetCubit>(context).fetchTarget();
+    BlocProvider.of<ClinetCubit>(context).fetchClients();
+  }
 
   @override
   Widget build(BuildContext context) {

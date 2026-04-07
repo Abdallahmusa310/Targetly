@@ -102,4 +102,13 @@ class _ClinetSheetState extends State<ClinetSheet> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    clientname.dispose();
+    clientphone.dispose();
+    clientid.dispose();
+    clientfees.dispose();
+    super.dispose();
+  }
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
@@ -25,6 +27,7 @@ class ClinetCubit extends Cubit<ClinetState> {
 
   Future<void> addClient(ClinetModel client) async {
     try {
+      emit(Clinetloading());
       await HiveManager.clients.add(client);
       await fetchClients();
     } catch (e) {
@@ -38,7 +41,8 @@ class ClinetCubit extends Cubit<ClinetState> {
     } else {
       filteredClients = allClients.where((client) {
         return client.clinetid.toLowerCase().contains(query.toLowerCase()) ||
-            client.clinetphone.toLowerCase().contains(query.toLowerCase());
+            client.clinetphone.toLowerCase().contains(query.toLowerCase()) ||
+            client.clinetname.toLowerCase().contains(query.toLowerCase());
       }).toList();
     }
 
@@ -54,4 +58,13 @@ class ClinetCubit extends Cubit<ClinetState> {
       emit(Clinetfailed(e.toString()));
     }
   }
+
+  double getTotalFees() {
+    return allClients.fold(
+      0,
+      (sum, client) => sum + (double.tryParse(client.clinetfees) ?? 0),
+    );
+  }
+
+  int getClientsCount() => allClients.length;
 }

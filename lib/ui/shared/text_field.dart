@@ -11,6 +11,7 @@ class SharedTextFeild extends StatelessWidget {
     this.validator,
     this.controller,
     this.onChanged,
+    this.keyboardType,
   });
 
   final String hintText;
@@ -21,10 +22,12 @@ class SharedTextFeild extends StatelessWidget {
   final TextEditingController? controller;
   final bool obscureText;
   final void Function(String)? onChanged;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
       controller: controller,
       obscureText: obscureText,
       validator: validator,

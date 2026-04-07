@@ -15,60 +15,51 @@ class ClientsScreen extends StatefulWidget {
 
 class _ClientsScreenState extends State<ClientsScreen> {
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ClinetCubit()..fetchClients(),
+  void initState() {
+    super.initState();
+    BlocProvider.of<ClinetCubit>(context).fetchClients();
+  }
 
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                ' Clients ',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              centerTitle: true,
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  SharedTextFeild(
-                    obscureText: false,
-                    hintText: 'Search by id or phone...',
-                    prefixIcon: Icon(Icons.search),
-                    onChanged: (value) {
-                      BlocProvider.of<ClinetCubit>(
-                        context,
-                      ).searchClients(value);
-                    },
-                  ),
-                  SizedBox(height: 16),
-                  Expanded(child: ClientsList()),
-                ],
-              ),
-            ),
-            floatingActionButton: Sharedboutton(
-              text: 'Add clinet',
-              onTap: () {
-                final cubit = context.read<ClinetCubit>();
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (context) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom,
-                      ),
-                      child: BlocProvider.value(
-                        value: cubit,
-                        child: const ClinetSheet(),
-                      ),
-                    );
-                  },
-                );
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(' Clients ', style: TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            SharedTextFeild(
+              obscureText: false,
+              hintText: 'Search by id or phone...',
+              prefixIcon: Icon(Icons.search),
+              onChanged: (value) {
+                BlocProvider.of<ClinetCubit>(context).searchClients(value);
               },
             ),
+            SizedBox(height: 16),
+            Expanded(child: ClientsList()),
+          ],
+        ),
+      ),
+      floatingActionButton: Sharedboutton(
+        text: 'Add clinet',
+        onTap: () {
+          showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
+                  child: const ClinetSheet(),
+                ),
+              );
+            },
           );
         },
       ),

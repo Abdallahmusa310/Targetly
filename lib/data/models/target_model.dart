@@ -2,12 +2,12 @@ import 'package:hive/hive.dart';
 
 part 'target_model.g.dart';
 
-@HiveType(typeId: 0)
-class ClinetModel extends HiveObject {
+@HiveType(typeId: 1)
+class TargetModel extends HiveObject {
   @HiveField(0)
-  final String target;
+  double target;
   @HiveField(1)
-  final String comission;
+  double commission;
 
-  ClinetModel({required this.target, required this.comission});
+  TargetModel({required this.target, required this.commission});
 }

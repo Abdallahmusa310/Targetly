@@ -19,14 +19,14 @@ class BuildStatCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 4,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                CircleAvatar(radius: 22, backgroundColor: color, child: icon),
-                SizedBox(width: 12),
+                CircleAvatar(radius: 18, backgroundColor: color, child: icon),
+                SizedBox(width: 6),
                 FittedBox(
                   fit: BoxFit.scaleDown,
 
@@ -35,6 +35,7 @@ class BuildStatCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: textfont ?? 16,
                       fontWeight: FontWeight.w600,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),

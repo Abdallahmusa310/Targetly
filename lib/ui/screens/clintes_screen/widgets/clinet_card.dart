@@ -33,8 +33,7 @@ class ClinetCard extends StatelessWidget {
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (_) {
-                final cubit = context.read<ClinetCubit>();
+              onPressed: (context) {
                 showModalBottomSheet(
                   isScrollControlled: true,
                   context: context,
@@ -43,10 +42,7 @@ class ClinetCard extends StatelessWidget {
                       padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
-                      child: BlocProvider.value(
-                        value: cubit,
-                        child: EditClientSheet(client: clinetModel),
-                      ),
+                      child: EditClientSheet(client: clinetModel),
                     );
                   },
                 );

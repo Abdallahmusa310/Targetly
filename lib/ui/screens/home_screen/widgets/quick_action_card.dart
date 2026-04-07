@@ -16,22 +16,25 @@ class QuickActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: CircleAvatar(
-              radius: 20,
-              backgroundColor: iconcolor,
-              child: IconButton(onPressed: ontap, icon: iconcard),
+    return SizedBox(
+      width: 260,
+      child: Card(
+        elevation: 4,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: iconcolor,
+                child: IconButton(onPressed: ontap, icon: iconcard),
+              ),
             ),
-          ),
 
-          Padding(padding: const EdgeInsets.all(8), child: Text(textcard)),
-        ],
+            Padding(padding: const EdgeInsets.all(8), child: Text(textcard)),
+          ],
+        ),
       ),
     );
   }
