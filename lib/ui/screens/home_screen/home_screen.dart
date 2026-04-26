@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/header.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/quick_ation_list.dart';
@@ -22,24 +23,28 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     BlocProvider.of<TargetCubit>(context).fetchTarget();
     BlocProvider.of<ClinetCubit>(context).fetchClients();
+    BlocProvider.of<ActivityCubit>(context).fetchActivities();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Targetly', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Targetly',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
-      backgroundColor: Color(0xFFF6F7FB),
+      backgroundColor: const Color(0xFFF6F7FB),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 Buildheader(),
                 SizedBox(height: 16),
                 BuildTargetCard(),

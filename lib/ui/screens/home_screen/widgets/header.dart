@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/ui/screens/auth_screens/reset_password_screen/confirm_message.dart';
 
 class Buildheader extends StatelessWidget {
@@ -6,6 +7,7 @@ class Buildheader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final username = HiveManager.getUsername();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -28,7 +30,7 @@ class Buildheader extends StatelessWidget {
                     icon: Icon(Icons.logout),
                   ),
                   Text(
-                    'Abdallah 👋',
+                    '$username 👋',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   ),
                 ],

@@ -11,31 +11,46 @@ class StatList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TargetCubit, TargetState>(
       builder: (context, state) {
-        final clientcubit = context.watch<ClinetCubit>();
-        final totalclient = clientcubit.getClientsCount();
-        final totalfees = clientcubit.getTotalFees();
-        double comissionpercent = 0;
+        final clientCubit = context.watch<ClinetCubit>();
+
+        double totalFees = 0;
+        int totalClients = 0;
+        double commissionPercent = 0;
+
         if (state is TargetSuccess) {
-          comissionpercent = state.target?.commission ?? 0;
+          final target = state.target;
+          commissionPercent = target?.commission ?? 0;
+          final start = target?.startDate;
+          final end = target?.endDate;
+          if (start != null && end != null) {
+            final stats = clientCubit.getStatsInRange(start, end);
+            totalFees = stats.achieved;
+            totalClients = stats.totalClients;
+          } else {
+            totalFees = clientCubit.getTotalFees();
+            totalClients = clientCubit.getClientsCount();
+          }
         }
-        final comissionvalue = totalfees * (comissionpercent / 100);
+
+        final commissionValue = totalFees * (commissionPercent / 100);
+
         return Row(
           children: [
             Expanded(
               child: BuildStatCard(
                 title: 'Commission',
-                value: comissionvalue.toString(),
-                icon: Icon(Icons.monetization_on, color: Colors.white),
-                color: Color(0xFF5B5F97),
+                value: commissionValue.toStringAsFixed(0),
+                icon: const Icon(Icons.monetization_on, color: Colors.white),
+                color: const Color(0xFF5B5F97),
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: BuildStatCard(
                 title: 'Clients',
-                value: totalclient.toString(),
-                icon: Icon(Icons.people, color: Colors.white),
-                color: Color.fromARGB(255, 13, 157, 201),
+                value: totalClients.toString(),
+                icon: const Icon(Icons.people, color: Colors.white),
+                color: const Color.fromARGB(255, 13, 157, 201),
               ),
             ),
           ],

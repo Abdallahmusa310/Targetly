@@ -1,9 +1,9 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
+import 'package:targetly/data/models/activity_model.dart';
 import 'package:targetly/data/models/client_model.dart';
+import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 
 part 'clinet_state.dart';
 
@@ -25,10 +25,22 @@ class ClinetCubit extends Cubit<ClinetState> {
     }
   }
 
-  Future<void> addClient(ClinetModel client) async {
+  Future<void> addClient(
+    ClinetModel client,
+    ActivityCubit activityCubit,
+  ) async {
     try {
       emit(Clinetloading());
       await HiveManager.clients.add(client);
+
+      await HiveManager.activitybox.add(
+        ActivityModel(
+          text: "New client: ${client.clinetname}",
+          date: DateTime.now(),
+        ),
+      );
+
+      await activityCubit.fetchActivities(); // ← أضفها
       await fetchClients();
     } catch (e) {
       emit(Clinetfailed(e.toString()));
@@ -59,11 +71,68 @@ class ClinetCubit extends Cubit<ClinetState> {
     }
   }
 
+  Future<void> clearClients() async {
+    try {
+      await HiveManager.clients.clear();
+
+      await fetchClients();
+    } catch (e) {
+      emit(Clinetfailed(e.toString()));
+    }
+  }
+
   double getTotalFees() {
     return allClients.fold(
       0,
       (sum, client) => sum + (double.tryParse(client.clinetfees) ?? 0),
     );
+  }
+
+  ({double achieved, int totalClients}) getStatsInRange(
+    DateTime start,
+    DateTime end,
+  ) {
+    double achieved = 0;
+    int count = 0;
+
+    for (var client in allClients) {
+      final date = client.createdAt;
+
+      if (date == null) continue;
+
+      final inRange = !date.isBefore(start) && !date.isAfter(end);
+
+      if (inRange) {
+        count++;
+        achieved += double.tryParse(client.clinetfees) ?? 0;
+      }
+    }
+
+    return (achieved: achieved, totalClients: count);
+  }
+
+  ({double achieved, int totalClients}) getTodayStats() {
+    final now = DateTime.now();
+
+    double achieved = 0;
+    int count = 0;
+
+    for (var client in allClients) {
+      final date = client.createdAt;
+      if (date == null) continue;
+
+      final isToday =
+          date.year == now.year &&
+          date.month == now.month &&
+          date.day == now.day;
+
+      if (isToday) {
+        count++;
+        achieved += double.tryParse(client.clinetfees) ?? 0;
+      }
+    }
+
+    return (achieved: achieved, totalClients: count);
   }
 
   int getClientsCount() => allClients.length;

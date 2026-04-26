@@ -12,11 +12,14 @@ class ClinetModel extends HiveObject {
   String clinetid;
   @HiveField(3)
   String clinetfees;
+  @HiveField(4)
+  DateTime? createdAt;
 
   ClinetModel({
     required this.clinetname,
     required this.clinetphone,
     required this.clinetid,
     required this.clinetfees,
+    required this.createdAt,
   });
 }

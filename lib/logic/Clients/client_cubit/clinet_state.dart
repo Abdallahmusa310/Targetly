@@ -14,7 +14,9 @@ final class Clinetsucsess extends ClinetState {
   const Clinetsucsess(List<ClinetModel>? clinets) : super(clinet: clinets);
 }
 
-final class Clinetloading extends ClinetState {}
+final class Clinetloading extends ClinetState {
+  Clinetloading() : super(clinet: null);
+}
 
 final class Clinetfailed extends ClinetState {
   final String errormesaage;

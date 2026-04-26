@@ -59,6 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
                             );
+                            if (!context.mounted) return;
                             if (user != null) {
                               Navigator.pushReplacementNamed(
                                 context,

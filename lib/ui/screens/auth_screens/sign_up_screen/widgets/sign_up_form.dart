@@ -7,10 +7,12 @@ class SignUpForm extends StatefulWidget {
     required this.formKey,
     required this.emailcontroller,
     required this.passwordcontroller,
+    required this.nameController,
   });
   final GlobalKey<FormState> formKey;
   final TextEditingController? emailcontroller;
   final TextEditingController? passwordcontroller;
+  final TextEditingController? nameController;
 
   @override
   State<SignUpForm> createState() => _SignUpFormState();
@@ -28,6 +30,7 @@ class _SignUpFormState extends State<SignUpForm> {
         children: [
           /// Full Name
           SharedTextFeild(
+            controller: widget.nameController,
             obscureText: false,
             hintText: "Full Name",
             prefixIcon: const Icon(Icons.person, color: Color(0xff969ACA)),

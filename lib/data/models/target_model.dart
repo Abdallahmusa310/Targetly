@@ -8,6 +8,15 @@ class TargetModel extends HiveObject {
   double target;
   @HiveField(1)
   double commission;
+  @HiveField(2)
+  DateTime startDate;
+  @HiveField(3)
+  DateTime endDate;
 
-  TargetModel({required this.target, required this.commission});
+  TargetModel({
+    required this.target,
+    required this.commission,
+    required this.startDate,
+    required this.endDate,
+  });
 }

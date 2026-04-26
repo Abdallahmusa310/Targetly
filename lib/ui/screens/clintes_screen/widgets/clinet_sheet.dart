@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/ui/shared/boutton.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 
@@ -82,16 +83,19 @@ class _ClinetSheetState extends State<ClinetSheet> {
               SizedBox(height: 16),
               Sharedboutton(
                 text: 'Add clinet',
-                onTap: () {
+                onTap: () async {
                   if (formKey.currentState!.validate()) {
-                    context.read<ClinetCubit>().addClient(
+                    await context.read<ClinetCubit>().addClient(
                       ClinetModel(
                         clinetname: clientname.text.trim(),
                         clinetphone: clientphone.text.trim(),
                         clinetid: clientid.text.trim(),
                         clinetfees: clientfees.text.trim(),
+                        createdAt: DateTime.now(),
                       ),
+                      context.read<ActivityCubit>(),
                     );
+
                     Navigator.pop(context);
                   }
                 },

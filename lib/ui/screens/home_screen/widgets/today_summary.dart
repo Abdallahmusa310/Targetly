@@ -11,14 +11,8 @@ class BuildTodaySummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TargetCubit, TargetState>(
       builder: (context, state) {
-        final clientcubit = context.watch<ClinetCubit>();
-        final totalclient = clientcubit.getClientsCount();
-        final totalfees = clientcubit.getTotalFees();
-        double comissionpercent = 0;
-        if (state is TargetSuccess) {
-          comissionpercent = state.target?.commission ?? 0;
-        }
-        final comissionvalue = totalfees * (comissionpercent / 100);
+        final clientCubit = context.watch<ClinetCubit>();
+        final stats = clientCubit.getTodayStats();
         return Card(
           elevation: 4,
           child: Column(
@@ -30,12 +24,12 @@ class BuildTodaySummary extends StatelessWidget {
               const SizedBox(height: 12),
               BuildTodaySummaryItem(
                 icon: Icons.people,
-                text: 'new client added ${totalclient}',
+                text: 'New clients: ${stats.totalClients}',
               ),
               const SizedBox(height: 6),
               BuildTodaySummaryItem(
                 icon: Icons.monetization_on,
-                text: 'sales today $comissionvalue',
+                text: 'Sales today: ${stats.achieved.toStringAsFixed(0)}',
               ),
             ],
           ),

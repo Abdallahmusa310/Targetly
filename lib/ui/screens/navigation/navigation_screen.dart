@@ -27,7 +27,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screen[currentIndex],
+      body: screen[currentIndex], // ← بدل IndexedStack
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         child: Container(
@@ -35,7 +35,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
             gradient: const LinearGradient(
               colors: [Color(0xFF7F73E6), Color.fromARGB(255, 13, 157, 201)],
             ),
-
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24),
               topRight: Radius.circular(24),
@@ -49,9 +48,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 currentIndex = index;
               });
             },
-
             selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withValues(alpha: 0.6),
+            unselectedItemColor: Colors.white.withOpacity(0.6),
           ),
         ),
       ),

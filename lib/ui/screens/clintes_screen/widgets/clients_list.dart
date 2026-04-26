@@ -22,12 +22,18 @@ class _ClientsListState extends State<ClientsList> {
         if (clientlist == null || clientlist.isEmpty) {
           return const Center(child: Text('No clients found'));
         }
+        final sortedClientList = List.from(clientlist)
+          ..sort((a, b) {
+            final dateA = a.createdAt ?? DateTime(0);
+            final dateB = b.createdAt ?? DateTime(0);
+            return dateB.compareTo(dateA);
+          });
         return ListView.builder(
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-            return ClinetCard(clinetModel: clientlist[index]);
+            return ClinetCard(clinetModel: sortedClientList[index]);
           },
-          itemCount: clientlist.length,
+          itemCount: sortedClientList.length,
         );
       },
     );

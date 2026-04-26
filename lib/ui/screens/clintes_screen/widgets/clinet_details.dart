@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,7 +23,9 @@ class ClinetDetails extends StatelessWidget {
           SizedBox(height: 4),
           Text('clinet fees : ${clinetModel.clinetfees}'),
           SizedBox(height: 4),
-
+          Text(
+            'clinet Added at: ${DateFormat('dd/M/yyyy').format(clinetModel.createdAt ?? DateTime.now())}',
+          ),
           SizedBox(height: 4),
           InkWell(
             onTap: () {

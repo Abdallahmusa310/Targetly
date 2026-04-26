@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
+import 'package:targetly/logic/activity/cubit/recentactivity_state.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/build_recent_activity_item.dart';
 
 class BuildRecentActivity extends StatelessWidget {
@@ -9,17 +12,58 @@ class BuildRecentActivity extends StatelessWidget {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        children: [
-          const Text(
-            'Recent Activity',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 12),
-          BuildRecentActivityItem(text: 'New client added'),
-          BuildRecentActivityItem(text: 'Commission updated'),
-          BuildRecentActivityItem(text: 'Target reached 65%'),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Recent Activity',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    context.read<ActivityCubit>().clearActivities();
+                  },
+                  icon: const Icon(
+                    Icons.delete_outline,
+                    size: 18,
+                    color: Colors.red,
+                  ),
+                  label: const Text(
+                    'Clear',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            BlocBuilder<ActivityCubit, ActivityState>(
+              builder: (context, state) {
+                if (state is ActivityLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is ActivitySuccess) {
+                  if (state.activities.isEmpty) {
+                    return const Text('No recent activity');
+                  }
+                  return Column(
+                    children: state.activities
+                        .map((a) => BuildRecentActivityItem(text: a.text))
+                        .toList(),
+                  );
+                }
+                if (state is ActivityFailure) {
+                  return Text('Error: ${state.message}');
+                }
+                return const SizedBox();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
+import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/header.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_up_screen/widgets/sign_up_form.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_up_screen/widgets/sign_up_prompt.dart';
@@ -15,8 +17,18 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final AuthService authService = AuthService();
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +62,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       formKey: formKey,
                       emailcontroller: emailController,
                       passwordcontroller: passwordController,
+                      nameController: nameController,
                     ),
                     const SizedBox(height: 30),
+
+                    /// زر التسجيل
                     Sharedboutton(
                       text: 'Create Account',
                       onTap: () async {
@@ -61,10 +76,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
                             );
+
                             if (user != null) {
+                              final name = nameController.text.trim();
+
+                              if (name.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Name cannot be empty"),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              await user.updateDisplayName(name);
+                              HiveManager.saveUsername(name);
+
+                              if (!context.mounted) return;
+
                               Navigator.pushReplacementNamed(
                                 context,
                                 '/navigation',
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Sign up failed")),
                               );
                             }
                           }

@@ -17,6 +17,7 @@ class CallClient extends StatelessWidget {
             if (await canLaunchUrl(tel)) {
               await launchUrl(tel, mode: LaunchMode.externalApplication);
             } else {
+              if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Cannot make a call')),
               );
@@ -32,6 +33,7 @@ class CallClient extends StatelessWidget {
             if (await canLaunchUrl(whatsapp)) {
               await launchUrl(whatsapp, mode: LaunchMode.externalApplication);
             } else {
+              if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Cannot open WhatsApp')),
               );

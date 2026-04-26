@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
+import 'package:targetly/data/models/activity_model.dart';
 import 'package:targetly/data/models/target_model.dart';
 
 part 'target_state.dart';
@@ -24,30 +25,41 @@ class TargetCubit extends Cubit<TargetState> {
     }
   }
 
-  /// ➕ / ✏️ add or update
   Future<void> setTarget({
     required double target,
     required double commission,
+    required DateTime startDate,
+    required DateTime endDate,
   }) async {
     try {
       emit(TargetLoading());
-
       if (HiveManager.settingsbox.isEmpty) {
-        /// أول مرة
-        final newTarget = TargetModel(target: target, commission: commission);
-
+        final newTarget = TargetModel(
+          target: target,
+          commission: commission,
+          startDate: startDate,
+          endDate: endDate,
+        );
         await HiveManager.settingsbox.add(newTarget);
         targetModel = newTarget;
       } else {
-        /// تعديل
         final existing = HiveManager.settingsbox.getAt(0);
 
         existing!.target = target;
         existing.commission = commission;
+        existing.startDate = startDate;
+        existing.endDate = endDate;
 
         await existing.save();
 
         targetModel = existing;
+        await HiveManager.activitybox.add(
+          ActivityModel(
+            text: "Target updated to ${target}",
+            date: DateTime.now(),
+          ),
+        );
+        fetchTarget();
       }
 
       emit(TargetSuccess(targetModel));
@@ -56,7 +68,6 @@ class TargetCubit extends Cubit<TargetState> {
     }
   }
 
-  /// 🗑️ reset target (اختياري)
   Future<void> clearTarget() async {
     try {
       emit(TargetLoading());
