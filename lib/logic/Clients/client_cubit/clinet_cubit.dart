@@ -39,8 +39,7 @@ class ClinetCubit extends Cubit<ClinetState> {
           date: DateTime.now(),
         ),
       );
-
-      await activityCubit.fetchActivities(); // ← أضفها
+      await activityCubit.fetchActivities();
       await fetchClients();
     } catch (e) {
       emit(Clinetfailed(e.toString()));

@@ -42,6 +42,7 @@ class TargetCubit extends Cubit<TargetState> {
           startDate: startDate,
           endDate: endDate.add(const Duration(days: 1)),
         );
+        await activityCubit.fetchActivities();
         await HiveManager.settingsbox.add(newTarget);
         targetModel = newTarget;
       } else {
@@ -57,7 +58,7 @@ class TargetCubit extends Cubit<TargetState> {
         targetModel = existing;
         await HiveManager.activitybox.add(
           ActivityModel(
-            text: "Target updated to ${target}",
+            text: "Target updated to $target",
             date: DateTime.now(),
           ),
         );
