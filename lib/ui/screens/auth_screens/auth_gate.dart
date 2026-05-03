@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:targetly/core/routing/routs.dart';
+import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/sign_in_screen.dart';
-import 'package:targetly/ui/screens/navigation/navigation_screen.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -11,44 +12,29 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        print(
-          'AuthGate state: ${snapshot.connectionState}, hasData: ${snapshot.hasData}',
-        );
-
-        // Still loading - add timeout
+        // لو لسه بيحمل - مش بيروح لأي مكان
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('Loading...'),
-                ],
-              ),
-            ),
+            body: Center(child: CircularProgressIndicator()),
           );
         }
 
-        // Error handling
         if (snapshot.hasError) {
-          print('AuthGate error: ${snapshot.error}');
           return Scaffold(
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error, color: Colors.red, size: 50),
-                  SizedBox(height: 16),
-                  Text('Authentication error occurred'),
-                  SizedBox(height: 16),
+                  const Icon(Icons.error, color: Colors.red, size: 50),
+                  const SizedBox(height: 16),
+                  const Text('Authentication error occurred'),
+                  const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () => Navigator.pushReplacement(
+                    onPressed: () => Navigator.pushReplacementNamed(
                       context,
-                      MaterialPageRoute(builder: (_) => const SignInScreen()),
+                      AppRoutes.signInScreen,
                     ),
-                    child: Text('Continue to Sign In'),
+                    child: const Text('Continue to Sign In'),
                   ),
                 ],
               ),
@@ -57,11 +43,20 @@ class AuthGate extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
-          print('User is authenticated, going to NavigationScreen');
-          return const NavigationScreen();
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            await HiveManager.openUserBoxes(); // ← لازم تخلص الأول
+            if (context.mounted) {
+              Navigator.of(
+                context,
+              ).pushReplacementNamed(AppRoutes.navigationScreen);
+            }
+          });
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
 
-        print('No user authenticated, going to SignInScreen');
+        // مفيش يوزر - روح للـ SignIn
         return const SignInScreen();
       },
     );

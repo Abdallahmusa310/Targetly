@@ -29,37 +29,43 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Targetly',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
       backgroundColor: const Color(0xFFF6F7FB),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Buildheader(),
-                SizedBox(height: 16),
-                BuildTargetCard(),
-                SizedBox(height: 16),
-                StatList(),
-                SizedBox(height: 16),
-                QuickAtionList(),
-                SizedBox(height: 16),
-                BuildRecentActivity(),
-                SizedBox(height: 16),
-                BuildTodaySummary(),
-              ],
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: const Text(
+              'Targetly',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.white.withValues(alpha: 0.8),
+            elevation: 0,
+            floating: true,
+            snap: true,
+            pinned: false,
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Buildheader(),
+                  SizedBox(height: 16),
+                  BuildTargetCard(),
+                  SizedBox(height: 16),
+                  StatList(),
+                  SizedBox(height: 16),
+                  QuickAtionList(),
+                  SizedBox(height: 16),
+                  BuildRecentActivity(),
+                  SizedBox(height: 16),
+                  BuildTodaySummary(),
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

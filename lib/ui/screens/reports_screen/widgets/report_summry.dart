@@ -12,7 +12,6 @@ class ReportSummry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// ❗ لو المستخدم مختارش رينج
     if (start == null || end == null) {
       return const Center(
         child: Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
+import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/sign_in_form.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/header.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/sign_in_prompt.dart';
@@ -61,6 +62,12 @@ class _SignInScreenState extends State<SignInScreen> {
                             );
                             if (!context.mounted) return;
                             if (user != null) {
+                              await HiveManager.openUserBoxes();
+                              HiveManager.saveUsername(
+                                user.displayName ??
+                                    emailController.text.trim().split('@')[0],
+                              );
+
                               Navigator.pushReplacementNamed(
                                 context,
                                 '/navigation',

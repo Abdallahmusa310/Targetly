@@ -93,6 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               HiveManager.saveUsername(name);
 
                               if (!context.mounted) return;
+                              await HiveManager.openUserBoxes(); // ← أضفها هنا
 
                               Navigator.pushReplacementNamed(
                                 context,

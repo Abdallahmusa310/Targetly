@@ -117,6 +117,11 @@ class BuildTargetCard extends StatelessWidget {
                               'Remaining: ${remaining.toStringAsFixed(0)}',
                               style: const TextStyle(color: Colors.white),
                             ),
+                            if (start != null && end != null)
+                              Text(
+                                'Period: ${start.day}/${start.month} - ${end.day}/${end.month}',
+                                style: const TextStyle(color: Colors.white),
+                              ),
                           ],
                         ),
                         Column(

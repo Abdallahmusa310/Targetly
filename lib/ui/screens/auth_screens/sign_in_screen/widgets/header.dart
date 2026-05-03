@@ -20,7 +20,7 @@ class Header extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.asset(
-                'assets/targetly icon.png',
+                'assets/targetlyicon.png',
                 width: 180,
                 height: 180,
                 fit: BoxFit.cover,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/date_range.dart';
 import 'package:targetly/ui/shared/boutton.dart';
@@ -114,6 +115,7 @@ class _TargetSheetState extends State<TargetSheet> {
                     commission: double.parse(commissionController.text),
                     startDate: startDate!,
                     endDate: endDate!,
+                    activityCubit: context.read<ActivityCubit>(),
                   );
 
                   Navigator.pop(context);

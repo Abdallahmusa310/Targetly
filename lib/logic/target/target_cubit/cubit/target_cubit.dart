@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/data/models/activity_model.dart';
 import 'package:targetly/data/models/target_model.dart';
+import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 
 part 'target_state.dart';
 
@@ -30,6 +31,7 @@ class TargetCubit extends Cubit<TargetState> {
     required double commission,
     required DateTime startDate,
     required DateTime endDate,
+    required ActivityCubit activityCubit,
   }) async {
     try {
       emit(TargetLoading());
@@ -38,7 +40,7 @@ class TargetCubit extends Cubit<TargetState> {
           target: target,
           commission: commission,
           startDate: startDate,
-          endDate: endDate,
+          endDate: endDate.add(const Duration(days: 1)),
         );
         await HiveManager.settingsbox.add(newTarget);
         targetModel = newTarget;
@@ -48,7 +50,7 @@ class TargetCubit extends Cubit<TargetState> {
         existing!.target = target;
         existing.commission = commission;
         existing.startDate = startDate;
-        existing.endDate = endDate;
+        existing.endDate = endDate.add(const Duration(days: 1));
 
         await existing.save();
 
@@ -60,6 +62,7 @@ class TargetCubit extends Cubit<TargetState> {
           ),
         );
         fetchTarget();
+        await activityCubit.fetchActivities();
       }
 
       emit(TargetSuccess(targetModel));

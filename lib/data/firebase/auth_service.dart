@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:targetly/data/hive/hive_manager.dart';
 
 class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -56,6 +57,8 @@ class AuthService {
   }
 
   Future<void> signOut() async {
+    await HiveManager.closeUserBoxes();
+    HiveManager.clearUser();
     await auth.signOut();
   }
 }

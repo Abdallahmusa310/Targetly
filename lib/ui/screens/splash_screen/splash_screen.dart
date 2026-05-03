@@ -45,7 +45,7 @@ class SplashScreen extends StatelessWidget {
           ),
         ],
       ),
-      duration: 2000, // Increased duration to ensure proper loading
+      duration: 1600, // Increased duration to ensure proper loading
       splashIconSize: 900,
       centered: true,
       nextScreen: AuthGate(),

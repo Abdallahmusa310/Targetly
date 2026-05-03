@@ -30,6 +30,7 @@ class QuickAtionList extends StatelessWidget {
                   },
                 );
               },
+
               textcard: 'Add client',
               iconcard: Icon(Icons.add, color: Colors.white),
               iconcolor: Color(0xFF5B5F97),
