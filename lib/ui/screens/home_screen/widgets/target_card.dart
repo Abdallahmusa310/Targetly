@@ -28,11 +28,11 @@ class BuildTargetCard extends StatelessWidget {
               !now.isBefore(start) &&
               !now.isAfter(end);
 
-          return BlocBuilder<ClinetCubit, ClinetState>(
+          return BlocBuilder<ClinetCubit, Clientstate>(
             builder: (context, clientState) {
               double achieved = 0;
 
-              if (clientState is Clinetsucsess) {
+              if (clientState is Clientsucsess) {
                 final clients = clientState.clinet ?? [];
 
                 if (start != null && end != null) {

@@ -44,12 +44,12 @@ class ReportSummry extends StatelessWidget {
           }
         }
 
-        return BlocBuilder<ClinetCubit, ClinetState>(
+        return BlocBuilder<ClinetCubit, Clientstate>(
           builder: (context, clientstate) {
             double achieved = 0;
             int totalClients = 0;
 
-            if (clientstate is Clinetsucsess) {
+            if (clientstate is Clientsucsess) {
               final stats = context.read<ClinetCubit>().getStatsInRange(
                 start!,
                 end!,

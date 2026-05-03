@@ -1,24 +1,24 @@
 part of 'clinet_cubit.dart';
 
 @immutable
-sealed class ClinetState {
+sealed class Clientstate {
   final List<ClinetModel>? clinet;
-  const ClinetState({this.clinet});
+  const Clientstate({this.clinet});
 }
 
-final class ClinetInitial extends ClinetState {
-  ClinetInitial() : super(clinet: []);
+final class ClientInitial extends Clientstate {
+  ClientInitial() : super(clinet: []);
 }
 
-final class Clinetsucsess extends ClinetState {
-  const Clinetsucsess(List<ClinetModel>? clinets) : super(clinet: clinets);
+final class Clientsucsess extends Clientstate {
+  const Clientsucsess(List<ClinetModel>? clinets) : super(clinet: clinets);
 }
 
-final class Clinetloading extends ClinetState {
-  Clinetloading() : super(clinet: null);
+final class Clientloading extends Clientstate {
+  const Clientloading() : super(clinet: null);
 }
 
-final class Clinetfailed extends ClinetState {
+final class Clientfailed extends Clientstate {
   final String errormesaage;
-  const Clinetfailed(this.errormesaage) : super(clinet: const []);
+  const Clientfailed(this.errormesaage) : super(clinet: const []);
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/ui/shared/boutton.dart';
@@ -8,7 +7,6 @@ import 'package:targetly/ui/shared/text_field.dart';
 
 class ClinetSheet extends StatefulWidget {
   const ClinetSheet({super.key});
-
   @override
   State<ClinetSheet> createState() => _ClinetSheetState();
 }
@@ -85,15 +83,12 @@ class _ClinetSheetState extends State<ClinetSheet> {
                 text: 'Add clinet',
                 onTap: () async {
                   if (formKey.currentState!.validate()) {
-                    await context.read<ClinetCubit>().addClient(
-                      ClinetModel(
-                        clinetname: clientname.text.trim(),
-                        clinetphone: clientphone.text.trim(),
-                        clinetid: clientid.text.trim(),
-                        clinetfees: clientfees.text.trim(),
-                        createdAt: DateTime.now(),
-                      ),
-                      context.read<ActivityCubit>(),
+                    context.read<ClinetCubit>().addclient(
+                      name: clientname.text,
+                      phone: clientphone.text,
+                      fees: clientfees.text,
+                      id: clientid.text,
+                      activityCubit: context.read<ActivityCubit>(),
                     );
 
                     Navigator.pop(context);

@@ -1,48 +1,47 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
-import 'package:targetly/data/models/activity_model.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 
 part 'clinet_state.dart';
 
-class ClinetCubit extends Cubit<ClinetState> {
-  ClinetCubit() : super(ClinetInitial());
+class ClinetCubit extends Cubit<Clientstate> {
+  ClinetCubit() : super(ClientInitial());
   List<ClinetModel> allClients = [];
   List<ClinetModel> filteredClients = [];
 
   Future<void> fetchClients() async {
     try {
-      emit(Clinetloading());
-
+      emit(Clientloading());
       allClients = HiveManager.clients.values.toList();
       filteredClients = allClients;
-
-      emit(Clinetsucsess(filteredClients));
+      emit(Clientsucsess(filteredClients));
     } catch (e) {
-      emit(Clinetfailed(e.toString()));
+      emit(Clientfailed(e.toString()));
     }
   }
 
-  Future<void> addClient(
-    ClinetModel client,
-    ActivityCubit activityCubit,
-  ) async {
+  Future<void> addclient({
+    required String name,
+    required String phone,
+    required String fees,
+    required String id,
+    required ActivityCubit activityCubit,
+  }) async {
     try {
-      emit(Clinetloading());
-      await HiveManager.clients.add(client);
-
-      await HiveManager.activitybox.add(
-        ActivityModel(
-          text: "New client: ${client.clinetname}",
-          date: DateTime.now(),
-        ),
+      final newClient = ClinetModel(
+        clinetname: name,
+        clinetphone: phone,
+        clinetfees: fees,
+        clinetid: id,
+        createdAt: DateTime.now(),
       );
       await activityCubit.fetchActivities();
-      await fetchClients();
+      await HiveManager.clients.add(newClient);
+      fetchClients();
     } catch (e) {
-      emit(Clinetfailed(e.toString()));
+      emit(Clientfailed(e.toString()));
     }
   }
 
@@ -57,7 +56,7 @@ class ClinetCubit extends Cubit<ClinetState> {
       }).toList();
     }
 
-    emit(Clinetsucsess(filteredClients));
+    emit(Clientsucsess(filteredClients));
   }
 
   Future<void> deleteClient(ClinetModel client) async {
@@ -66,17 +65,7 @@ class ClinetCubit extends Cubit<ClinetState> {
 
       await fetchClients();
     } catch (e) {
-      emit(Clinetfailed(e.toString()));
-    }
-  }
-
-  Future<void> clearClients() async {
-    try {
-      await HiveManager.clients.clear();
-
-      await fetchClients();
-    } catch (e) {
-      emit(Clinetfailed(e.toString()));
+      emit(Clientfailed(e.toString()));
     }
   }
 

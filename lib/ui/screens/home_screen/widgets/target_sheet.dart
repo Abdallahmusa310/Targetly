@@ -29,12 +29,9 @@ class _TargetSheetState extends State<TargetSheet> {
     targetController = TextEditingController(
       text: targetModel?.target.toString() ?? "",
     );
-
     commissionController = TextEditingController(
       text: targetModel?.commission.toString() ?? "",
     );
-
-    /// 🔥 مهم عشان الـ edit
     startDate = targetModel?.startDate;
     endDate = targetModel?.endDate;
   }
@@ -64,10 +61,7 @@ class _TargetSheetState extends State<TargetSheet> {
                 hintText: 'Your target',
                 prefixIcon: const Icon(Icons.money),
               ),
-
               const SizedBox(height: 16),
-
-              /// 💰 Commission
               SharedTextFeild(
                 keyboardType: TextInputType.number,
                 controller: commissionController,
@@ -81,10 +75,7 @@ class _TargetSheetState extends State<TargetSheet> {
                 hintText: 'Commission percentage',
                 prefixIcon: const Icon(Icons.percent),
               ),
-
               const SizedBox(height: 16),
-
-              /// 📅 Date Range
               DateRangeField(
                 initialStart: startDate,
                 initialEnd: endDate,
@@ -93,23 +84,17 @@ class _TargetSheetState extends State<TargetSheet> {
                   endDate = end;
                 },
               ),
-
               const SizedBox(height: 20),
-
-              /// 🔘 Button
               Sharedboutton(
                 text: 'Set Target',
                 onTap: () {
                   if (!formKey.currentState!.validate()) return;
-
-                  /// 🔥 Validation مهم
                   if (startDate == null || endDate == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Please select date range")),
                     );
                     return;
                   }
-
                   context.read<TargetCubit>().setTarget(
                     target: double.parse(targetController.text),
                     commission: double.parse(commissionController.text),

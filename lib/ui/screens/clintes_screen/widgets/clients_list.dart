@@ -13,9 +13,9 @@ class ClientsList extends StatefulWidget {
 class _ClientsListState extends State<ClientsList> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ClinetCubit, ClinetState>(
+    return BlocBuilder<ClinetCubit, Clientstate>(
       builder: (context, state) {
-        if (state is Clinetloading) {
+        if (state is Clientloading) {
           return const Center(child: CircularProgressIndicator());
         }
         final clientlist = state.clinet;
