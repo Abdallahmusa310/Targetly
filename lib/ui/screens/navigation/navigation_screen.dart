@@ -27,7 +27,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screen[currentIndex], // ← بدل IndexedStack
+      body: IndexedStack(index: currentIndex, children: screen),
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         child: Container(
