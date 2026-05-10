@@ -40,14 +40,12 @@ class _StaggeredwidgetState extends State<Staggeredwidget>
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOutCubic));
 
-    // ← أضف هنا
     if (widget.animate) {
       _hasStarted = true;
       Future.delayed(Duration(milliseconds: 100 * widget.index), () {
         if (mounted) controller.forward();
       });
     } else {
-      // مش هيتعمل أنيميشن - يظهر مباشرة
       controller.value = 1.0;
     }
   }
@@ -72,7 +70,6 @@ class _StaggeredwidgetState extends State<Staggeredwidget>
 
   @override
   Widget build(BuildContext context) {
-    // لو مش هيتعمل animation يظهر مباشرة
     if (!widget.animate && !_hasStarted) {
       return widget.child;
     }
