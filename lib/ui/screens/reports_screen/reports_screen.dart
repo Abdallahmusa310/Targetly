@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
+import 'package:targetly/ui/screens/reports_screen/widgets/line_chart.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/report_summry.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/select_period.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/target_progress.dart';
@@ -64,6 +65,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ReportSummry(start: reportStart, end: reportEnd),
               const SizedBox(height: 10),
               TargetProgress(achieved: _achieved, target: _target), // ← dynamic
+              if (reportStart != null && reportEnd != null) ...[
+                const SizedBox(height: 16),
+                SalesLineChart(start: reportStart!, end: reportEnd!),
+              ],
             ],
           ),
         ),

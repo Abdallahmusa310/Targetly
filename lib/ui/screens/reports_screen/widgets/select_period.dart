@@ -48,7 +48,7 @@ class _SelectPeriodState extends State<SelectPeriod> {
           onTap: () {
             if (selectedStart == null || selectedEnd == null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("اختار التاريخ الأول")),
+                const SnackBar(content: Text("select a valid date range")),
               );
               return;
             }

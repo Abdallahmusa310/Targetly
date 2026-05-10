@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
+import 'package:targetly/data/models/activity_model.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 
@@ -37,9 +38,13 @@ class ClinetCubit extends Cubit<Clientstate> {
         clinetid: id,
         createdAt: DateTime.now(),
       );
-      await activityCubit.fetchActivities();
-      await HiveManager.clients.add(newClient);
-      fetchClients();
+      await HiveManager.clients.add(newClient); // ← الأول
+      await HiveManager.activitybox.add(
+        // ← تاني
+        ActivityModel(text: "New client: $name", date: DateTime.now()),
+      );
+      await fetchClients(); // ← await مهم
+      await activityCubit.fetchActivities(); // ← الأخير
     } catch (e) {
       emit(Clientfailed(e.toString()));
     }

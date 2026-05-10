@@ -144,7 +144,7 @@ class BuildTargetCard extends StatelessWidget {
                       const Padding(
                         padding: EdgeInsets.only(top: 10),
                         child: Text(
-                          'Target period انتهت',
+                          'Target period ended',
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 12,

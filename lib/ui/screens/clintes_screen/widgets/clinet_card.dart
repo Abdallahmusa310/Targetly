@@ -14,17 +14,19 @@ class ClinetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
+        await Future.delayed(const Duration(milliseconds: 80));
+
         showModalBottomSheet(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15),
-              topRight: Radius.circular(15),
-            ),
-          ),
           context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent, // 🔥 مهم
           builder: (context) {
-            return ClinetDetails(clinetModel: clinetModel);
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic,
+              child: ClinetDetails(clinetModel: clinetModel),
+            );
           },
         );
       },
@@ -115,7 +117,6 @@ class ClinetCard extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 CallClient(clinetModel: clinetModel),
               ],
             ),
