@@ -8,7 +8,7 @@ class LightWave extends StatelessWidget {
     return ClipPath(
       clipper: LightWaveClipper(),
       child: Container(
-        height: 200,
+        height: 100,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -60,7 +60,7 @@ class MidWave extends StatelessWidget {
     return ClipPath(
       clipper: MidWaveClipper(),
       child: Container(
-        height: 150,
+        height: 75,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
@@ -112,7 +112,7 @@ class MainWave extends StatelessWidget {
     return ClipPath(
       clipper: MainWaveClipper(),
       child: Container(
-        height: 100,
+        height: 50,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,

@@ -28,25 +28,6 @@ class _SignUpFormState extends State<SignUpForm> {
       key: widget.formKey,
       child: Column(
         children: [
-          /// Full Name
-          SharedTextFeild(
-            controller: widget.nameController,
-            obscureText: false,
-            hintText: "Full Name",
-            prefixIcon: const Icon(Icons.person, color: Color(0xff969ACA)),
-            validator: (fullname) {
-              if (fullname == null || fullname.isEmpty) {
-                return "Please enter your name";
-              }
-              if (fullname.length < 3) {
-                return "Name must be at least 3 characters";
-              }
-              return null;
-            },
-          ),
-
-          const SizedBox(height: 12),
-
           /// Email
           SharedTextFeild(
             controller: widget.emailcontroller,

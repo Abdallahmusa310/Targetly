@@ -15,7 +15,7 @@ class Header extends StatelessWidget {
         Positioned(
           left: 0,
           right: 0,
-          bottom: -130,
+          bottom: -180,
           child: Center(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),

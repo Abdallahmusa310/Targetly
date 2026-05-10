@@ -30,7 +30,7 @@ class _StaggeredwidgetState extends State<Staggeredwidget>
 
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 800),
     );
 
     opacity = Tween<double>(begin: 0, end: 1).animate(controller);
