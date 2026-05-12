@@ -33,13 +33,13 @@ class _ClientsScreenState extends State<ClientsScreen> {
           children: [
             SharedTextFeild(
               obscureText: false,
-              hintText: 'Search by id or phone...',
+              hintText: 'Search by id or phone,name...',
               prefixIcon: Icon(Icons.search),
               onChanged: (value) {
                 BlocProvider.of<ClinetCubit>(context).searchClients(value);
               },
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 12),
             Expanded(child: ClientsList()),
           ],
         ),

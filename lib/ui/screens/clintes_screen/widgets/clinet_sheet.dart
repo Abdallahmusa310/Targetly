@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
@@ -42,6 +43,8 @@ class _ClinetSheetState extends State<ClinetSheet> {
               SizedBox(height: 16),
               SharedTextFeild(
                 controller: clientphone,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (clinetphone) {
                   if (clinetphone == null || clinetphone.isEmpty) {
                     return 'Enter client phone';
@@ -68,6 +71,12 @@ class _ClinetSheetState extends State<ClinetSheet> {
               SizedBox(height: 16),
               SharedTextFeild(
                 controller: clientfees,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                ],
                 validator: (name) {
                   if (name == null || name.isEmpty) {
                     return "Enter clinet fees";

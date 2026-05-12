@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:targetly/core/routing/routs.dart';
+import 'package:targetly/data/firebase/auth_service.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/ui/screens/auth_screens/reset_password_screen/confirm_message.dart';
 
@@ -24,8 +26,22 @@ class Buildheader extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () async {
-                      showLogoutDialog(context);
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ConfirmMessage(
+                          onConfirm: () async {
+                            Navigator.pop(context);
+                            await HiveManager.closeUserBoxes();
+                            HiveManager.clearUser();
+                            await AuthService().signOut();
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              AppRoutes.signInScreen,
+                              (route) => false,
+                            );
+                          },
+                        ),
+                      );
                     },
                     icon: Icon(Icons.logout),
                   ),

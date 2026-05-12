@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SharedTextFeild extends StatelessWidget {
   const SharedTextFeild({
@@ -12,6 +13,7 @@ class SharedTextFeild extends StatelessWidget {
     this.controller,
     this.onChanged,
     this.keyboardType,
+    this.inputFormatters,
   });
 
   final String hintText;
@@ -23,10 +25,12 @@ class SharedTextFeild extends StatelessWidget {
   final bool obscureText;
   final void Function(String)? onChanged;
   final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: inputFormatters,
       keyboardType: keyboardType,
       controller: controller,
       obscureText: obscureText,

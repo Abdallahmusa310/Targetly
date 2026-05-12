@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/ui/screens/auth_screens/reset_password_screen/confirm_message.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/call_client.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_details.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/edit_client_sheet.dart';
@@ -20,7 +21,7 @@ class ClinetCard extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
-          backgroundColor: Colors.transparent, // 🔥 مهم
+          backgroundColor: Colors.transparent,
           builder: (context) {
             return AnimatedContainer(
               duration: const Duration(milliseconds: 300),
@@ -56,7 +57,17 @@ class ClinetCard extends StatelessWidget {
             ),
             SlidableAction(
               onPressed: (context) {
-                BlocProvider.of<ClinetCubit>(context).deleteClient(clinetModel);
+                showDialog(
+                  context: context,
+                  builder: (context) => ConfirmMessage(
+                    onConfirm: () async {
+                      Navigator.pop(context);
+                      BlocProvider.of<ClinetCubit>(
+                        context,
+                      ).deleteClient(clinetModel);
+                    },
+                  ),
+                );
               },
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
