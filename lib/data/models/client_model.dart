@@ -6,20 +6,28 @@ part 'client_model.g.dart';
 class ClinetModel extends HiveObject {
   @HiveField(0)
   String clinetname;
+
   @HiveField(1)
   String clinetphone;
+
   @HiveField(2)
-  String clinetid;
+  String? clinetid;
+
   @HiveField(3)
-  String clinetfees;
+  String? clinetfees;
+
   @HiveField(4)
   DateTime? createdAt;
 
   ClinetModel({
     required this.clinetname,
     required this.clinetphone,
-    required this.clinetid,
-    required this.clinetfees,
     required this.createdAt,
+    this.clinetid,
+    this.clinetfees,
   });
+
+  bool get isSubscribed {
+    return clinetfees != null && clinetfees!.isNotEmpty;
+  }
 }

@@ -19,9 +19,9 @@ class ClinetModelAdapter extends TypeAdapter<ClinetModel> {
     return ClinetModel(
       clinetname: fields[0] as String,
       clinetphone: fields[1] as String,
-      clinetid: fields[2] as String,
-      clinetfees: fields[3] as String,
       createdAt: fields[4] as DateTime?,
+      clinetid: fields[2] as String?,
+      clinetfees: fields[3] as String?,
     );
   }
 

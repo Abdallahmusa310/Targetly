@@ -11,6 +11,7 @@ class ClinetCubit extends Cubit<Clientstate> {
   ClinetCubit() : super(ClientInitial());
   List<ClinetModel> allClients = [];
   List<ClinetModel> filteredClients = [];
+  List<ClinetModel> unsupscribedClients = [];
 
   Future<void> fetchClients() async {
     try {
@@ -26,8 +27,8 @@ class ClinetCubit extends Cubit<Clientstate> {
   Future<void> addclient({
     required String name,
     required String phone,
-    required String fees,
-    required String id,
+    String? fees,
+    String? id,
     required ActivityCubit activityCubit,
   }) async {
     try {
@@ -55,13 +56,23 @@ class ClinetCubit extends Cubit<Clientstate> {
       filteredClients = allClients;
     } else {
       filteredClients = allClients.where((client) {
-        return client.clinetid.toLowerCase().contains(query.toLowerCase()) ||
+        return (client.clinetid ?? '').toLowerCase().contains(
+              query.toLowerCase(),
+            ) ||
             client.clinetphone.toLowerCase().contains(query.toLowerCase()) ||
             client.clinetname.toLowerCase().contains(query.toLowerCase());
       }).toList();
     }
 
     emit(Clientsucsess(filteredClients));
+  }
+
+  List<ClinetModel> get subscribedClients {
+    return allClients.where((c) => c.isSubscribed).toList();
+  }
+
+  List<ClinetModel> get unsubscribedClients {
+    return allClients.where((c) => !c.isSubscribed).toList();
   }
 
   Future<void> deleteClient(ClinetModel client) async {
@@ -75,10 +86,13 @@ class ClinetCubit extends Cubit<Clientstate> {
   }
 
   double getTotalFees() {
-    return allClients.fold(
-      0,
-      (sum, client) => sum + (double.tryParse(client.clinetfees) ?? 0),
-    );
+    return allClients
+        .where((client) => client.isSubscribed)
+        .fold(
+          0,
+          (sum, client) =>
+              sum + (double.tryParse(client.clinetfees ?? "0") ?? 0),
+        );
   }
 
   ({double achieved, int totalClients}) getStatsInRange(
@@ -89,6 +103,8 @@ class ClinetCubit extends Cubit<Clientstate> {
     int count = 0;
 
     for (var client in allClients) {
+      if (!client.isSubscribed) continue;
+
       final date = client.createdAt;
 
       if (date == null) continue;
@@ -97,7 +113,7 @@ class ClinetCubit extends Cubit<Clientstate> {
 
       if (inRange) {
         count++;
-        achieved += double.tryParse(client.clinetfees) ?? 0;
+        achieved += double.tryParse(client.clinetfees ?? '0') ?? 0;
       }
     }
 
@@ -111,6 +127,8 @@ class ClinetCubit extends Cubit<Clientstate> {
     int count = 0;
 
     for (var client in allClients) {
+      if (!client.isSubscribed) continue;
+
       final date = client.createdAt;
       if (date == null) continue;
 
@@ -121,7 +139,7 @@ class ClinetCubit extends Cubit<Clientstate> {
 
       if (isToday) {
         count++;
-        achieved += double.tryParse(client.clinetfees) ?? 0;
+        achieved += double.tryParse(client.clinetfees ?? "0") ?? 0;
       }
     }
 

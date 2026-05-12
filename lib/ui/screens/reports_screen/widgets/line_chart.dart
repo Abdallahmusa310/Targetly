@@ -32,7 +32,7 @@ class SalesLineChart extends StatelessWidget {
           final dayIndex = date.difference(start).inDays;
           salesPerDay[dayIndex] =
               (salesPerDay[dayIndex] ?? 0) +
-              (double.tryParse(client.clinetfees) ?? 0);
+              (double.tryParse(client.clinetfees ?? '0') ?? 0);
         }
 
         final spots = salesPerDay.entries

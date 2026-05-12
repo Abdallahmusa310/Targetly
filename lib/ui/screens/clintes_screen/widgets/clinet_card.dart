@@ -111,7 +111,7 @@ class ClinetCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              clinetModel.clinetid,
+                              clinetModel.clinetid ?? 'No ID',
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,

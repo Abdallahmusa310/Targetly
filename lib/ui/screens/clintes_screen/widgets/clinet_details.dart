@@ -75,8 +75,8 @@ class _ClinetDetailsState extends State<ClinetDetails>
 
               /// 🔥 Info
               _buildRow("Name", widget.clinetModel.clinetname),
-              _buildRow("ID", widget.clinetModel.clinetid),
-              _buildRow("Fees", widget.clinetModel.clinetfees),
+              _buildRow("ID", widget.clinetModel.clinetid ?? ''),
+              _buildRow("Fees", widget.clinetModel.clinetfees ?? ''),
               _buildRow(
                 "Added",
                 DateFormat(

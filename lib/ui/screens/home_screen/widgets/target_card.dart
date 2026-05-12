@@ -49,7 +49,7 @@ class BuildTargetCard extends StatelessWidget {
                   achieved = clients.fold<double>(
                     0,
                     (sum, client) =>
-                        sum + (double.tryParse(client.clinetfees) ?? 0),
+                        sum + (double.tryParse(client.clinetfees ?? '0') ?? 0),
                   );
                 }
               }

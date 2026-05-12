@@ -58,12 +58,6 @@ class _ClinetSheetState extends State<ClinetSheet> {
               SizedBox(height: 16),
               SharedTextFeild(
                 controller: clientid,
-                validator: (clinetid) {
-                  if (clinetid == null || clinetid.isEmpty) {
-                    return 'Enter client id';
-                  }
-                  return null;
-                },
                 obscureText: false,
                 hintText: 'Client id',
                 prefixIcon: Icon(Icons.key),
@@ -77,12 +71,6 @@ class _ClinetSheetState extends State<ClinetSheet> {
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
                 ],
-                validator: (name) {
-                  if (name == null || name.isEmpty) {
-                    return "Enter clinet fees";
-                  }
-                  return null;
-                },
                 obscureText: false,
                 hintText: 'Client fees',
                 prefixIcon: Icon(Icons.money),
@@ -93,10 +81,17 @@ class _ClinetSheetState extends State<ClinetSheet> {
                 onTap: () async {
                   if (formKey.currentState!.validate()) {
                     context.read<ClinetCubit>().addclient(
-                      name: clientname.text,
-                      phone: clientphone.text,
-                      fees: clientfees.text,
-                      id: clientid.text,
+                      name: clientname.text.trim(),
+                      phone: clientphone.text.trim(),
+
+                      fees: clientfees.text.trim().isEmpty
+                          ? null
+                          : clientfees.text.trim(),
+
+                      id: clientid.text.trim().isEmpty
+                          ? null
+                          : clientid.text.trim(),
+
                       activityCubit: context.read<ActivityCubit>(),
                     );
 
