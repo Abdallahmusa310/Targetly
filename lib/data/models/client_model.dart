@@ -18,6 +18,8 @@ class ClinetModel extends HiveObject {
 
   @HiveField(4)
   DateTime? createdAt;
+  @HiveField(5)
+  String? clientComment;
 
   ClinetModel({
     required this.clinetname,
@@ -25,6 +27,7 @@ class ClinetModel extends HiveObject {
     required this.createdAt,
     this.clinetid,
     this.clinetfees,
+    this.clientComment,
   });
 
   bool get isSubscribed {

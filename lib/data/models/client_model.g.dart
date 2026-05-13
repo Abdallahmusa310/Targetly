@@ -22,13 +22,14 @@ class ClinetModelAdapter extends TypeAdapter<ClinetModel> {
       createdAt: fields[4] as DateTime?,
       clinetid: fields[2] as String?,
       clinetfees: fields[3] as String?,
+      clientComment: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ClinetModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.clinetname)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class ClinetModelAdapter extends TypeAdapter<ClinetModel> {
       ..writeByte(3)
       ..write(obj.clinetfees)
       ..writeByte(4)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(5)
+      ..write(obj.clientComment);
   }
 
   @override

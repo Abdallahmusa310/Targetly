@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/ui/screens/clintes_screen/widgets/client_dialog.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clients_list.dart';
-import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_sheet.dart';
 import 'package:targetly/ui/shared/boutton.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 
@@ -47,19 +47,9 @@ class _ClientsScreenState extends State<ClientsScreen> {
       floatingActionButton: Sharedboutton(
         text: 'Add clinet',
         onTap: () {
-          showModalBottomSheet(
-            isScrollControlled: true,
+          showDialog(
             context: context,
-            builder: (context) {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                  ),
-                  child: const ClinetSheet(),
-                ),
-              );
-            },
+            builder: (context) => const Clientdialog(),
           );
         },
       ),

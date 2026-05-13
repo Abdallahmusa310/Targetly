@@ -5,7 +5,8 @@ import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/ui/screens/auth_screens/reset_password_screen/confirm_message.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/call_client.dart';
-import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_details.dart';
+import 'package:targetly/ui/screens/clintes_screen/widgets/client_comment.dart';
+import 'package:targetly/ui/screens/clintes_screen/widgets/client_details_dialog.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/edit_client_sheet.dart';
 
 class ClinetCard extends StatelessWidget {
@@ -15,19 +16,19 @@ class ClinetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        await Future.delayed(const Duration(milliseconds: 80));
-
-        showModalBottomSheet(
+      onDoubleTap: () {
+        showDialog(
           context: context,
-          isScrollControlled: true,
-          backgroundColor: Colors.transparent,
           builder: (context) {
-            return AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeOutCubic,
-              child: ClinetDetails(clinetModel: clinetModel),
-            );
+            return ClientComment();
+          },
+        );
+      },
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return ClinetDetailsDialog(clinetModel: clinetModel);
           },
         );
       },

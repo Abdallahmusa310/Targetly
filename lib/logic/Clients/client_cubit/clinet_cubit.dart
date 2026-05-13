@@ -39,9 +39,8 @@ class ClinetCubit extends Cubit<Clientstate> {
         clinetid: id,
         createdAt: DateTime.now(),
       );
-      await HiveManager.clients.add(newClient); // ← الأول
+      await HiveManager.clients.add(newClient);
       await HiveManager.activitybox.add(
-        // ← تاني
         ActivityModel(text: "New client: $name", date: DateTime.now()),
       );
       await fetchClients(); // ← await مهم

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_sheet.dart';
+import 'package:targetly/ui/screens/clintes_screen/widgets/client_dialog.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/quick_action_card.dart';
-import 'package:targetly/ui/screens/home_screen/widgets/target_sheet.dart';
+import 'package:targetly/ui/screens/home_screen/widgets/target_dialog.dart';
 
 class QuickAtionList extends StatelessWidget {
   const QuickAtionList({super.key});
@@ -17,22 +17,14 @@ class QuickAtionList extends StatelessWidget {
           children: [
             QuickActionCard(
               ontap: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
+                showDialog(
                   context: context,
-                  builder: (context) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom,
-                      ),
-                      child: ClinetSheet(),
-                    );
-                  },
+                  builder: (context) => const Clientdialog(),
                 );
               },
 
               textcard: 'Add client',
-              iconcard: Icon(Icons.add, color: Colors.white),
+              iconcard: Icon(Icons.person_add_alt_1, color: Colors.white),
               iconcolor: Color(0xFF5B5F97),
             ),
             QuickActionCard(
@@ -45,19 +37,9 @@ class QuickAtionList extends StatelessWidget {
             ),
             QuickActionCard(
               ontap: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
+                showDialog(
                   context: context,
-                  builder: (context) {
-                    return SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom,
-                        ),
-                        child: const TargetSheet(),
-                      ),
-                    );
-                  },
+                  builder: (context) => const Targetdialog(),
                 );
               },
               textcard: 'update target',
