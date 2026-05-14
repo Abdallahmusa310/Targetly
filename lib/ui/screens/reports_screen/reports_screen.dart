@@ -8,7 +8,10 @@ import 'package:targetly/ui/screens/reports_screen/widgets/select_period.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/target_progress.dart';
 
 class ReportsScreen extends StatefulWidget {
-  const ReportsScreen({super.key});
+  const ReportsScreen({super.key, this.initialStart, this.initialEnd});
+
+  final DateTime? initialStart;
+  final DateTime? initialEnd;
 
   @override
   State<ReportsScreen> createState() => _ReportsScreenState();
@@ -17,8 +20,20 @@ class ReportsScreen extends StatefulWidget {
 class _ReportsScreenState extends State<ReportsScreen> {
   DateTime? reportStart;
   DateTime? reportEnd;
+
   double _achieved = 0;
   double _target = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.initialStart != null && widget.initialEnd != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        onGenerate(widget.initialStart!, widget.initialEnd!);
+      });
+    }
+  }
 
   void onGenerate(DateTime start, DateTime end) {
     final clientCubit = context.read<ClinetCubit>();
@@ -27,8 +42,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
     final stats = clientCubit.getStatsInRange(start, end);
 
     double target = 0;
+
     if (targetCubit.state is TargetSuccess) {
       final targetModel = (targetCubit.state as TargetSuccess).target;
+
       if (targetModel != null &&
           !start.isAfter(targetModel.endDate) &&
           !end.isBefore(targetModel.startDate)) {
@@ -55,18 +72,25 @@ class _ReportsScreenState extends State<ReportsScreen> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SelectPeriod(onGenerate: onGenerate),
+
               const SizedBox(height: 16),
+
               ReportSummry(start: reportStart, end: reportEnd),
+
               const SizedBox(height: 10),
-              TargetProgress(achieved: _achieved, target: _target), // ← dynamic
+
+              TargetProgress(achieved: _achieved, target: _target),
+
               if (reportStart != null && reportEnd != null) ...[
                 const SizedBox(height: 16),
+
                 SalesLineChart(start: reportStart!, end: reportEnd!),
               ],
             ],

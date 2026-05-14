@@ -89,18 +89,25 @@ class BuildTargetCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     const SizedBox(height: 16),
-
-                    LinearProgressIndicator(
-                      value: progress.toDouble(),
-                      minHeight: 6,
-                      backgroundColor: Colors.white24,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        progress >= 1 ? Colors.green : Colors.white,
-                      ),
+                    TweenAnimationBuilder<double>(
+                      tween: Tween(begin: 0, end: progress.toDouble()),
+                      duration: const Duration(milliseconds: 1200),
+                      curve: Curves.easeInOut,
+                      builder: (context, value, child) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: LinearProgressIndicator(
+                            value: value,
+                            minHeight: 8,
+                            backgroundColor: Colors.white24,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              value >= 1 ? Colors.green : Colors.white,
+                            ),
+                          ),
+                        );
+                      },
                     ),
-
                     const SizedBox(height: 8),
 
                     Row(

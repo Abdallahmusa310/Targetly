@@ -31,14 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider.of<ActivityCubit>(context).fetchActivities();
 
     if (!_hasAnimatedBefore) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          setState(() {
-            hasanimated = true;
-            _hasAnimatedBefore = true;
-          });
-        }
-      });
+      hasanimated = true; // ← على طول من غير postFrameCallback
+      _hasAnimatedBefore = true;
     } else {
       hasanimated = true;
     }

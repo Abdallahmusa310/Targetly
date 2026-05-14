@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/client_dialog.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/quick_action_card.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/target_dialog.dart';
+import 'package:targetly/ui/screens/reports_screen/reports_screen.dart';
 
 class QuickAtionList extends StatelessWidget {
   const QuickAtionList({super.key});
@@ -29,7 +32,22 @@ class QuickAtionList extends StatelessWidget {
             ),
             QuickActionCard(
               ontap: () {
-                Navigator.pushNamed(context, '/reports');
+                final targetState = context.read<TargetCubit>().state;
+
+                if (targetState is TargetSuccess &&
+                    targetState.target != null) {
+                  final target = targetState.target!;
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ReportsScreen(
+                        initialStart: target.startDate,
+                        initialEnd: target.endDate,
+                      ),
+                    ),
+                  );
+                }
               },
               textcard: 'View report',
               iconcard: Icon(Icons.assessment, color: Colors.white),
