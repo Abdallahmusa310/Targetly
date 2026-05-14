@@ -173,5 +173,39 @@ class ClinetCubit extends Cubit<Clientstate> {
     return (achieved: achieved, totalClients: count);
   }
 
+  Future<void> addComment(ClinetModel client, String comment) async {
+    try {
+      client.comments.add(comment);
+      await client.save();
+      await fetchClients();
+    } catch (e) {
+      emit(Clientfailed(e.toString()));
+    }
+  }
+
+  Future<void> editComment(
+    ClinetModel client,
+    int index,
+    String newComment,
+  ) async {
+    try {
+      client.comments[index] = newComment;
+      await client.save();
+      await fetchClients();
+    } catch (e) {
+      emit(Clientfailed(e.toString()));
+    }
+  }
+
+  Future<void> deleteComment(ClinetModel client, int index) async {
+    try {
+      client.comments.removeAt(index);
+      await client.save();
+      await fetchClients();
+    } catch (e) {
+      emit(Clientfailed(e.toString()));
+    }
+  }
+
   int getClientsCount() => allClients.length;
 }

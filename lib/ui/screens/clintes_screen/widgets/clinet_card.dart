@@ -5,7 +5,7 @@ import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/ui/screens/auth_screens/reset_password_screen/confirm_message.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/call_client.dart';
-import 'package:targetly/ui/screens/clintes_screen/widgets/client_comment.dart';
+import 'package:targetly/ui/screens/clintes_screen/widgets/client_comment_dialog.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/client_details_dialog.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/edit_client_sheet.dart';
 
@@ -20,7 +20,7 @@ class ClinetCard extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) {
-            return ClientComment();
+            return ClientCommentdialog(client: clinetModel);
           },
         );
       },

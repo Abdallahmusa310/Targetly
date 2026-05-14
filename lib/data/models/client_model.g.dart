@@ -22,7 +22,7 @@ class ClinetModelAdapter extends TypeAdapter<ClinetModel> {
       createdAt: fields[4] as DateTime?,
       clinetid: fields[2] as String?,
       clinetfees: fields[3] as String?,
-      clientComment: fields[5] as String?,
+      comments: (fields[5] as List?)?.cast<String>(),
     );
   }
 
@@ -41,7 +41,7 @@ class ClinetModelAdapter extends TypeAdapter<ClinetModel> {
       ..writeByte(4)
       ..write(obj.createdAt)
       ..writeByte(5)
-      ..write(obj.clientComment);
+      ..write(obj.comments);
   }
 
   @override
