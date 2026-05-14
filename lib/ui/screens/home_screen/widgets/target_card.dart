@@ -82,7 +82,7 @@ class BuildTargetCard extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     Text(
-                      '${achieved.toStringAsFixed(0)} / ${target.toStringAsFixed(0)} EGP',
+                      '${achieved.toStringAsFixed(0)} / ${target.toStringAsFixed(0)} EGP / Month',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 22,
@@ -109,10 +109,6 @@ class BuildTargetCard extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Target: ${target.toStringAsFixed(0)}',
-                              style: const TextStyle(color: Colors.white),
-                            ),
                             Text(
                               'Remaining: ${remaining.toStringAsFixed(0)}',
                               style: const TextStyle(color: Colors.white),

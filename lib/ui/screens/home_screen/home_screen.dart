@@ -73,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     animate: hasanimated,
                     child: Buildheader(),
                   ),
-                  SizedBox(height: 16),
                   Staggeredwidget(
                     index: 1,
                     animate: hasanimated,
