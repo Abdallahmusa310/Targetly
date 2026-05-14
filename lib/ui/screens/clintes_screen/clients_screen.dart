@@ -14,6 +14,8 @@ class ClientsScreen extends StatefulWidget {
 }
 
 class _ClientsScreenState extends State<ClientsScreen> {
+  ClientFilter selectedFilter = ClientFilter.all;
+
   @override
   void initState() {
     super.initState();
@@ -24,9 +26,13 @@ class _ClientsScreenState extends State<ClientsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(' Clients ', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Clients',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -34,18 +40,50 @@ class _ClientsScreenState extends State<ClientsScreen> {
             SharedTextFeild(
               obscureText: false,
               hintText: 'Search by id or phone,name...',
-              prefixIcon: Icon(Icons.search),
+              prefixIcon: const Icon(Icons.search),
               onChanged: (value) {
                 BlocProvider.of<ClinetCubit>(context).searchClients(value);
               },
             ),
-            SizedBox(height: 12),
-            Expanded(child: ClientsList()),
+
+            const SizedBox(height: 16),
+
+            /// FILTERS
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _buildFilterChip(
+                    title: "All Clients",
+                    filter: ClientFilter.all,
+                  ),
+
+                  const SizedBox(width: 10),
+
+                  _buildFilterChip(
+                    title: "Subscribed",
+                    filter: ClientFilter.subscribed,
+                  ),
+
+                  const SizedBox(width: 10),
+
+                  _buildFilterChip(
+                    title: "Unsubscribed",
+                    filter: ClientFilter.unsubscribed,
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 14),
+
+            const Expanded(child: ClientsList()),
           ],
         ),
       ),
+
       floatingActionButton: Sharedboutton(
-        text: 'Add clinet',
+        text: 'Add client',
         onTap: () {
           showDialog(
             context: context,
@@ -55,4 +93,33 @@ class _ClientsScreenState extends State<ClientsScreen> {
       ),
     );
   }
+
+  Widget _buildFilterChip({
+    required String title,
+    required ClientFilter filter,
+  }) {
+    final bool isSelected = selectedFilter == filter;
+
+    return ChoiceChip(
+      label: Text(title),
+      selected: isSelected,
+      showCheckmark: false,
+      selectedColor: const Color(0xff9367FA),
+      backgroundColor: Colors.grey.shade100,
+      labelStyle: TextStyle(
+        color: isSelected ? Colors.white : Colors.black87,
+        fontWeight: FontWeight.w600,
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      onSelected: (_) {
+        setState(() {
+          selectedFilter = filter;
+        });
+
+        context.read<ClinetCubit>().filterClients(filter);
+      },
+    );
+  }
 }
+
+enum ClientFilter { all, subscribed, unsubscribed }

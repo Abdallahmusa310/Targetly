@@ -4,20 +4,23 @@ import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/data/models/activity_model.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
+import 'package:targetly/ui/screens/clintes_screen/clients_screen.dart';
 
 part 'clinet_state.dart';
 
 class ClinetCubit extends Cubit<Clientstate> {
   ClinetCubit() : super(ClientInitial());
+
   List<ClinetModel> allClients = [];
   List<ClinetModel> filteredClients = [];
-  List<ClinetModel> unsupscribedClients = [];
 
   Future<void> fetchClients() async {
     try {
       emit(Clientloading());
+
       allClients = HiveManager.clients.values.toList();
       filteredClients = allClients;
+
       emit(Clientsucsess(filteredClients));
     } catch (e) {
       emit(Clientfailed(e.toString()));
@@ -39,12 +42,16 @@ class ClinetCubit extends Cubit<Clientstate> {
         clinetid: id,
         createdAt: DateTime.now(),
       );
+
       await HiveManager.clients.add(newClient);
+
       await HiveManager.activitybox.add(
         ActivityModel(text: "New client: $name", date: DateTime.now()),
       );
-      await fetchClients(); // ← await مهم
-      await activityCubit.fetchActivities(); // ← الأخير
+
+      await fetchClients();
+
+      await activityCubit.fetchActivities();
     } catch (e) {
       emit(Clientfailed(e.toString()));
     }
@@ -61,6 +68,24 @@ class ClinetCubit extends Cubit<Clientstate> {
             client.clinetphone.toLowerCase().contains(query.toLowerCase()) ||
             client.clinetname.toLowerCase().contains(query.toLowerCase());
       }).toList();
+    }
+
+    emit(Clientsucsess(filteredClients));
+  }
+
+  void filterClients(ClientFilter filter) {
+    switch (filter) {
+      case ClientFilter.all:
+        filteredClients = allClients;
+        break;
+
+      case ClientFilter.subscribed:
+        filteredClients = subscribedClients;
+        break;
+
+      case ClientFilter.unsubscribed:
+        filteredClients = unsubscribedClients;
+        break;
     }
 
     emit(Clientsucsess(filteredClients));
@@ -112,6 +137,7 @@ class ClinetCubit extends Cubit<Clientstate> {
 
       if (inRange) {
         count++;
+
         achieved += double.tryParse(client.clinetfees ?? '0') ?? 0;
       }
     }
@@ -129,6 +155,7 @@ class ClinetCubit extends Cubit<Clientstate> {
       if (!client.isSubscribed) continue;
 
       final date = client.createdAt;
+
       if (date == null) continue;
 
       final isToday =
@@ -138,6 +165,7 @@ class ClinetCubit extends Cubit<Clientstate> {
 
       if (isToday) {
         count++;
+
         achieved += double.tryParse(client.clinetfees ?? "0") ?? 0;
       }
     }
