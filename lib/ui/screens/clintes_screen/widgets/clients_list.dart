@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
@@ -18,18 +19,22 @@ class _ClientsListState extends State<ClientsList> {
         if (state is Clientloading) {
           return const Center(child: CircularProgressIndicator());
         }
+
         final clientlist = state.clinet;
+
         if (clientlist == null || clientlist.isEmpty) {
-          return const Center(child: Text('No clients found'));
+          return Center(child: Text('No clients found'.tr()));
         }
+
         final sortedClientList = List.from(clientlist)
           ..sort((a, b) {
             final dateA = a.createdAt ?? DateTime(0);
             final dateB = b.createdAt ?? DateTime(0);
             return dateB.compareTo(dateA);
           });
+
         return ListView.builder(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return ClinetCard(clinetModel: sortedClientList[index]);
           },

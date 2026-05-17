@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/ui/shared/dialog.dart';
@@ -43,12 +45,13 @@ class _ClientdialogState extends State<Clientdialog> {
                     color: Color(0xff9367FA),
                   ),
                 ),
-
                 const SizedBox(width: 12),
-
-                const Text(
-                  "Add Client",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                Text(
+                  'Add Client'.tr(),
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -57,12 +60,12 @@ class _ClientdialogState extends State<Clientdialog> {
 
             SharedTextFeild(
               controller: clientname,
-              hintText: 'Client Name',
+              hintText: 'Client Name'.tr(),
               obscureText: false,
               prefixIcon: const Icon(Icons.person),
               validator: (name) {
                 if (name == null || name.isEmpty) {
-                  return "Enter client name";
+                  return 'Enter client name'.tr();
                 }
                 return null;
               },
@@ -72,14 +75,14 @@ class _ClientdialogState extends State<Clientdialog> {
 
             SharedTextFeild(
               controller: clientphone,
-              hintText: 'Client Phone',
+              hintText: 'Client Phone'.tr(),
               obscureText: false,
               prefixIcon: const Icon(Icons.phone),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (phone) {
                 if (phone == null || phone.isEmpty) {
-                  return "Enter client phone";
+                  return 'Enter client phone'.tr();
                 }
                 return null;
               },
@@ -89,7 +92,7 @@ class _ClientdialogState extends State<Clientdialog> {
 
             SharedTextFeild(
               controller: clientid,
-              hintText: 'Client ID',
+              hintText: 'Client ID'.tr(),
               obscureText: false,
               prefixIcon: const Icon(Icons.badge),
             ),
@@ -98,7 +101,7 @@ class _ClientdialogState extends State<Clientdialog> {
 
             SharedTextFeild(
               controller: clientfees,
-              hintText: 'Client Fees',
+              hintText: 'Client Fees'.tr(),
               obscureText: false,
               prefixIcon: const Icon(Icons.attach_money),
               keyboardType: const TextInputType.numberWithOptions(
@@ -140,9 +143,9 @@ class _ClientdialogState extends State<Clientdialog> {
                         Navigator.pop(context);
                       }
                     },
-                    child: const Text(
-                      "Add",
-                      style: TextStyle(
+                    child: Text(
+                      'Add'.tr(),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -160,10 +163,8 @@ class _ClientdialogState extends State<Clientdialog> {
                         borderRadius: BorderRadius.circular(14),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Cancel"),
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('Cancel'.tr()),
                   ),
                 ),
               ],

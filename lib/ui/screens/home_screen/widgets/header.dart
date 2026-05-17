@@ -1,15 +1,16 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:targetly/core/routing/routs.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/ui/screens/auth_screens/reset_password_screen/confirm_message.dart';
+import 'package:targetly/ui/screens/profile_screen/profile_screen.dart';
 
 class Buildheader extends StatelessWidget {
   const Buildheader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final username = HiveManager.getUsername();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -19,7 +20,7 @@ class Buildheader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Welcome back',
+                'Welcome back'.tr(),
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
               SizedBox(height: 4),
@@ -46,25 +47,36 @@ class Buildheader extends StatelessWidget {
                     icon: Icon(Icons.logout),
                   ),
                   Text(
-                    '$username 👋',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    '${'username'.tr()} 👋',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
               ),
               Text(
-                'real state sales',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
+                'real state sales'.tr(),
+                style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ],
           ),
         ),
-        CircleAvatar(
-          radius: 22,
-          backgroundColor: Color(0xFF5B5F97),
-          child: Icon(Icons.person, color: Colors.white),
+        InkWell(
+          onTap: () {
+            showDialog(context: context, builder: (_) => const ProfileDialog());
+          },
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                colors: [Color(0xFF7F73E6), Color.fromARGB(255, 13, 157, 201)],
+              ),
+            ),
+            child: const Icon(Icons.person, size: 30, color: Colors.white),
+          ),
         ),
       ],
     );

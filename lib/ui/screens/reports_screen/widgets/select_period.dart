@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/date_range.dart';
 import 'package:targetly/ui/shared/boutton.dart';
@@ -44,16 +46,15 @@ class _SelectPeriodState extends State<SelectPeriod> {
 
         /// 🔘 Generate Button
         Sharedboutton(
-          text: 'Generate Report',
+          text: "generate_report_btn".tr(),
           onTap: () {
             if (selectedStart == null || selectedEnd == null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("select a valid date range")),
+                SnackBar(content: Text("select_valid_date_range_error".tr())),
               );
               return;
             }
 
-            /// 🔥 نرجع القيم للأب
             widget.onGenerate(selectedStart!, selectedEnd!);
           },
           borderRadius: 12,

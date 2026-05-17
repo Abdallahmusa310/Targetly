@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/report_card.dart';
@@ -13,10 +15,10 @@ class ReportSummry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (start == null || end == null) {
-      return const Center(
+      return Center(
         child: Text(
-          "Select date range and generate report",
-          style: TextStyle(color: Colors.grey),
+          "select_range_and_generate_report".tr(),
+          style: const TextStyle(color: Colors.grey),
         ),
       );
     }
@@ -29,7 +31,6 @@ class ReportSummry extends StatelessWidget {
         if (targetstate is TargetSuccess) {
           final targetModel = targetstate.target;
 
-          /// 🔥 check لو الرينج داخل فترة التارجت
           final hasTargetRange =
               targetModel?.startDate != null && targetModel?.endDate != null;
 
@@ -60,25 +61,27 @@ class ReportSummry extends StatelessWidget {
             }
 
             final remaining = (target - achieved).clamp(0, double.infinity);
-
             final commissionValue = achieved * (commissionPercent / 100);
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Report Summary',
-                  style: TextStyle(fontSize: 18, color: Color(0xff8F92C2)),
+                Text(
+                  "report_summary_title".tr(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Color(0xff8F92C2),
+                  ),
                 ),
+
                 const SizedBox(height: 20),
 
-                /// 🔥 لو مفيش تارجت في الفترة
                 if (target == 0)
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      "No target in this period",
-                      style: TextStyle(color: Colors.red),
+                      "no_target_in_period".tr(),
+                      style: const TextStyle(color: Colors.red),
                     ),
                   ),
 
@@ -90,27 +93,23 @@ class ReportSummry extends StatelessWidget {
                   crossAxisSpacing: 16,
                   childAspectRatio: 1.4,
                   children: [
-                    /// 👥 Clients
                     Reportcard(
-                      title: 'Clients',
+                      title: "clients_title".tr(),
                       value: totalClients.toString(),
                     ),
 
-                    /// 💰 Remaining
                     Reportcard(
-                      title: 'Remaining',
+                      title: "remaining_title".tr(),
                       value: remaining.toStringAsFixed(0),
                     ),
 
-                    /// 📊 Sales
                     Reportcard(
-                      title: 'Sales',
+                      title: "sales_title".tr(),
                       value: achieved.toStringAsFixed(0),
                     ),
 
-                    /// 💸 Commission
                     Reportcard(
-                      title: 'Commission',
+                      title: "commission_title".tr(),
                       value: commissionValue.toStringAsFixed(0),
                     ),
                   ],

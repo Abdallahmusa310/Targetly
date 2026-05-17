@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
@@ -20,10 +21,14 @@ class BuildRecentActivity extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Recent Activity',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                Text(
+                  'Recent Activity'.tr(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
+
                 TextButton.icon(
                   onPressed: () {
                     context.read<ActivityCubit>().clearActivities();
@@ -33,32 +38,38 @@ class BuildRecentActivity extends StatelessWidget {
                     size: 18,
                     color: Colors.red,
                   ),
-                  label: const Text(
-                    'Clear',
-                    style: TextStyle(color: Colors.red),
+                  label: Text(
+                    'Clear'.tr(),
+                    style: const TextStyle(color: Colors.red),
                   ),
                 ),
               ],
             ),
+
             const SizedBox(height: 12),
+
             BlocBuilder<ActivityCubit, ActivityState>(
               builder: (context, state) {
                 if (state is ActivityLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }
+
                 if (state is ActivitySuccess) {
                   if (state.activities.isEmpty) {
-                    return const Text('No recent activity');
+                    return Text('No recent activity'.tr());
                   }
+
                   return Column(
                     children: state.activities
                         .map((a) => BuildRecentActivityItem(text: a.text))
                         .toList(),
                   );
                 }
+
                 if (state is ActivityFailure) {
-                  return Text('Error: ${state.message}');
+                  return Text('${'Error'.tr()}: ${state.message}');
                 }
+
                 return const SizedBox();
               },
             ),

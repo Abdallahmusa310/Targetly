@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/ui/screens/auth_screens/reset_password_screen/confirm_message.dart';
@@ -8,6 +9,8 @@ import 'package:targetly/ui/screens/clintes_screen/widgets/call_client.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/client_comment_dialog.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/client_details_dialog.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/edit_client_sheet.dart';
+
+import 'package:easy_localization/easy_localization.dart';
 
 class ClinetCard extends StatelessWidget {
   const ClinetCard({super.key, required this.clinetModel});
@@ -38,23 +41,15 @@ class ClinetCard extends StatelessWidget {
           children: [
             SlidableAction(
               onPressed: (context) {
-                showModalBottomSheet(
-                  isScrollControlled: true,
+                showDialog(
                   context: context,
-                  builder: (context) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom,
-                      ),
-                      child: EditClientSheet(client: clinetModel),
-                    );
-                  },
+                  builder: (context) => EditClientdialog(client: clinetModel),
                 );
               },
               backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
               icon: Icons.edit,
-              label: 'Edit',
+              label: 'Edit'.tr(),
             ),
             SlidableAction(
               onPressed: (context) {
@@ -63,9 +58,7 @@ class ClinetCard extends StatelessWidget {
                   builder: (context) => ConfirmMessage(
                     onConfirm: () async {
                       Navigator.pop(context);
-                      BlocProvider.of<ClinetCubit>(
-                        context,
-                      ).deleteClient(clinetModel);
+                      context.read<ClinetCubit>().deleteClient(clinetModel);
                     },
                   ),
                 );
@@ -73,7 +66,7 @@ class ClinetCard extends StatelessWidget {
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               icon: Icons.delete,
-              label: 'Delete',
+              label: 'Delete'.tr(),
             ),
           ],
         ),
@@ -112,7 +105,7 @@ class ClinetCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              clinetModel.clinetid ?? 'No ID',
+                              clinetModel.clinetid ?? 'No ID'.tr(),
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,

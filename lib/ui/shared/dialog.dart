@@ -47,20 +47,29 @@ class _SharedDialogState extends State<SharedDialog>
       child: SlideTransition(
         position: offset,
         child: Dialog(
+          backgroundColor: Colors.white,
+
           insetPadding: const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 24,
           ),
+
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(28),
           ),
-          child: SingleChildScrollView(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(22),
-              child: widget.child,
+
+          child: Container(
+            constraints: const BoxConstraints(maxHeight: 700),
+
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: widget.child,
+              ),
             ),
           ),
         ),

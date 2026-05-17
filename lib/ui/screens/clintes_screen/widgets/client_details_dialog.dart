@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -6,10 +7,7 @@ import 'package:targetly/ui/shared/dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClinetDetailsDialog extends StatelessWidget {
-  const ClinetDetailsDialog({
-    super.key,
-    required this.clinetModel,
-  });
+  const ClinetDetailsDialog({super.key, required this.clinetModel});
 
   final ClinetModel clinetModel;
 
@@ -29,21 +27,15 @@ class ClinetDetailsDialog extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: const Color(0xff9367FA)
-                      .withOpacity(.1),
+                  color: const Color(0xff9367FA).withOpacity(.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(
-                  Icons.person,
-                  color: Color(0xff9367FA),
-                ),
+                child: const Icon(Icons.person, color: Color(0xff9367FA)),
               ),
-
               const SizedBox(width: 12),
-
-              const Text(
-                "Client Details",
-                style: TextStyle(
+              Text(
+                'Client Details'.tr(),
+                style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
@@ -53,26 +45,15 @@ class ClinetDetailsDialog extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          _buildRow("Name", clinetModel.clinetname),
-
-          _buildRow("Phone", clinetModel.clinetphone),
-
+          _buildRow('Name'.tr(), clinetModel.clinetname),
+          _buildRow('Phone'.tr(), clinetModel.clinetphone),
+          _buildRow('ID'.tr(), clinetModel.clinetid ?? '-'),
+          _buildRow('Fees'.tr(), clinetModel.clinetfees ?? '-'),
           _buildRow(
-            "ID",
-            clinetModel.clinetid ?? '-',
-          ),
-
-          _buildRow(
-            "Fees",
-            clinetModel.clinetfees ?? '-',
-          ),
-
-          _buildRow(
-            "Added",
-            DateFormat('dd/M/yyyy').format(
-              clinetModel.createdAt ??
-                  DateTime.now(),
-            ),
+            'Added'.tr(),
+            DateFormat(
+              'dd/M/yyyy',
+            ).format(clinetModel.createdAt ?? DateTime.now()),
           ),
 
           const SizedBox(height: 24),
@@ -83,15 +64,10 @@ class ClinetDetailsDialog extends StatelessWidget {
               Expanded(
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        const Color(0xff9367FA),
-                    padding:
-                        const EdgeInsets.symmetric(
-                      vertical: 14,
-                    ),
+                    backgroundColor: const Color(0xff9367FA),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(14),
                     ),
                   ),
                   onPressed: () async {
@@ -102,13 +78,10 @@ class ClinetDetailsDialog extends StatelessWidget {
 
                     await launchUrl(uri);
                   },
-                  icon: const Icon(
-                    Icons.call,
-                    color: Colors.white,
-                  ),
-                  label: const Text(
-                    "Call",
-                    style: TextStyle(
+                  icon: const Icon(Icons.call, color: Colors.white),
+                  label: Text(
+                    'Call'.tr(),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -122,13 +95,9 @@ class ClinetDetailsDialog extends StatelessWidget {
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
-                    padding:
-                        const EdgeInsets.symmetric(
-                      vertical: 14,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(14),
                     ),
                   ),
                   onPressed: () async {
@@ -139,9 +108,9 @@ class ClinetDetailsDialog extends StatelessWidget {
                     color: Colors.white,
                     size: 18,
                   ),
-                  label: const Text(
-                    "WhatsApp",
-                    style: TextStyle(
+                  label: Text(
+                    'WhatsApp'.tr(),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -157,19 +126,13 @@ class ClinetDetailsDialog extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(
-                  vertical: 14,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(14),
                 ),
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text("Close"),
+              onPressed: () => Navigator.pop(context),
+              child: Text('Close'.tr()),
             ),
           ),
         ],
@@ -177,31 +140,20 @@ class ClinetDetailsDialog extends StatelessWidget {
     );
   }
 
-  static Widget _buildRow(
-    String title,
-    String value,
-  ) {
+  static Widget _buildRow(String title, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             width: 70,
             child: Text(
-              "$title:",
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              '$title:',
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-
-          Expanded(
-            child: Text(value),
-          ),
+          Expanded(child: Text(value)),
         ],
       ),
     );

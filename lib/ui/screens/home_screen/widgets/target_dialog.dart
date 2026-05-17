@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
@@ -65,9 +66,9 @@ class _TargetdialogState extends State<Targetdialog> {
 
                 const SizedBox(width: 12),
 
-                const Expanded(
+                Expanded(
                   child: Text(
-                    "Set Your Target",
+                    "Set Your Target".tr(),
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -81,11 +82,11 @@ class _TargetdialogState extends State<Targetdialog> {
               controller: targetController,
               keyboardType: TextInputType.number,
               obscureText: false,
-              hintText: 'Your target',
+              hintText: "Your target".tr(),
               prefixIcon: const Icon(Icons.attach_money),
               validator: (target) {
                 if (target == null || target.isEmpty) {
-                  return "Enter your target";
+                  return "Enter your target".tr();
                 }
                 return null;
               },
@@ -98,11 +99,11 @@ class _TargetdialogState extends State<Targetdialog> {
               controller: commissionController,
               keyboardType: TextInputType.number,
               obscureText: false,
-              hintText: 'Commission percentage',
+              hintText: "Commission percentage".tr(),
               prefixIcon: const Icon(Icons.percent),
               validator: (commission) {
                 if (commission == null || commission.isEmpty) {
-                  return "Enter your commission";
+                  return "Enter your commission".tr();
                 }
                 return null;
               },
@@ -142,8 +143,8 @@ class _TargetdialogState extends State<Targetdialog> {
 
                       if (startDate == null || endDate == null) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Please select date range"),
+                          SnackBar(
+                            content: Text("Please select date range".tr()),
                           ),
                         );
                         return;
@@ -159,8 +160,8 @@ class _TargetdialogState extends State<Targetdialog> {
 
                       Navigator.pop(context);
                     },
-                    child: const Text(
-                      "Save",
+                    child: Text(
+                      "Save".tr(),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -182,7 +183,7 @@ class _TargetdialogState extends State<Targetdialog> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Cancel"),
+                    child: Text("Cancel".tr()),
                   ),
                 ),
               ],

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,7 @@ class SalesLineChart extends StatelessWidget {
     return BlocBuilder<ClinetCubit, Clientstate>(
       builder: (context, state) {
         if (state is! Clientsucsess) return const SizedBox();
+
         final Map<int, double> salesPerDay = {};
 
         final totalDays = end.difference(start).inDays + 1;
@@ -24,12 +26,15 @@ class SalesLineChart extends StatelessWidget {
 
         for (var client in context.read<ClinetCubit>().allClients) {
           final date = client.createdAt;
+
           if (date == null) continue;
 
           final inRange = !date.isBefore(start) && !date.isAfter(end);
+
           if (!inRange) continue;
 
           final dayIndex = date.difference(start).inDays;
+
           salesPerDay[dayIndex] =
               (salesPerDay[dayIndex] ?? 0) +
               (double.tryParse(client.clinetfees ?? '0') ?? 0);
@@ -50,28 +55,33 @@ class SalesLineChart extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Sales Over Time',
-                  style: TextStyle(
+                Text(
+                  "sales_over_time_title".tr(),
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: Color(0xff8F92C2),
                   ),
                 ),
+
                 const SizedBox(height: 16),
+
                 SizedBox(
                   height: 200,
                   child: LineChart(
                     LineChartData(
                       minY: 0,
                       maxY: maxY == 0 ? 100 : maxY,
+
                       gridData: FlGridData(
                         show: true,
                         drawVerticalLine: false,
                         getDrawingHorizontalLine: (value) =>
                             FlLine(color: Colors.grey.shade200, strokeWidth: 1),
                       ),
+
                       borderData: FlBorderData(show: false),
+
                       titlesData: FlTitlesData(
                         leftTitles: AxisTitles(
                           sideTitles: SideTitles(
@@ -86,6 +96,7 @@ class SalesLineChart extends StatelessWidget {
                             ),
                           ),
                         ),
+
                         bottomTitles: AxisTitles(
                           sideTitles: SideTitles(
                             showTitles: true,
@@ -94,6 +105,7 @@ class SalesLineChart extends StatelessWidget {
                               final date = start.add(
                                 Duration(days: value.toInt()),
                               );
+
                               return Text(
                                 '${date.day}/${date.month}',
                                 style: const TextStyle(
@@ -102,30 +114,37 @@ class SalesLineChart extends StatelessWidget {
                                 ),
                               );
                             },
+
                             interval: totalDays <= 7
                                 ? 1
                                 : (totalDays / 7).ceilToDouble(),
                           ),
                         ),
+
                         rightTitles: const AxisTitles(
                           sideTitles: SideTitles(showTitles: false),
                         ),
+
                         topTitles: const AxisTitles(
                           sideTitles: SideTitles(showTitles: false),
                         ),
                       ),
+
                       lineBarsData: [
                         LineChartBarData(
                           spots: spots,
                           isCurved: true,
+
                           gradient: const LinearGradient(
                             colors: [
                               Color(0xFF7F73E6),
                               Color.fromARGB(255, 13, 157, 201),
                             ],
                           ),
+
                           barWidth: 3,
                           isStrokeCapRound: true,
+
                           dotData: FlDotData(
                             show: true,
                             getDotPainter: (spot, percent, bar, index) =>
@@ -136,13 +155,16 @@ class SalesLineChart extends StatelessWidget {
                                   strokeColor: const Color(0xFF7F73E6),
                                 ),
                           ),
+
                           belowBarData: BarAreaData(
                             show: true,
                             gradient: LinearGradient(
                               colors: [
                                 const Color(0xFF7F73E6).withOpacity(0.3),
+
                                 const Color(0xFF7F73E6).withOpacity(0.0),
                               ],
+
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                             ),

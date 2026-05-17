@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
@@ -19,11 +20,15 @@ class StatList extends StatelessWidget {
 
         if (state is TargetSuccess) {
           final target = state.target;
+
           commissionPercent = target?.commission ?? 0;
+
           final start = target?.startDate;
           final end = target?.endDate;
+
           if (start != null && end != null) {
             final stats = clientCubit.getStatsInRange(start, end);
+
             totalFees = stats.achieved;
             totalClients = stats.totalClients;
           } else {
@@ -38,16 +43,18 @@ class StatList extends StatelessWidget {
           children: [
             Expanded(
               child: BuildStatCard(
-                title: 'Commission',
+                title: 'Commission'.tr(),
                 value: commissionValue.toStringAsFixed(0),
                 icon: const Icon(Icons.monetization_on, color: Colors.white),
                 color: const Color(0xFF5B5F97),
               ),
             ),
+
             const SizedBox(width: 16),
+
             Expanded(
               child: BuildStatCard(
-                title: 'Clients',
+                title: 'Clients'.tr(),
                 value: totalClients.toString(),
                 icon: const Icon(Icons.people, color: Colors.white),
                 color: const Color.fromARGB(255, 13, 157, 201),

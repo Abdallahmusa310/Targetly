@@ -2,26 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
-import 'package:targetly/ui/shared/boutton.dart';
+import 'package:targetly/ui/shared/dialog.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 
-class EditClientSheet extends StatefulWidget {
-  const EditClientSheet({super.key, required this.client});
+class EditClientdialog extends StatefulWidget {
+  const EditClientdialog({super.key, required this.client});
   final ClinetModel client;
 
   @override
-  State<EditClientSheet> createState() => _EditClientSheetState();
+  State<EditClientdialog> createState() => _EditClientdialogState();
 }
 
-class _EditClientSheetState extends State<EditClientSheet> {
-  TextEditingController? nameController,
-      phoneController,
-      feesController,
-      idController;
+class _EditClientdialogState extends State<EditClientdialog> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  late TextEditingController nameController;
+  late TextEditingController phoneController;
+  late TextEditingController feesController;
+  late TextEditingController idController;
+
   @override
   void initState() {
     super.initState();
+
     nameController = TextEditingController(text: widget.client.clinetname);
     phoneController = TextEditingController(text: widget.client.clinetphone);
     feesController = TextEditingController(text: widget.client.clinetfees);
@@ -30,106 +33,137 @@ class _EditClientSheetState extends State<EditClientSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 15),
-              CloseButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(height: 15),
+    return SharedDialog(
+      child: Form(
+        key: formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            /// HEADER
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff9367FA).withOpacity(.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(Icons.edit, color: Color(0xff9367FA)),
+                ),
+                const SizedBox(width: 12),
+                const Text(
+                  'Edit Client',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
 
-              /// 👤 Name
-              SharedTextFeild(
-                controller: nameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Enter client name";
-                  }
-                  return null;
-                },
-                obscureText: false,
-                hintText: 'Client Name',
-                prefixIcon: const Icon(Icons.person),
-              ),
+            const SizedBox(height: 24),
 
-              const SizedBox(height: 16),
+            /// NAME
+            SharedTextFeild(
+              obscureText: false,
+              controller: nameController,
+              hintText: 'Client Name',
+              prefixIcon: const Icon(Icons.person),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Enter client name";
+                }
+                return null;
+              },
+            ),
 
-              /// 📞 Phone
-              SharedTextFeild(
-                controller: phoneController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter client phone';
-                  }
-                  return null;
-                },
+            const SizedBox(height: 16),
 
-                obscureText: false,
-                hintText: 'Client phone',
-                prefixIcon: const Icon(Icons.phone),
-              ),
+            /// PHONE
+            SharedTextFeild(
+              obscureText: false,
+              controller: phoneController,
+              hintText: 'Client Phone',
+              prefixIcon: const Icon(Icons.phone),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Enter client phone";
+                }
+                return null;
+              },
+            ),
 
-              const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-              /// 🆔 ID
-              SharedTextFeild(
-                controller: idController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter client id';
-                  }
-                  return null;
-                },
+            /// ID
+            SharedTextFeild(
+              obscureText: false,
+              controller: idController,
+              hintText: 'Client ID',
+              prefixIcon: const Icon(Icons.badge),
+            ),
 
-                obscureText: false,
-                hintText: 'Client id',
-                prefixIcon: const Icon(Icons.key),
-              ),
+            const SizedBox(height: 16),
 
-              const SizedBox(height: 16),
+            /// FEES
+            SharedTextFeild(
+              obscureText: false,
+              controller: feesController,
+              hintText: 'Client Fees',
+              prefixIcon: const Icon(Icons.attach_money),
+            ),
 
-              /// 💰 Fees
-              SharedTextFeild(
-                controller: feesController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Enter client fees";
-                  }
-                  return null;
-                },
+            const SizedBox(height: 28),
 
-                obscureText: false,
-                hintText: 'Client fees',
-                prefixIcon: const Icon(Icons.money),
-              ),
+            /// BUTTONS
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff9367FA),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        widget.client.clinetname = nameController.text.trim();
+                        widget.client.clinetphone = phoneController.text.trim();
+                        widget.client.clinetfees = feesController.text.trim();
+                        widget.client.clinetid = idController.text.trim();
 
-              const SizedBox(height: 20),
+                        widget.client.save();
 
-              /// 🔘 Button
-              Sharedboutton(
-                text: 'Save',
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    widget.client.clinetname = nameController!.text;
-                    widget.client.clinetphone = phoneController!.text;
-                    widget.client.clinetfees = feesController!.text;
-                    widget.client.clinetid = idController!.text;
-                    widget.client.save();
+                        context.read<ClinetCubit>().fetchClients();
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
 
-                    BlocProvider.of<ClinetCubit>(context).fetchClients();
-                  }
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
+                const SizedBox(width: 12),
+
+                Expanded(
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Cancel'),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -137,10 +171,10 @@ class _EditClientSheetState extends State<EditClientSheet> {
 
   @override
   void dispose() {
-    nameController?.dispose();
-    phoneController?.dispose();
-    idController?.dispose();
-    feesController?.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    feesController.dispose();
+    idController.dispose();
     super.dispose();
   }
 }

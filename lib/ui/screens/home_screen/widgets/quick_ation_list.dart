@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
@@ -14,7 +15,7 @@ class QuickAtionList extends StatelessWidget {
     return SizedBox(
       height: 80,
       child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
@@ -25,11 +26,11 @@ class QuickAtionList extends StatelessWidget {
                   builder: (context) => const Clientdialog(),
                 );
               },
-
-              textcard: 'Add client',
-              iconcard: Icon(Icons.person_add_alt_1, color: Colors.white),
-              iconcolor: Color(0xFF5B5F97),
+              textcard: 'Add client'.tr(),
+              iconcard: const Icon(Icons.person_add_alt_1, color: Colors.white),
+              iconcolor: const Color(0xFF5B5F97),
             ),
+
             QuickActionCard(
               ontap: () {
                 final targetState = context.read<TargetCubit>().state;
@@ -49,10 +50,11 @@ class QuickAtionList extends StatelessWidget {
                   );
                 }
               },
-              textcard: 'View report',
-              iconcard: Icon(Icons.assessment, color: Colors.white),
-              iconcolor: Color.fromARGB(255, 13, 157, 201),
+              textcard: 'View report'.tr(),
+              iconcard: const Icon(Icons.assessment, color: Colors.white),
+              iconcolor: const Color.fromARGB(255, 13, 157, 201),
             ),
+
             QuickActionCard(
               ontap: () {
                 showDialog(
@@ -60,9 +62,9 @@ class QuickAtionList extends StatelessWidget {
                   builder: (context) => const Targetdialog(),
                 );
               },
-              textcard: 'update target',
-              iconcard: Icon(Icons.arrow_circle_up, color: Colors.white),
-              iconcolor: Color(0xFF5B5F97),
+              textcard: 'Update target'.tr(),
+              iconcard: const Icon(Icons.arrow_circle_up, color: Colors.white),
+              iconcolor: const Color(0xFF5B5F97),
             ),
           ],
         ),
@@ -70,5 +72,3 @@ class QuickAtionList extends StatelessWidget {
     );
   }
 }
-
-// abali2792004@gmail.com

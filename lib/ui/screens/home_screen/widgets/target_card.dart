@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
@@ -22,6 +23,7 @@ class BuildTargetCard extends StatelessWidget {
           final end = targetModel?.endDate;
 
           final now = DateTime.now();
+
           final isActiveRange =
               start != null &&
               end != null &&
@@ -41,6 +43,7 @@ class BuildTargetCard extends StatelessWidget {
                       start,
                       end,
                     );
+
                     achieved = stats.achieved;
                   } else {
                     achieved = 0;
@@ -61,6 +64,7 @@ class BuildTargetCard extends StatelessWidget {
                   : (achieved / target).clamp(0, 1);
 
               final percentage = progress * 100;
+
               return Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -75,21 +79,24 @@ class BuildTargetCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Monthly Target',
-                      style: TextStyle(color: Colors.white70),
+                    Text(
+                      'Monthly Target'.tr(),
+                      style: const TextStyle(color: Colors.white70),
                     ),
+
                     const SizedBox(height: 8),
 
                     Text(
-                      '${achieved.toStringAsFixed(0)} / ${target.toStringAsFixed(0)} EGP / Month',
+                      '${achieved.toStringAsFixed(0)} / ${target.toStringAsFixed(0)} ${'EGP / Month'.tr()}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                     const SizedBox(height: 16),
+
                     TweenAnimationBuilder<double>(
                       tween: Tween(begin: 0, end: progress.toDouble()),
                       duration: const Duration(milliseconds: 1200),
@@ -108,6 +115,7 @@ class BuildTargetCard extends StatelessWidget {
                         );
                       },
                     ),
+
                     const SizedBox(height: 8),
 
                     Row(
@@ -117,25 +125,28 @@ class BuildTargetCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Remaining: ${remaining.toStringAsFixed(0)}',
+                              '${'Remaining:'.tr()} ${remaining.toStringAsFixed(0)}',
                               style: const TextStyle(color: Colors.white),
                             ),
+
                             if (start != null && end != null)
                               Text(
-                                'Period: ${start.day}/${start.month} - ${end.day}/${end.month}',
+                                '${'Period:'.tr()} ${start.day}/${start.month} - ${end.day}/${end.month}',
                                 style: const TextStyle(color: Colors.white),
                               ),
                           ],
                         ),
+
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              'Achieved: ${percentage.toStringAsFixed(1)}%',
+                              '${'Achieved:'.tr()} ${percentage.toStringAsFixed(1)}%',
                               style: const TextStyle(color: Colors.white),
                             ),
+
                             Text(
-                              'Commission: ${targetModel?.commission ?? 0}%',
+                              '${'Commission:'.tr()} ${targetModel?.commission ?? 0}%',
                               style: const TextStyle(color: Colors.white),
                             ),
                           ],
@@ -144,11 +155,11 @@ class BuildTargetCard extends StatelessWidget {
                     ),
 
                     if (start != null && end != null && !isActiveRange)
-                      const Padding(
-                        padding: EdgeInsets.only(top: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
                         child: Text(
-                          'Target period ended',
-                          style: TextStyle(
+                          'Target period ended'.tr(),
+                          style: const TextStyle(
                             color: Colors.redAccent,
                             fontSize: 12,
                           ),
@@ -161,7 +172,7 @@ class BuildTargetCard extends StatelessWidget {
           );
         }
 
-        return const Text('No Target');
+        return Text('No Target'.tr());
       },
     );
   }

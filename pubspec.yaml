@@ -54,6 +54,8 @@ dependencies:
   bloc: ^9.2.0
   meta: ^1.16.0
   fl_chart: ^0.68.0
+  flutter_localization: ^0.3.3
+  easy_localization: ^3.0.8
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +77,8 @@ flutter:
      - assets/Mission.json
      - assets/targetlyicon.png
      - assets/targetlyicon2.png
+     - assets/translations/
+
 
 
       

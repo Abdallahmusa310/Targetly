@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/client_dialog.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clients_list.dart';
@@ -26,23 +28,22 @@ class _ClientsScreenState extends State<ClientsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Clients',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          'Clients'.tr(),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             SharedTextFeild(
               obscureText: false,
-              hintText: 'Search by id or phone,name...',
+              hintText: 'Search by id or phone,name...'.tr(),
               prefixIcon: const Icon(Icons.search),
               onChanged: (value) {
-                BlocProvider.of<ClinetCubit>(context).searchClients(value);
+                context.read<ClinetCubit>().searchClients(value);
               },
             ),
 
@@ -54,21 +55,17 @@ class _ClientsScreenState extends State<ClientsScreen> {
               child: Row(
                 children: [
                   _buildFilterChip(
-                    title: "All Clients",
+                    title: 'All Clients'.tr(),
                     filter: ClientFilter.all,
                   ),
-
                   const SizedBox(width: 10),
-
                   _buildFilterChip(
-                    title: "Subscribed",
+                    title: 'Subscribed'.tr(),
                     filter: ClientFilter.subscribed,
                   ),
-
                   const SizedBox(width: 10),
-
                   _buildFilterChip(
-                    title: "Unsubscribed",
+                    title: 'Unsubscribed'.tr(),
                     filter: ClientFilter.unsubscribed,
                   ),
                 ],
@@ -83,7 +80,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
       ),
 
       floatingActionButton: Sharedboutton(
-        text: 'Add client',
+        text: 'Add client'.tr(),
         onTap: () {
           showDialog(
             context: context,
