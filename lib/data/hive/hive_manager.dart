@@ -56,6 +56,9 @@ class HiveManager {
     }
   }
 
+  static void saveJobTitle(String title) => user.put('jobtitle', title);
+  static String getJobTitle() => user.get('jobtitle') ?? 'Sales Manager';
+
   static Box<ClinetModel> get clients => Hive.box<ClinetModel>(_clientsBoxName);
 
   static Box<TargetModel> get settingsbox =>

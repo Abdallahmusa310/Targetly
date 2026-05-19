@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
-import 'package:targetly/ui/screens/auth_screens/reset_password_screen/confirm_message.dart';
+import 'package:targetly/ui/shared/confirm_message.dart';
 
 class ClientCommentdialog extends StatefulWidget {
   const ClientCommentdialog({super.key, required this.client});

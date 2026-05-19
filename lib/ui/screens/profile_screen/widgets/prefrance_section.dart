@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:targetly/core/routing/routs.dart';
 import 'package:targetly/ui/screens/profile_screen/widgets/build_tile.dart';
 
 class PrefranceSection extends StatelessWidget {
@@ -7,6 +8,8 @@ class PrefranceSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLocale = context.locale;
+
     return Column(
       children: [
         BuildTile(
@@ -15,7 +18,6 @@ class PrefranceSection extends StatelessWidget {
           subtitle: "Coming soon".tr(),
           onTap: () {},
         ),
-
         BuildTile(
           icon: Icons.language,
           title: "Language".tr(),
@@ -26,7 +28,7 @@ class PrefranceSection extends StatelessWidget {
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
-              builder: (_) {
+              builder: (sheetContext) {
                 return Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -34,38 +36,54 @@ class PrefranceSection extends StatelessWidget {
                     children: [
                       Text(
                         "Choose Language".tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
                       const SizedBox(height: 20),
-
                       ListTile(
                         leading: const Text(
                           "🇺🇸",
                           style: TextStyle(fontSize: 24),
                         ),
                         title: const Text("English"),
-                        onTap: () {
-                          context.setLocale(const Locale('en'));
-                          Navigator.pop(context);
+                        trailing: currentLocale == const Locale('en')
+                            ? const Icon(Icons.check, color: Color(0xFF7F73E6))
+                            : null,
+                        onTap: () async {
+                          await context.setLocale(const Locale('en'));
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              AppRoutes.navigationScreen,
+                              (route) => false,
+                            );
+                          }
                         },
                       ),
-
                       ListTile(
                         leading: const Text(
                           "🇪🇬",
                           style: TextStyle(fontSize: 24),
                         ),
                         title: const Text("العربية"),
-                        onTap: () {
-                          context.setLocale(const Locale('ar'));
-                          Navigator.pop(context);
+                        trailing: currentLocale == const Locale('ar')
+                            ? const Icon(Icons.check, color: Color(0xFF7F73E6))
+                            : null,
+                        onTap: () async {
+                          await context.setLocale(const Locale('ar'));
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              AppRoutes.navigationScreen,
+                              (route) => false,
+                            );
+                          }
                         },
                       ),
-
                       const SizedBox(height: 10),
                     ],
                   ),
@@ -74,15 +92,12 @@ class PrefranceSection extends StatelessWidget {
             );
           },
         ),
-
         BuildTile(
           icon: Icons.delete_forever,
           title: "Clear Data".tr(),
-          subtitle: "Remove cached app data".tr(),
+          subtitle: "Coming soon".tr(),
           iconColor: Colors.orange,
-          onTap: () async {
-            /// امسح البيانات المحلية هنا
-          },
+          onTap: () async {},
         ),
       ],
     );

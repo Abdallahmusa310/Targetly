@@ -1,0 +1,80 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:targetly/data/hive/hive_manager.dart';
+
+class EditProfileDialog extends StatelessWidget {
+  final String currentUsername;
+  final String currentJobTitle;
+  final VoidCallback? onSaved;
+
+  EditProfileDialog({
+    super.key,
+    required this.currentUsername,
+    required this.currentJobTitle,
+    this.onSaved,
+  });
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController jobController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    nameController.text = currentUsername;
+    jobController.text = currentJobTitle;
+
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      title: Text('edit_profile'.tr()),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: nameController,
+            decoration: InputDecoration(
+              labelText: 'Name'.tr(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: jobController,
+            decoration: InputDecoration(
+              labelText: 'job_title'.tr(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('cancel'.tr()),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            HiveManager.saveUsername(nameController.text.trim());
+            HiveManager.saveJobTitle(jobController.text.trim());
+
+            Navigator.pop(context);
+
+            if (onSaved != null) {
+              onSaved!();
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF7F73E6),
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: Text('save'.tr()),
+        ),
+      ],
+    );
+  }
+}

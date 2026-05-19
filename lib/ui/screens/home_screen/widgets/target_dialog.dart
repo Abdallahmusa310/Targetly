@@ -180,9 +180,9 @@ class _TargetdialogState extends State<Targetdialog> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+
+                    onPressed: () => Navigator.pop(context),
+
                     child: Text("Cancel".tr()),
                   ),
                 ),

@@ -13,7 +13,7 @@ class ProfileDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SharedDialog(
-      child: Container(
+      child: ConstrainedBox(
         constraints: const BoxConstraints(maxHeight: 700),
         child: SingleChildScrollView(
           child: Column(
@@ -38,7 +38,7 @@ class ProfileDialog extends StatelessWidget {
 
               const SizedBox(height: 14),
 
-              AccounntSction(),
+              AccountSection(),
 
               const SizedBox(height: 14),
 
@@ -88,7 +88,7 @@ class ProfileDialog extends StatelessWidget {
 
   Widget _sectionTitle(String title) {
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: AlignmentDirectional.centerStart,
       child: Text(
         title,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

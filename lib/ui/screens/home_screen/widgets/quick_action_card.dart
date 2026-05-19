@@ -19,27 +19,34 @@ class QuickActionCard extends StatelessWidget {
     return SizedBox(
       width: 260,
       child: InkWell(
+        borderRadius: BorderRadius.circular(16),
         onTap: ontap,
-        child: AnimatedScale(
-          scale: 1,
-          duration: const Duration(milliseconds: 350),
-          child: Card(
-            elevation: 4,
+        child: Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: iconcolor,
-                    child: IconButton(onPressed: ontap, icon: iconcard),
-                  ),
+                CircleAvatar(
+                  radius: 22,
+                  backgroundColor: iconcolor,
+                  child: IconButton(onPressed: ontap, icon: iconcard),
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(textcard),
+                const SizedBox(width: 14),
+
+                Expanded(
+                  child: Text(
+                    textcard,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ],
             ),

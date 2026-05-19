@@ -99,5 +99,11 @@
   "Enter your target": "أدخل الهدف",
   "Enter your commission": "أدخل نسبة العمولة",
   "Please select date range": "يرجى اختيار نطاق التاريخ",
-  "Save": "حفظ"
+  "Save": "حفظ",
+  "target_updated_msg": "تم تحديث الهدف إلى {}",
+  "new_client_msg": "عميل جديد: {}",
+  "edit_profile": "تعديل الملف الشخصي",
+  "job_title": "المسمى الوظيفي",
+  "Are you sure?": "هل أنت متأكد؟",
+  "Confirm": "تأكيد"
 }

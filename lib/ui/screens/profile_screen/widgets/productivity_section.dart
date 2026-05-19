@@ -15,8 +15,6 @@ class ProductivitySection extends StatelessWidget {
           title: "Set Target".tr(),
           subtitle: "Update your target".tr(),
           onTap: () {
-            Navigator.pop(context);
-
             showDialog(context: context, builder: (_) => const Targetdialog());
           },
         ),

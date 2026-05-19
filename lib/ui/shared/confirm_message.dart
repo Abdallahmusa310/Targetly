@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmMessage extends StatelessWidget {
@@ -8,12 +9,12 @@ class ConfirmMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Confirm"),
-      content: const Text("Are you sure?"),
+      title: Text("Confirm".tr()),
+      content: Text("Are you sure?".tr()),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel"),
+          child: Text("Cancel".tr()),
         ),
         TextButton(
           onPressed: () async {
@@ -21,7 +22,7 @@ class ConfirmMessage extends StatelessWidget {
               await onConfirm!();
             }
           },
-          child: const Text("Confirm", style: TextStyle(color: Colors.red)),
+          child: Text("Confirm".tr(), style: TextStyle(color: Colors.red)),
         ),
       ],
     );

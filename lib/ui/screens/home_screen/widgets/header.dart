@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:targetly/core/routing/routs.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
-import 'package:targetly/ui/screens/auth_screens/reset_password_screen/confirm_message.dart';
+import 'package:targetly/ui/shared/confirm_message.dart';
 import 'package:targetly/ui/screens/profile_screen/profile_screen.dart';
 
 class Buildheader extends StatelessWidget {
@@ -11,6 +11,8 @@ class Buildheader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final username = HiveManager.getUsername();
+    final jobTitle = HiveManager.getJobTitle();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -47,7 +49,7 @@ class Buildheader extends StatelessWidget {
                     icon: Icon(Icons.logout),
                   ),
                   Text(
-                    '${'username'.tr()} 👋',
+                    username.isNotEmpty ? username : '${'username'.tr()} 👋',
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -56,7 +58,7 @@ class Buildheader extends StatelessWidget {
                 ],
               ),
               Text(
-                'real state sales'.tr(),
+                jobTitle.isNotEmpty ? jobTitle : 'job_title'.tr(),
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ],

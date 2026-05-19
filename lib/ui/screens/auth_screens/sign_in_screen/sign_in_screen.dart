@@ -64,10 +64,6 @@ class _SignInScreenState extends State<SignInScreen> {
                               if (!context.mounted) return;
                               if (user != null) {
                                 await HiveManager.openUserBoxes();
-                                HiveManager.saveUsername(
-                                  user.displayName ??
-                                      emailController.text.trim().split('@')[0],
-                                );
 
                                 Navigator.pushReplacementNamed(
                                   context,

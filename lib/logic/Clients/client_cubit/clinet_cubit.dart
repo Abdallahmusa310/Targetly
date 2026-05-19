@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:meta/meta.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/data/models/activity_model.dart';
@@ -47,7 +46,7 @@ class ClinetCubit extends Cubit<Clientstate> {
       await HiveManager.clients.add(newClient);
 
       await HiveManager.activitybox.add(
-        ActivityModel(text: "New client: {}".tr(), date: DateTime.now()),
+        ActivityModel(text: "New client:$name", date: DateTime.now()),
       );
       await fetchClients();
 

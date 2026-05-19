@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:meta/meta.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/data/models/activity_model.dart';
@@ -59,7 +58,7 @@ class TargetCubit extends Cubit<TargetState> {
         targetModel = existing;
         await HiveManager.activitybox.add(
           ActivityModel(
-            text: "Target updated to {}".tr(),
+            text: "target_updated:$target", // ← حفظ key مع القيمة
             date: DateTime.now(),
           ),
         );

@@ -101,5 +101,11 @@
   "Please select date range": "Please select date range",
   "Save": "Save",
   "New client": "New client",
-  "Target updated to": "Target updated to"
+  "Target updated to": "Target updated to",
+  "target_updated_msg": "Target updated to {}",
+  "new_client_msg": "New client: {}",
+  "edit_profile": "Edit Profile",
+  "job_title": "Job Title",
+  "Are you sure?": "Are you sure?",
+  "Confirm": "تأكيد"
 }

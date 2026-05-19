@@ -1,11 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 
 class BuildTargetCard extends StatelessWidget {
   const BuildTargetCard({super.key});
+
+  String formatNumber(num number) {
+    return NumberFormat.decimalPattern(Intl.getCurrentLocale()).format(number);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +92,7 @@ class BuildTargetCard extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     Text(
-                      '${achieved.toStringAsFixed(0)} / ${target.toStringAsFixed(0)} ${'EGP / Month'.tr()}',
+                      '${formatNumber(achieved.toStringAsFixed(0) == achieved ? achieved.toInt() : achieved)} / ${formatNumber(target)} ${'EGP / Month'.tr()}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 22,
@@ -125,13 +130,16 @@ class BuildTargetCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${'Remaining:'.tr()} ${remaining.toStringAsFixed(0)}',
+                              '${'Remaining:'.tr()} ${formatNumber(remaining)}',
                               style: const TextStyle(color: Colors.white),
                             ),
 
                             if (start != null && end != null)
                               Text(
-                                '${'Period:'.tr()} ${start.day}/${start.month} - ${end.day}/${end.month}',
+                                '${'Period:'.tr()} '
+                                '${DateFormat.yMd(context.locale.languageCode).format(start)}'
+                                ' - '
+                                '${DateFormat.yMd(context.locale.languageCode).format(end)}',
                                 style: const TextStyle(color: Colors.white),
                               ),
                           ],
@@ -141,12 +149,12 @@ class BuildTargetCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              '${'Achieved:'.tr()} ${percentage.toStringAsFixed(1)}%',
+                              '${'Achieved:'.tr()} ${formatNumber(double.parse(percentage.toStringAsFixed(1)))}%',
                               style: const TextStyle(color: Colors.white),
                             ),
 
                             Text(
-                              '${'Commission:'.tr()} ${targetModel?.commission ?? 0}%',
+                              '${'Commission:'.tr()} ${formatNumber(targetModel?.commission ?? 0)}%',
                               style: const TextStyle(color: Colors.white),
                             ),
                           ],

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:targetly/core/routing/app_router.dart';
 import 'package:targetly/core/routing/routs.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
@@ -41,7 +42,13 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
+
         locale: context.locale,
+        theme: ThemeData(
+          textTheme: context.locale == const Locale('ar')
+              ? GoogleFonts.cairoTextTheme()
+              : GoogleFonts.poppinsTextTheme(),
+        ),
         initialRoute: AppRoutes.splashScreen,
         onGenerateRoute: AppRouter().ongenerateRoute,
       ),
