@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
+import 'package:targetly/ui/shared/formate_numpers.dart';
 
 class BuildTargetCard extends StatelessWidget {
   const BuildTargetCard({super.key});
@@ -92,7 +93,7 @@ class BuildTargetCard extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     Text(
-                      '${formatNumber(achieved.toStringAsFixed(0) == achieved ? achieved.toInt() : achieved)} / ${formatNumber(target)} ${'EGP / Month'.tr()}',
+                      '${achieved.toLocalizedString(context)} / ${target.toLocalizedString(context)} ${'EGP / Month'.tr()}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 22,
@@ -130,7 +131,7 @@ class BuildTargetCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${'Remaining:'.tr()} ${formatNumber(remaining)}',
+                              '${'Remaining:'.tr()} ${remaining.toLocalizedString(context)}',
                               style: const TextStyle(color: Colors.white),
                             ),
 
@@ -149,12 +150,12 @@ class BuildTargetCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              '${'Achieved:'.tr()} ${formatNumber(double.parse(percentage.toStringAsFixed(1)))}%',
+                              '${'Achieved:'.tr()} ${percentage.toLocalizedString(context)}%',
                               style: const TextStyle(color: Colors.white),
                             ),
 
                             Text(
-                              '${'Commission:'.tr()} ${formatNumber(targetModel?.commission ?? 0)}%',
+                              '${'Commission:'.tr()} ${targetModel?.commission.toLocalizedString(context) ?? 0}%',
                               style: const TextStyle(color: Colors.white),
                             ),
                           ],

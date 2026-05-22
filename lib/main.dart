@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,7 @@ import 'package:targetly/firebase_options.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:targetly/logic/thems/cubit/thems_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,20 +38,33 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ClinetCubit()),
         BlocProvider(create: (context) => TargetCubit()),
         BlocProvider(create: (context) => ActivityCubit()),
+        BlocProvider(create: (context) => ThemsCubit()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
+      child: BlocBuilder<ThemsCubit, ThemsState>(
+        builder: (context, themeState) {
+          final themeMode = context.read<ThemsCubit>().currentTheme;
+          final isArabic = context.locale == const Locale('ar');
 
-        locale: context.locale,
-        theme: ThemeData(
-          textTheme: context.locale == const Locale('ar')
-              ? GoogleFonts.cairoTextTheme()
-              : GoogleFonts.poppinsTextTheme(),
-        ),
-        initialRoute: AppRoutes.splashScreen,
-        onGenerateRoute: AppRouter().ongenerateRoute,
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            themeMode: themeMode,
+            theme: ThemeData.light().copyWith(
+              textTheme: isArabic
+                  ? GoogleFonts.cairoTextTheme()
+                  : GoogleFonts.poppinsTextTheme(),
+            ),
+            darkTheme: ThemeData.dark().copyWith(
+              textTheme: isArabic
+                  ? GoogleFonts.cairoTextTheme(ThemeData.dark().textTheme)
+                  : GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+            ),
+            initialRoute: AppRoutes.splashScreen,
+            onGenerateRoute: AppRouter().ongenerateRoute,
+          );
+        },
       ),
     );
   }

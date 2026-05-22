@@ -8,6 +8,7 @@ class BuildTile extends StatelessWidget {
     required this.subtitle,
     required this.onTap,
     this.iconColor,
+    this.trailing, // ✅ جديد
   });
 
   final IconData icon;
@@ -15,6 +16,7 @@ class BuildTile extends StatelessWidget {
   final String subtitle;
   final VoidCallback onTap;
   final Color? iconColor;
+  final Widget? trailing; // ✅ جديد
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +60,7 @@ class BuildTile extends StatelessWidget {
                           fontSize: 15,
                         ),
                       ),
-
                       const SizedBox(height: 4),
-
                       Text(
                         subtitle,
                         style: TextStyle(
@@ -72,7 +72,8 @@ class BuildTile extends StatelessWidget {
                   ),
                 ),
 
-                const Icon(Icons.arrow_forward_ios, size: 16),
+                // ✅ لو في trailing يعرضه، لو لأ يعرض السهم
+                trailing ?? const Icon(Icons.arrow_forward_ios, size: 16),
               ],
             ),
           ),

@@ -107,5 +107,10 @@
   "edit_profile": "Edit Profile",
   "job_title": "Job Title",
   "Are you sure?": "Are you sure?",
-  "Confirm": "تأكيد"
+  "Confirm": "Confirm",
+  "clients_in_period": "Clients in period",
+  "no clients in period": "No clients in this period",
+  "reset period": "Reset Period",
+  "reset period_confirm": "This will clear the target and progress. Are you sure?",
+  "reset": "Reset"
 }

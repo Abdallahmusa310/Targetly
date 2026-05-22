@@ -2,12 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
 
-class EditProfileDialog extends StatelessWidget {
+class ProfileDialog extends StatelessWidget {
   final String currentUsername;
   final String currentJobTitle;
   final VoidCallback? onSaved;
 
-  EditProfileDialog({
+  ProfileDialog({
     super.key,
     required this.currentUsername,
     required this.currentJobTitle,
@@ -56,8 +56,10 @@ class EditProfileDialog extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            HiveManager.saveUsername(nameController.text.trim());
-            HiveManager.saveJobTitle(jobController.text.trim());
+            HiveManager.saveUser(
+              username: nameController.text.trim(),
+              jobTitle: jobController.text.trim(),
+            );
 
             Navigator.pop(context);
 

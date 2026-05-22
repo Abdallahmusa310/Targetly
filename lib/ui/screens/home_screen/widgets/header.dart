@@ -6,9 +6,14 @@ import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/ui/shared/confirm_message.dart';
 import 'package:targetly/ui/screens/profile_screen/profile_screen.dart';
 
-class Buildheader extends StatelessWidget {
+class Buildheader extends StatefulWidget {
   const Buildheader({super.key});
 
+  @override
+  State<Buildheader> createState() => _BuildheaderState();
+}
+
+class _BuildheaderState extends State<Buildheader> {
   @override
   Widget build(BuildContext context) {
     final username = HiveManager.getUsername();
@@ -49,7 +54,7 @@ class Buildheader extends StatelessWidget {
                     icon: Icon(Icons.logout),
                   ),
                   Text(
-                    username.isNotEmpty ? username : '${'username'.tr()} 👋',
+                    username,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -58,7 +63,7 @@ class Buildheader extends StatelessWidget {
                 ],
               ),
               Text(
-                jobTitle.isNotEmpty ? jobTitle : 'job_title'.tr(),
+                jobTitle,
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ],
@@ -67,6 +72,7 @@ class Buildheader extends StatelessWidget {
         InkWell(
           onTap: () {
             showDialog(context: context, builder: (_) => const ProfileDialog());
+            setState(() {});
           },
           child: Container(
             width: 50,

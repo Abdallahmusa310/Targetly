@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/build_today_summary_item.dart';
+import 'package:targetly/ui/shared/formate_numpers.dart';
 
 class BuildTodaySummary extends StatelessWidget {
   const BuildTodaySummary({super.key});
@@ -32,7 +33,8 @@ class BuildTodaySummary extends StatelessWidget {
 
               BuildTodaySummaryItem(
                 icon: Icons.people,
-                text: '${'New clients'.tr()}: ${stats.totalClients}',
+                text:
+                    '${'New clients'.tr()}: ${stats.totalClients.toLocalizedString(context)}',
               ),
 
               const SizedBox(height: 6),
@@ -40,7 +42,7 @@ class BuildTodaySummary extends StatelessWidget {
               BuildTodaySummaryItem(
                 icon: Icons.monetization_on,
                 text:
-                    '${'Sales today'.tr()}: ${stats.achieved.toStringAsFixed(0)}',
+                    '${'Sales today'.tr()}: ${stats.achieved.toLocalizedString(context)}',
               ),
             ],
           ),

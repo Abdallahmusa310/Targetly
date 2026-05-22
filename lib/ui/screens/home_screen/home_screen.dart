@@ -5,6 +5,7 @@ import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/header.dart';
+import 'package:targetly/ui/screens/home_screen/widgets/home_grid.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/quick_ation_list.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/recent_activity.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/stat_list.dart';
@@ -76,13 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Staggeredwidget(
                     index: 2,
                     animate: hasanimated,
-                    child: StatList(),
-                  ),
-                  SizedBox(height: 16),
-                  Staggeredwidget(
-                    index: 3,
-                    animate: hasanimated,
-                    child: QuickAtionList(),
+                    child: HomeGrid(),
                   ),
                   SizedBox(height: 16),
                   Staggeredwidget(

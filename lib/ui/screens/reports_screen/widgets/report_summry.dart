@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/report_card.dart';
+import 'package:targetly/ui/shared/formate_numpers.dart';
 
 class ReportSummry extends StatelessWidget {
   const ReportSummry({super.key, required this.start, required this.end});
@@ -95,22 +96,22 @@ class ReportSummry extends StatelessWidget {
                   children: [
                     Reportcard(
                       title: "clients_title".tr(),
-                      value: totalClients.toString(),
+                      value: totalClients.toLocalizedString(context),
                     ),
 
                     Reportcard(
                       title: "remaining_title".tr(),
-                      value: remaining.toStringAsFixed(0),
+                      value: remaining.toLocalizedString(context),
                     ),
 
                     Reportcard(
                       title: "sales_title".tr(),
-                      value: achieved.toStringAsFixed(0),
+                      value: achieved.toLocalizedString(context),
                     ),
 
                     Reportcard(
                       title: "commission_title".tr(),
-                      value: commissionValue.toStringAsFixed(0),
+                      value: commissionValue.toLocalizedString(context),
                     ),
                   ],
                 ),

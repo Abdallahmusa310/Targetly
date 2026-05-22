@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/state_card.dart';
+import 'package:targetly/ui/shared/formate_numpers.dart';
 
 class StatList extends StatelessWidget {
   const StatList({super.key});
@@ -44,7 +45,7 @@ class StatList extends StatelessWidget {
             Expanded(
               child: BuildStatCard(
                 title: 'Commission'.tr(),
-                value: commissionValue.toStringAsFixed(0),
+                value: commissionValue.toLocalizedString(context),
                 icon: const Icon(Icons.monetization_on, color: Colors.white),
                 color: const Color(0xFF5B5F97),
               ),
@@ -55,7 +56,7 @@ class StatList extends StatelessWidget {
             Expanded(
               child: BuildStatCard(
                 title: 'Clients'.tr(),
-                value: totalClients.toString(),
+                value: totalClients.toLocalizedString(context),
                 icon: const Icon(Icons.people, color: Colors.white),
                 color: const Color.fromARGB(255, 13, 157, 201),
               ),

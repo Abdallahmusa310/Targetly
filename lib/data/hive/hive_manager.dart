@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:targetly/data/models/activity_model.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/data/models/target_model.dart';
+import 'package:targetly/data/models/user_model.dart';
 
 class HiveManager {
   static const String userBoxName = 'user_box';
@@ -20,8 +21,9 @@ class HiveManager {
     Hive.registerAdapter(ClinetModelAdapter());
     Hive.registerAdapter(TargetModelAdapter());
     Hive.registerAdapter(ActivityModelAdapter());
+    Hive.registerAdapter(UserModelAdapter());
 
-    await Hive.openBox(userBoxName);
+    await Hive.openBox<UserModel>(userBoxName);
   }
 
   static Future<void> openUserBoxes() async {
@@ -56,8 +58,7 @@ class HiveManager {
     }
   }
 
-  static void saveJobTitle(String title) => user.put('jobtitle', title);
-  static String getJobTitle() => user.get('jobtitle') ?? 'Sales Manager';
+  static Box<UserModel> get userBox => Hive.box<UserModel>(userBoxName);
 
   static Box<ClinetModel> get clients => Hive.box<ClinetModel>(_clientsBoxName);
 
@@ -67,9 +68,36 @@ class HiveManager {
   static Box<ActivityModel> get activitybox =>
       Hive.box<ActivityModel>(_activityBoxName);
 
-  static Box get user => Hive.box(userBoxName);
+  // User methods
+  static void saveUser({required String username, required String jobTitle}) {
+    if (userBox.isEmpty) {
+      userBox.add(UserModel(username: username, jobTitle: jobTitle));
+    } else {
+      final user = userBox.getAt(0)!;
+      user.username = username;
+      user.jobTitle = jobTitle;
+      user.save();
+    }
+  }
 
-  static void saveUsername(String name) => user.put('username', name);
-  static String getUsername() => user.get('username') ?? 'User';
-  static void clearUser() => user.delete('username');
+  static UserModel? getUser() => userBox.isNotEmpty ? userBox.getAt(0) : null;
+
+  static String getUsername() => getUser()?.username ?? 'User';
+  static String getJobTitle() => getUser()?.jobTitle ?? 'Sales Manager';
+
+  static void clearUser() {
+    if (userBox.isNotEmpty) {
+      userBox.clear();
+    }
+  }
+
+  static void saveTheme(bool isDark) {
+    if (userBox.isNotEmpty) {
+      final user = userBox.getAt(0)!;
+      user.isDark = isDark;
+      user.save();
+    }
+  }
+
+  static bool getTheme() => getUser()?.isDark ?? false;
 }

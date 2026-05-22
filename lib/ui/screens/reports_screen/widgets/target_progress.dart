@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:targetly/ui/shared/formate_numpers.dart';
 
 class TargetProgress extends StatelessWidget {
   const TargetProgress({
@@ -14,7 +15,7 @@ class TargetProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = target == 0 ? 0.0 : (achieved / target).clamp(0.0, 1.0);
-    final percentage = (progress * 100).toStringAsFixed(1);
+    final percentage = (progress * 100).toLocalizedString(context);
 
     return Card(
       elevation: 4,

@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/core/routing/routs.dart';
+import 'package:targetly/logic/thems/cubit/thems_cubit.dart';
 import 'package:targetly/ui/screens/profile_screen/widgets/build_tile.dart';
 
 class PrefranceSection extends StatelessWidget {
@@ -16,7 +18,14 @@ class PrefranceSection extends StatelessWidget {
           icon: Icons.dark_mode,
           title: "Dark Mode".tr(),
           subtitle: "Coming soon".tr(),
-          onTap: () {},
+          onTap: () {
+            context.read<ThemsCubit>().toggleTheme();
+          },
+          trailing: Switch(
+            value: context.watch<ThemsCubit>().currentTheme == ThemeMode.dark,
+            onChanged: (_) => context.read<ThemsCubit>().toggleTheme(),
+            activeColor: const Color(0xFF7F73E6),
+          ),
         ),
         BuildTile(
           icon: Icons.language,

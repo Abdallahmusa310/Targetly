@@ -105,5 +105,10 @@
   "edit_profile": "تعديل الملف الشخصي",
   "job_title": "المسمى الوظيفي",
   "Are you sure?": "هل أنت متأكد؟",
-  "Confirm": "تأكيد"
+  "Confirm": "تأكيد",
+  "clients in period": "العملاء في الفترة",
+  "no clients in period": "لا يوجد عملاء في هذه الفترة",
+  "reset period": "إعادة تعيين الفترة",
+  "reset period_confirm": "سيتم مسح الهدف والتقدم. هل أنت متأكد؟",
+  "reset": "إعادة تعيين"
 }

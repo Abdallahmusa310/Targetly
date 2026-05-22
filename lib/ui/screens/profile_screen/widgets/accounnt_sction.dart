@@ -27,7 +27,7 @@ class _AccountSectionState extends State<AccountSection> {
           onTap: () {
             showDialog(
               context: context,
-              builder: (_) => EditProfileDialog(
+              builder: (_) => ProfileDialog(
                 currentUsername: HiveManager.getUsername(),
                 currentJobTitle: HiveManager.getJobTitle(),
                 onSaved: () {
