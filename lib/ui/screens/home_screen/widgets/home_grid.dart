@@ -5,9 +5,7 @@ import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/client_dialog.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_card.dart';
-import 'package:targetly/ui/screens/home_screen/widgets/target_dialog.dart';
 import 'package:targetly/ui/screens/reports_screen/reports_screen.dart';
-import 'package:targetly/ui/shared/confirm_message.dart';
 import 'package:targetly/ui/shared/formate_numpers.dart';
 
 class HomeGrid extends StatelessWidget {
@@ -73,16 +71,7 @@ class HomeGrid extends StatelessWidget {
             ),
           ),
           // Update Target
-          _GridItem(
-            icon: Icons.arrow_circle_up,
-            color: const Color(0xFF5B5F97),
-            title: 'Update target'.tr(),
-            isAction: true,
-            onTap: () => showDialog(
-              context: context,
-              builder: (_) => const Targetdialog(),
-            ),
-          ),
+
           // View Report
           _GridItem(
             icon: Icons.assessment,
@@ -104,14 +93,8 @@ class HomeGrid extends StatelessWidget {
               }
             },
           ),
+
           // Reset Period
-          _GridItem(
-            icon: Icons.refresh,
-            color: Colors.redAccent,
-            title: 'Reset period'.tr(),
-            isAction: true,
-            onTap: () => _showResetDialog(context),
-          ),
         ];
 
         return GridView.builder(
@@ -225,44 +208,6 @@ class HomeGrid extends StatelessWidget {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text('close'.tr()),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showResetDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text('reset period'.tr()),
-        content: Text('reset period confirm'.tr()),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('cancel'.tr()),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => ConfirmMessage(
-                  onConfirm: () async {
-                    context.read<TargetCubit>().clearTarget();
-                    Navigator.pop(context);
-                  },
-                ),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: Text('reset'.tr()),
           ),
         ],
       ),

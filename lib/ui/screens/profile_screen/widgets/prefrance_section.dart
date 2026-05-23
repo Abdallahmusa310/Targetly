@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/core/routing/routs.dart';
 import 'package:targetly/logic/thems/cubit/thems_cubit.dart';
 import 'package:targetly/ui/screens/profile_screen/widgets/build_tile.dart';
+import 'package:targetly/ui/screens/profile_screen/widgets/clear_dialog.dart';
+import 'package:targetly/ui/screens/profile_screen/widgets/reset_dialog.dart';
 
 class PrefranceSection extends StatelessWidget {
   const PrefranceSection({super.key});
@@ -104,9 +106,21 @@ class PrefranceSection extends StatelessWidget {
         BuildTile(
           icon: Icons.delete_forever,
           title: "Clear Data".tr(),
-          subtitle: "Coming soon".tr(),
+          subtitle: 'Clear Data'.tr(),
+          iconColor: Colors.redAccent,
+          onTap: () {
+            showDialog(context: context, builder: (_) => ClearDialog());
+          },
+        ),
+        BuildTile(
+          icon: Icons.refresh,
+          title: 'reset period'.tr(),
+          subtitle: "Start new target".tr(),
+
           iconColor: Colors.orange,
-          onTap: () async {},
+          onTap: () {
+            showDialog(context: context, builder: (_) => ResetDialog());
+          },
         ),
       ],
     );

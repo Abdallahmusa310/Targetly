@@ -112,5 +112,12 @@
   "no clients in period": "No clients in this period",
   "reset period": "Reset Period",
   "reset period_confirm": "This will clear the target and progress. Are you sure?",
-  "reset": "Reset"
+  "reset": "Reset",
+  "Comments": "Comments",
+  "No comments yet": "No comments yet",
+  "Add comment...": "Add comment...",
+  "Edit comment...": "Edit comment...",
+  "Start new target": "Start new target",
+  "clear data confirm": "This will remove all clients, target and activity data. Are you sure?",
+  "clear": "Clear"
 }
