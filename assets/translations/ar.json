@@ -118,5 +118,9 @@
   "reset period confirmation": "تأكيد إعادة تعيين الفترة",
   "Start new target": "بدء هدف جديد",
   "clear data confirm": "سيتم حذف كل العملاء والهدف وسجل النشاط. هل أنت متأكد؟",
-  "clear": "مسح"
+  "clear": "مسح",
+  "Commission rate": "نسبة العمولة",
+  "Total sales": "إجمالي المبيعات",
+  "Commission earned": "العمولة المحققة",
+  "Days remaining": "الأيام المتبقية"
 }

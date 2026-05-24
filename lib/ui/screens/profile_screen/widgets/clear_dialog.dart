@@ -65,6 +65,7 @@ class ClearDialog extends StatelessWidget {
                       context.read<ClinetCubit>().fetchClients();
                       context.read<TargetCubit>().fetchTarget();
                       context.read<ActivityCubit>().fetchActivities();
+                      context.read<TargetCubit>().clearTarget();
                       Navigator.pop(context);
                     }
                   },

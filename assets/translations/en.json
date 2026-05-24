@@ -119,5 +119,9 @@
   "Edit comment...": "Edit comment...",
   "Start new target": "Start new target",
   "clear data confirm": "This will remove all clients, target and activity data. Are you sure?",
-  "clear": "Clear"
+  "clear": "Clear",
+  "commission_rate": "Commission rate",
+  "total sales": "Total sales",
+  "commission earned": "Commission earned",
+  "days remaining": "Days remaining"
 }

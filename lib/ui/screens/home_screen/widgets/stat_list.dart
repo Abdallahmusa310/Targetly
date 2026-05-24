@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/client_dialog.dart';
-import 'package:targetly/ui/screens/clintes_screen/widgets/clinet_card.dart';
+import 'package:targetly/ui/screens/home_screen/widgets/clients_in_period_dialog.dart';
+import 'package:targetly/ui/screens/home_screen/widgets/comission_dialog.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/state_card.dart';
 import 'package:targetly/ui/screens/reports_screen/reports_screen.dart';
-import 'package:targetly/ui/shared/dialog.dart';
 import 'package:targetly/ui/shared/formate_numpers.dart';
 
 class StatList extends StatelessWidget {
@@ -56,6 +56,16 @@ class StatList extends StatelessWidget {
                       color: Colors.white,
                     ),
                     color: const Color(0xFF5B5F97),
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (_) => ComissionDialog(
+                        commissionValue: commissionValue,
+                        commissionPercent: commissionPercent,
+                        totalFees: totalFees,
+                        start: start,
+                        end: end,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -65,7 +75,13 @@ class StatList extends StatelessWidget {
                     value: totalClients.toLocalizedString(context),
                     icon: const Icon(Icons.people, color: Colors.white),
                     color: const Color.fromARGB(255, 13, 157, 201),
-                    onTap: () => showClientsInRange(context, start, end),
+                    onTap: start != null && end != null
+                        ? () => showDialog(
+                            context: context,
+                            builder: (_) =>
+                                ClientsInPeriodDialog(start: start!, end: end!),
+                          )
+                        : null,
                   ),
                 ),
               ],
@@ -115,66 +131,4 @@ class StatList extends StatelessWidget {
       },
     );
   }
-}
-
-void showClientsInRange(BuildContext context, DateTime? start, DateTime? end) {
-  if (start == null || end == null) return;
-
-  final clients = context.read<ClinetCubit>().allClients.where((c) {
-    final date = c.createdAt;
-    if (date == null) return false;
-    return !date.isBefore(start) && !date.isAfter(end);
-  }).toList();
-
-  showDialog(
-    context: context,
-    builder: (_) => SharedDialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              const CircleAvatar(
-                backgroundColor: Color.fromARGB(255, 13, 157, 201),
-                child: Icon(Icons.people, color: Colors.white),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                'clients_in_period'.tr(),
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          clients.isEmpty
-              ? Text('no_clients_in_period'.tr())
-              : SizedBox(
-                  height: 400,
-                  child: ListView.builder(
-                    itemCount: clients.length,
-                    itemBuilder: (context, index) =>
-                        ClinetCard(clinetModel: clients[index]),
-                  ),
-                ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton(
-              onPressed: () => Navigator.pop(context),
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: Text('close'.tr()),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }
