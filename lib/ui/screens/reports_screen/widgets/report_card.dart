@@ -15,8 +15,7 @@ class Reportcard extends StatelessWidget {
             title,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          Divider(height: 3, thickness: 1),
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
           Text(
             value,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:targetly/core/routing/routs.dart';
 
 class SignInPrompt extends StatelessWidget {
   const SignInPrompt({super.key});
@@ -8,34 +10,31 @@ class SignInPrompt extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, '/reset-password');
-          },
-          child: const Text(
-            'Forget Password?',
-            style: TextStyle(
+          onTap: () => Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.resetPasswordScreen,
+          ),
+          child: Text(
+            'forgot_password'.tr(),
+            style: const TextStyle(
               color: Color(0xff2B1E5E),
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
-
         const SizedBox(height: 20),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Don\'t have an account? ',
-              style: TextStyle(color: Color(0xff8F92C2)),
+              'no_account'.tr(),
+              style: const TextStyle(color: Color(0xff8F92C2)),
             ),
             InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/sign-up');
-              },
+              onTap: () => Navigator.pushNamed(context, '/sign-up'),
               child: Text(
-                'Sign Up',
-                style: TextStyle(
+                'sign_up_link'.tr(),
+                style: const TextStyle(
                   color: Color(0xff6A5AE0),
                   fontWeight: FontWeight.bold,
                 ),

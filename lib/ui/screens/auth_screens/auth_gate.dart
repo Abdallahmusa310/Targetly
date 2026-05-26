@@ -82,7 +82,7 @@ void _showUsernameDialog(BuildContext context) {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'enter_your_info'.tr(),
+            'enter your info'.tr(),
             style: const TextStyle(color: Colors.grey),
           ),
           const SizedBox(height: 16),
@@ -99,7 +99,7 @@ void _showUsernameDialog(BuildContext context) {
           TextField(
             controller: jobController,
             decoration: InputDecoration(
-              labelText: 'job_title'.tr(),
+              labelText: 'job title'.tr(),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),

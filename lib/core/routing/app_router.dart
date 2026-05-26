@@ -9,6 +9,7 @@ import 'package:targetly/ui/screens/auth_screens/reset_password_screen/reset_pas
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_up_screen/sign_up_screen.dart';
 import 'package:targetly/ui/screens/splash_screen/splash_screen.dart';
+import 'package:targetly/ui/screens/welcome_screen/welcome_screen.dart';
 
 class AppRouter {
   Route ongenerateRoute(RouteSettings settings) {
@@ -31,6 +32,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
       case AppRoutes.authGate:
         return MaterialPageRoute(builder: (_) => AuthGate());
+      case AppRoutes.welcomeScreen:
+        return MaterialPageRoute(builder: (_) => WelcomeScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

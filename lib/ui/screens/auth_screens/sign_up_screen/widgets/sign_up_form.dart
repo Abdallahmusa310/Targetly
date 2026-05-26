@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 
@@ -28,71 +29,53 @@ class _SignUpFormState extends State<SignUpForm> {
       key: widget.formKey,
       child: Column(
         children: [
-          /// Email
           SharedTextFeild(
             controller: widget.emailcontroller,
             obscureText: false,
-            hintText: "Email",
+            hintText: 'email'.tr(),
             prefixIcon: const Icon(Icons.email, color: Color(0xff969ACA)),
             validator: (email) {
-              if (email == null || email.isEmpty) {
-                return "Enter your email";
-              }
+              if (email == null || email.isEmpty) return 'enter_email'.tr();
               if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email)) {
-                return "Enter valid email";
+                return 'valid_email'.tr();
               }
               return null;
             },
           ),
-
           const SizedBox(height: 12),
-
-          /// Password
           SharedTextFeild(
             obscureText: !isPasswordVisible,
             suffixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  isPasswordVisible = !isPasswordVisible;
-                });
-              },
+              onPressed: () =>
+                  setState(() => isPasswordVisible = !isPasswordVisible),
               icon: Icon(
                 isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                color: Color(0xff969ACA),
+                color: const Color(0xff969ACA),
               ),
             ),
-            hintText: "Password",
-
+            hintText: 'password'.tr(),
             prefixIcon: const Icon(Icons.lock, color: Color(0xff969ACA)),
             controller: widget.passwordcontroller,
             validator: (password) {
-              if (password == null || password.isEmpty) {
-                return "Enter password";
-              }
-              if (password.length < 6) {
-                return "Password must be at least 6 characters";
-              }
+              if (password == null || password.isEmpty)
+                return 'enter_password'.tr();
+              if (password.length < 6) return 'password_length'.tr();
               return null;
             },
           ),
-
           const SizedBox(height: 12),
-
-          /// Confirm Password
           SharedTextFeild(
-            hintText: "Confirm Password",
+            hintText: 'confirm_password'.tr(),
             obscureText: !isConfirmPasswordVisible,
             suffixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  isConfirmPasswordVisible = !isConfirmPasswordVisible;
-                });
-              },
+              onPressed: () => setState(
+                () => isConfirmPasswordVisible = !isConfirmPasswordVisible,
+              ),
               icon: Icon(
                 isConfirmPasswordVisible
                     ? Icons.visibility
                     : Icons.visibility_off,
-                color: Color(0xff969ACA),
+                color: const Color(0xff969ACA),
               ),
             ),
             prefixIcon: const Icon(
@@ -101,9 +84,10 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             validator: (confirmPassword) {
               if (confirmPassword == null || confirmPassword.isEmpty) {
-                return "Please confirm your password";
-              } else if (confirmPassword != widget.passwordcontroller?.text) {
-                return "Passwords do not match";
+                return 'confirm_password_empty'.tr();
+              }
+              if (confirmPassword != widget.passwordcontroller?.text) {
+                return 'passwords_not_match'.tr();
               }
               return null;
             },

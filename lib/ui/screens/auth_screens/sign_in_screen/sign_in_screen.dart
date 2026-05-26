@@ -1,10 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:targetly/core/animations/homescreenanimation.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/sign_in_body.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/sign_in_form.dart';
-import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/header.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/sign_in_prompt.dart';
 import 'package:targetly/ui/shared/boutton.dart';
 
@@ -24,71 +24,77 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Staggeredwidget(index: 0, animate: true, child: const Header()),
-              const SizedBox(height: 130),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Staggeredwidget(
-                      index: 1,
-                      animate: true,
-                      child: SignInBody(),
-                    ),
-                    const SizedBox(height: 16),
-                    Staggeredwidget(
-                      index: 3,
-                      animate: true,
-                      child: SignInForm(
-                        formKey: formKey,
-                        emailcontroller: emailController,
-                        passwordcontroller: passwordController,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      Staggeredwidget(
+                        index: 0,
+                        animate: true,
+                        child: SignInBody(),
                       ),
-                    ),
-                    const SizedBox(height: 30),
-                    Staggeredwidget(
-                      index: 4,
-                      animate: true,
-                      child: Sharedboutton(
-                        text: 'Sign In',
-                        onTap: () async {
-                          try {
-                            if (formKey.currentState!.validate()) {
-                              final user = await AuthService().signIn(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              );
-                              if (!context.mounted) return;
-                              if (user != null) {
-                                await HiveManager.openUserBoxes();
-
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  '/navigation',
+                      const SizedBox(height: 16),
+                      Staggeredwidget(
+                        index: 1,
+                        animate: true,
+                        child: SignInForm(
+                          formKey: formKey,
+                          emailcontroller: emailController,
+                          passwordcontroller: passwordController,
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      Staggeredwidget(
+                        index: 2,
+                        animate: true,
+                        child: Sharedboutton(
+                          text: 'Sign In'.tr(),
+                          onTap: () async {
+                            try {
+                              if (formKey.currentState!.validate()) {
+                                final user = await AuthService().signIn(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
                                 );
+
+                                if (!context.mounted) return; // ← مهم
+
+                                if (user != null) {
+                                  await HiveManager.openUserBoxes();
+
+                                  if (!context.mounted)
+                                    return; // ← أضفها هنا برضه
+
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    '/navigation',
+                                  );
+                                }
                               }
+                            } catch (e) {
+                              if (!context.mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())),
+                              );
                             }
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())),
-                            );
-                          }
-                        },
+                          },
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Staggeredwidget(
-                      index: 5,
-                      animate: true,
-                      child: SignInPrompt(),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      Staggeredwidget(
+                        index: 3,
+                        animate: true,
+                        child: SignInPrompt(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -1,8 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
 import 'package:targetly/core/animations/homescreenanimation.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
-import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/header.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_up_screen/widgets/sign_up_body.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_up_screen/widgets/sign_up_form.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_up_screen/widgets/sign_up_prompt.dart';
@@ -36,94 +36,94 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Staggeredwidget(index: 0, animate: true, child: const Header()),
-              const SizedBox(height: 130),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Staggeredwidget(
-                      index: 1,
-                      animate: true,
-                      child: const SignUpBody(),
-                    ),
-                    const SizedBox(height: 16),
-                    Staggeredwidget(
-                      index: 2,
-                      animate: true,
-                      child: SignUpForm(
-                        formKey: formKey,
-                        emailcontroller: emailController,
-                        passwordcontroller: passwordController,
-                        nameController: nameController,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      Staggeredwidget(
+                        index: 0,
+                        animate: true,
+                        child: const SignUpBody(),
                       ),
-                    ),
-                    const SizedBox(height: 30),
+                      const SizedBox(height: 16),
+                      Staggeredwidget(
+                        index: 1,
+                        animate: true,
+                        child: SignUpForm(
+                          formKey: formKey,
+                          emailcontroller: emailController,
+                          passwordcontroller: passwordController,
+                          nameController: nameController,
+                        ),
+                      ),
+                      const SizedBox(height: 30),
 
-                    /// زر التسجيل
-                    Staggeredwidget(
-                      index: 3,
-                      animate: true,
-                      child: Sharedboutton(
-                        text: 'Create Account',
-                        onTap: () async {
-                          try {
-                            if (formKey.currentState!.validate()) {
-                              final user = await authService.signUp(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              );
+                      /// زر التسجيل
+                      Staggeredwidget(
+                        index: 2,
+                        animate: true,
+                        child: Sharedboutton(
+                          text: 'Create account'.tr(),
+                          onTap: () async {
+                            try {
+                              if (formKey.currentState!.validate()) {
+                                final user = await authService.signUp(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                );
 
-                              if (user != null) {
-                                final name = nameController.text.trim();
+                                if (user != null) {
+                                  final name = nameController.text.trim();
 
-                                if (name.isEmpty) {
+                                  if (name.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Name cannot be empty"),
+                                      ),
+                                    );
+                                    return;
+                                  }
+
+                                  await user.updateDisplayName(name);
+
+                                  if (!context.mounted) return;
+                                  await HiveManager.openUserBoxes(); // ← أضفها هنا
+
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    '/navigation',
+                                  );
+                                } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text("Name cannot be empty"),
+                                      content: Text("Sign up failed"),
                                     ),
                                   );
-                                  return;
                                 }
-
-                                await user.updateDisplayName(name);
-
-                                if (!context.mounted) return;
-                                await HiveManager.openUserBoxes(); // ← أضفها هنا
-
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  '/navigation',
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Sign up failed"),
-                                  ),
-                                );
                               }
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())),
+                              );
                             }
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())),
-                            );
-                          }
-                        },
+                          },
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Staggeredwidget(
-                      index: 4,
-                      animate: true,
-                      child: const SignUpPrompt(),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      Staggeredwidget(
+                        index: 3,
+                        animate: true,
+                        child: const SignUpPrompt(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

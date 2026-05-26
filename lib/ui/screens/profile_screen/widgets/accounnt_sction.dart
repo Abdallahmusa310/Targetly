@@ -46,16 +46,19 @@ class _AccountSectionState extends State<AccountSection> {
           onTap: () async {
             showDialog(
               context: context,
-              builder: (context) => ConfirmMessage(
+              builder: (dialogContext) => ConfirmMessage(
                 onConfirm: () async {
-                  Navigator.pop(context);
+                  Navigator.pop(dialogContext); // ← استخدم dialogContext
                   await HiveManager.closeUserBoxes();
                   HiveManager.clearUser();
                   await AuthService().signOut();
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    AppRoutes.signInScreen,
-                    (route) => false,
-                  );
+                  if (context.mounted) {
+                    // ← تأكد إن الـ context لسه شغال
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.signInScreen,
+                      (route) => false,
+                    );
+                  }
                 },
               ),
             );
