@@ -1,6 +1,5 @@
-part of 'clinet_cubit.dart';
+part of 'client_cubit.dart';
 
-@immutable
 sealed class Clientstate {
   final List<ClinetModel>? clinet;
   const Clientstate({this.clinet});

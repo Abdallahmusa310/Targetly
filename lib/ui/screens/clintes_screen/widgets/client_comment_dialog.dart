@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/data/models/client_model.dart';
-import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
 import 'package:targetly/ui/shared/confirm_message.dart';
 import 'package:targetly/ui/shared/dialog.dart';
 
@@ -26,12 +26,13 @@ class _ClientCommentdialogState extends State<ClientCommentdialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SharedDialog(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header
           Row(
             children: [
               Container(
@@ -46,9 +47,10 @@ class _ClientCommentdialogState extends State<ClientCommentdialog> {
               Expanded(
                 child: Text(
                   '${'Comments'.tr()} - ${widget.client.clinetname}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : const Color(0xff2B1E5E),
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -57,10 +59,9 @@ class _ClientCommentdialogState extends State<ClientCommentdialog> {
           ),
 
           const SizedBox(height: 16),
-          const Divider(),
+          Divider(color: isDark ? Colors.white12 : Colors.grey.shade200),
           const SizedBox(height: 8),
 
-          // Comments list
           widget.client.comments.isEmpty
               ? Center(
                   child: Padding(
@@ -70,12 +71,14 @@ class _ClientCommentdialogState extends State<ClientCommentdialog> {
                         Icon(
                           Icons.comment_outlined,
                           size: 40,
-                          color: Colors.grey.shade300,
+                          color: isDark ? Colors.white24 : Colors.grey.shade300,
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'No comments yet'.tr(),
-                          style: const TextStyle(color: Colors.grey),
+                          style: TextStyle(
+                            color: isDark ? Colors.white38 : Colors.grey,
+                          ),
                         ),
                       ],
                     ),
@@ -91,9 +94,15 @@ class _ClientCommentdialogState extends State<ClientCommentdialog> {
                         margin: const EdgeInsets.only(bottom: 8),
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade50,
+                          color: isDark
+                              ? const Color.fromARGB(255, 39, 39, 70)
+                              : Colors.grey.shade50,
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.grey.shade200),
+                          border: Border.all(
+                            color: isDark
+                                ? Colors.white12
+                                : Colors.grey.shade200,
+                          ),
                         ),
                         child: Row(
                           children: [
@@ -110,7 +119,14 @@ class _ClientCommentdialogState extends State<ClientCommentdialog> {
                             ),
                             const SizedBox(width: 10),
                             Expanded(
-                              child: Text(widget.client.comments[index]),
+                              child: Text(
+                                widget.client.comments[index],
+                                style: TextStyle(
+                                  color: isDark
+                                      ? Colors.white70
+                                      : Colors.black87,
+                                ),
+                              ),
                             ),
                             IconButton(
                               icon: const Icon(
@@ -155,28 +171,43 @@ class _ClientCommentdialogState extends State<ClientCommentdialog> {
                 ),
 
           const SizedBox(height: 12),
-          const Divider(),
+          Divider(color: isDark ? Colors.white12 : Colors.grey.shade200),
           const SizedBox(height: 12),
 
-          // Add/Edit field
           Row(
             children: [
               Expanded(
                 child: TextField(
                   controller: _controller,
+                  style: TextStyle(
+                    color: isDark ? Colors.white : Colors.black87,
+                  ),
                   decoration: InputDecoration(
                     hintText: _editingIndex != null
                         ? 'Edit comment'.tr()
                         : 'Add comment'.tr(),
+                    hintStyle: TextStyle(
+                      color: isDark ? Colors.white38 : Colors.grey,
+                    ),
                     filled: true,
-                    fillColor: Colors.grey.shade50,
+                    fillColor: isDark
+                        ? const Color.fromARGB(255, 39, 39, 70)
+                        : Colors.grey.shade50,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade200),
+                      borderSide: BorderSide(
+                        color: isDark ? Colors.white12 : Colors.grey.shade200,
+                      ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade200),
+                      borderSide: BorderSide(
+                        color: isDark ? Colors.white12 : Colors.grey.shade200,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFF7F73E6)),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 12,
@@ -225,11 +256,19 @@ class _ClientCommentdialogState extends State<ClientCommentdialog> {
               onPressed: () => Navigator.pop(context),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),
+                side: BorderSide(
+                  color: isDark ? Colors.white24 : const Color(0xFF7F73E6),
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: Text('Close'.tr()),
+              child: Text(
+                'Close'.tr(),
+                style: TextStyle(
+                  color: isDark ? Colors.white70 : const Color(0xFF7F73E6),
+                ),
+              ),
             ),
           ),
         ],

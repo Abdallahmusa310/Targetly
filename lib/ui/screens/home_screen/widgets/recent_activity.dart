@@ -10,8 +10,11 @@ class BuildRecentActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Card(
       elevation: 4,
+      color: isDark ? const Color.fromARGB(255, 39, 39, 70) : Colors.white,
       margin: const EdgeInsets.only(bottom: 16),
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -23,12 +26,12 @@ class BuildRecentActivity extends StatelessWidget {
               children: [
                 Text(
                   'Recent Activity'.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
+                    color: isDark ? Colors.white : const Color(0xff2B1E5E),
                   ),
                 ),
-
                 TextButton.icon(
                   onPressed: () {
                     context.read<ActivityCubit>().clearActivities();
@@ -45,9 +48,7 @@ class BuildRecentActivity extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 12),
-
             BlocBuilder<ActivityCubit, ActivityState>(
               builder: (context, state) {
                 if (state is ActivityLoading) {
@@ -56,7 +57,12 @@ class BuildRecentActivity extends StatelessWidget {
 
                 if (state is ActivitySuccess) {
                   if (state.activities.isEmpty) {
-                    return Text('No recent activity'.tr());
+                    return Text(
+                      'No recent activity'.tr(),
+                      style: TextStyle(
+                        color: isDark ? Colors.white54 : Colors.grey,
+                      ),
+                    );
                   }
 
                   return Column(
@@ -67,7 +73,10 @@ class BuildRecentActivity extends StatelessWidget {
                 }
 
                 if (state is ActivityFailure) {
-                  return Text('${'Error'.tr()}: ${state.message}');
+                  return Text(
+                    '${'Error'.tr()}: ${state.message}',
+                    style: const TextStyle(color: Colors.red),
+                  );
                 }
 
                 return const SizedBox();

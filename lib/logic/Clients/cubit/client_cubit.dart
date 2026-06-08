@@ -1,12 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/data/models/activity_model.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/ui/screens/clintes_screen/clients_screen.dart';
 
-part 'clinet_state.dart';
+part 'client_state.dart';
 
 class ClinetCubit extends Cubit<Clientstate> {
   ClinetCubit() : super(ClientInitial());

@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:targetly/core/routing/routs.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
@@ -17,24 +18,34 @@ class AccountSection extends StatefulWidget {
 class _AccountSectionState extends State<AccountSection> {
   @override
   Widget build(BuildContext context) {
+    final email = FirebaseAuth.instance.currentUser?.email ?? '';
+
     return Column(
       children: [
+        BuildTile(
+          icon: Icons.email_outlined,
+          title: "Account Email".tr(),
+          subtitle: email,
+          iconColor: const Color(0xFF7F73E6),
+          onTap: () {},
+        ),
+
         BuildTile(
           icon: Icons.edit,
           title: "Edit Profile".tr(),
           subtitle: "Update username and job title".tr(),
           iconColor: const Color(0xFF7F73E6),
-          onTap: () {
-            showDialog(
+          onTap: () async {
+            await showDialog(
               context: context,
               builder: (_) => ProfileDialog(
                 currentUsername: HiveManager.getUsername(),
                 currentJobTitle: HiveManager.getJobTitle(),
-                onSaved: () {
-                  setState(() {});
-                },
               ),
             );
+            if (context.mounted) {
+              setState(() {});
+            }
           },
         ),
 
@@ -48,12 +59,11 @@ class _AccountSectionState extends State<AccountSection> {
               context: context,
               builder: (dialogContext) => ConfirmMessage(
                 onConfirm: () async {
-                  Navigator.pop(dialogContext); // ← استخدم dialogContext
+                  Navigator.pop(dialogContext);
                   await HiveManager.closeUserBoxes();
                   HiveManager.clearUser();
                   await AuthService().signOut();
                   if (context.mounted) {
-                    // ← تأكد إن الـ context لسه شغال
                     Navigator.of(context).pushNamedAndRemoveUntil(
                       AppRoutes.signInScreen,
                       (route) => false,

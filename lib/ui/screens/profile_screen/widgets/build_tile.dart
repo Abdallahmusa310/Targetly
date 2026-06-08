@@ -1,3 +1,4 @@
+// BuildTile
 import 'package:flutter/material.dart';
 
 class BuildTile extends StatelessWidget {
@@ -8,7 +9,7 @@ class BuildTile extends StatelessWidget {
     required this.subtitle,
     required this.onTap,
     this.iconColor,
-    this.trailing, // ✅ جديد
+    this.trailing,
   });
 
   final IconData icon;
@@ -16,14 +17,18 @@ class BuildTile extends StatelessWidget {
   final String subtitle;
   final VoidCallback onTap;
   final Color? iconColor;
-  final Widget? trailing; // ✅ جديد
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
       child: Material(
-        color: Colors.grey.shade50,
+        color: isDark
+            ? const Color.fromARGB(255, 39, 39, 70)
+            : Colors.grey.shade50,
         borderRadius: BorderRadius.circular(18),
         child: InkWell(
           borderRadius: BorderRadius.circular(18),
@@ -46,34 +51,38 @@ class BuildTile extends StatelessWidget {
                     color: iconColor ?? const Color(0xFF7F73E6),
                   ),
                 ),
-
                 const SizedBox(width: 14),
-
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
+                          color: isDark
+                              ? Colors.white
+                              : const Color(0xff2B1E5E),
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         subtitle,
                         style: TextStyle(
-                          color: Colors.grey.shade600,
+                          color: isDark ? Colors.white54 : Colors.grey.shade600,
                           fontSize: 13,
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // ✅ لو في trailing يعرضه، لو لأ يعرض السهم
-                trailing ?? const Icon(Icons.arrow_forward_ios, size: 16),
+                trailing ??
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: isDark ? Colors.white38 : Colors.grey,
+                    ),
               ],
             ),
           ),

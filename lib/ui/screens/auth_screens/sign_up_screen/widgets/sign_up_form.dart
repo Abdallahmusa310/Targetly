@@ -8,12 +8,10 @@ class SignUpForm extends StatefulWidget {
     required this.formKey,
     required this.emailcontroller,
     required this.passwordcontroller,
-    required this.nameController,
   });
   final GlobalKey<FormState> formKey;
   final TextEditingController? emailcontroller;
   final TextEditingController? passwordcontroller;
-  final TextEditingController? nameController;
 
   @override
   State<SignUpForm> createState() => _SignUpFormState();
@@ -57,8 +55,9 @@ class _SignUpFormState extends State<SignUpForm> {
             prefixIcon: const Icon(Icons.lock, color: Color(0xff969ACA)),
             controller: widget.passwordcontroller,
             validator: (password) {
-              if (password == null || password.isEmpty)
+              if (password == null || password.isEmpty) {
                 return 'enter_password'.tr();
+              }
               if (password.length < 6) return 'password_length'.tr();
               return null;
             },

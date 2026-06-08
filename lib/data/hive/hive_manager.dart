@@ -6,8 +6,8 @@ import 'package:targetly/data/models/target_model.dart';
 import 'package:targetly/data/models/user_model.dart';
 
 class HiveManager {
-  static const String userBoxName = 'user_box';
   static const String appSettingsBoxName = 'app_settings';
+  static String get userBoxName => 'user_box_$_userId';
 
   static String get _userId =>
       FirebaseAuth.instance.currentUser?.uid ?? 'guest';
@@ -23,13 +23,14 @@ class HiveManager {
     Hive.registerAdapter(TargetModelAdapter());
     Hive.registerAdapter(ActivityModelAdapter());
     Hive.registerAdapter(UserModelAdapter());
-
-    await Hive.openBox<UserModel>(userBoxName);
     await Hive.openBox(appSettingsBoxName);
   }
 
   static Future<void> openUserBoxes() async {
     try {
+      if (!Hive.isBoxOpen(userBoxName)) {
+        await Hive.openBox<UserModel>(userBoxName); // ← أضفها
+      }
       if (!Hive.isBoxOpen(_clientsBoxName)) {
         await Hive.openBox<ClinetModel>(_clientsBoxName);
       }
@@ -46,6 +47,9 @@ class HiveManager {
 
   static Future<void> closeUserBoxes() async {
     try {
+      if (Hive.isBoxOpen(userBoxName)) {
+        await Hive.box<UserModel>(userBoxName).close(); // ← أضفها
+      }
       if (Hive.isBoxOpen(_clientsBoxName)) {
         await Hive.box<ClinetModel>(_clientsBoxName).close();
       }
@@ -92,7 +96,13 @@ class HiveManager {
   static String getJobTitle() => getUser()?.jobTitle ?? 'Sales Manager';
 
   static void clearUser() {
-    if (userBox.isNotEmpty) userBox.clear();
+    try {
+      if (Hive.isBoxOpen(userBoxName) && userBox.isNotEmpty) {
+        userBox.clear();
+      }
+    } catch (e) {
+      print('clearUser error: $e');
+    }
   }
 
   static void saveTheme(bool isDark) {

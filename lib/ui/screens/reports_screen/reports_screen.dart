@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
 
-import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/line_chart.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/report_summry.dart';
@@ -66,12 +66,15 @@ class _ReportsScreenState extends State<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
           "reports".tr(),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+        elevation: 0,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -81,18 +84,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SelectPeriod(onGenerate: onGenerate),
-
               const SizedBox(height: 16),
-
               ReportSummry(start: reportStart, end: reportEnd),
-
               const SizedBox(height: 10),
-
               TargetProgress(achieved: _achieved, target: _target),
-
               if (reportStart != null && reportEnd != null) ...[
                 const SizedBox(height: 16),
-
                 SalesLineChart(start: reportStart!, end: reportEnd!),
               ],
             ],

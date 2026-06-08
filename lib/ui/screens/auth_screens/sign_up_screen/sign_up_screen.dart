@@ -57,7 +57,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           formKey: formKey,
                           emailcontroller: emailController,
                           passwordcontroller: passwordController,
-                          nameController: nameController,
                         ),
                       ),
                       const SizedBox(height: 30),
@@ -78,15 +77,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                 if (user != null) {
                                   final name = nameController.text.trim();
-
-                                  if (name.isEmpty) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("Name cannot be empty"),
-                                      ),
-                                    );
-                                    return;
-                                  }
 
                                   await user.updateDisplayName(name);
 

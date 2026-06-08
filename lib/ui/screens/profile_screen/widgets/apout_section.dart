@@ -1,3 +1,4 @@
+// ApoutSection
 import 'package:flutter/material.dart';
 
 class ApoutSection extends StatelessWidget {
@@ -5,16 +6,22 @@ class ApoutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Column(
       children: [
         Text(
           "Targetly CRM",
-          style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            color: isDark ? Colors.white38 : Colors.grey,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-
-        SizedBox(height: 4),
-
-        Text("Version 1.0.0", style: TextStyle(color: Colors.grey)),
+        const SizedBox(height: 4),
+        Text(
+          "Version 1.0.0",
+          style: TextStyle(color: isDark ? Colors.white38 : Colors.grey),
+        ),
       ],
     );
   }

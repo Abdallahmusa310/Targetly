@@ -26,30 +26,27 @@ class _TargetdialogState extends State<Targetdialog> {
   @override
   void initState() {
     super.initState();
-
     final targetModel = context.read<TargetCubit>().targetModel;
-
     targetController = TextEditingController(
       text: targetModel?.target.toString() ?? "",
     );
-
     commissionController = TextEditingController(
       text: targetModel?.commission.toString() ?? "",
     );
-
     startDate = targetModel?.startDate;
     endDate = targetModel?.endDate;
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SharedDialog(
       child: Form(
         key: formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            /// HEADER
             Row(
               children: [
                 Container(
@@ -63,13 +60,15 @@ class _TargetdialogState extends State<Targetdialog> {
                     color: Color(0xFF5B5F97),
                   ),
                 ),
-
                 const SizedBox(width: 12),
-
                 Expanded(
                   child: Text(
                     "Set Your Target".tr(),
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : const Color(0xff2B1E5E),
+                    ),
                   ),
                 ),
               ],
@@ -77,13 +76,15 @@ class _TargetdialogState extends State<Targetdialog> {
 
             const SizedBox(height: 28),
 
-            /// TARGET FIELD
             SharedTextFeild(
               controller: targetController,
               keyboardType: TextInputType.number,
               obscureText: false,
               hintText: "Your target".tr(),
-              prefixIcon: const Icon(Icons.attach_money),
+              prefixIcon: Icon(
+                Icons.attach_money,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
               validator: (target) {
                 if (target == null || target.isEmpty) {
                   return "Enter your target".tr();
@@ -94,13 +95,15 @@ class _TargetdialogState extends State<Targetdialog> {
 
             const SizedBox(height: 18),
 
-            /// COMMISSION FIELD
             SharedTextFeild(
               controller: commissionController,
               keyboardType: TextInputType.number,
               obscureText: false,
               hintText: "Commission percentage".tr(),
-              prefixIcon: const Icon(Icons.percent),
+              prefixIcon: Icon(
+                Icons.percent,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
               validator: (commission) {
                 if (commission == null || commission.isEmpty) {
                   return "Enter your commission".tr();
@@ -111,7 +114,6 @@ class _TargetdialogState extends State<Targetdialog> {
 
             const SizedBox(height: 20),
 
-            /// DATE RANGE
             DateRangeField(
               initialStart: startDate,
               initialEnd: endDate,
@@ -123,7 +125,6 @@ class _TargetdialogState extends State<Targetdialog> {
 
             const SizedBox(height: 30),
 
-            /// BUTTONS
             Row(
               children: [
                 Expanded(
@@ -137,10 +138,7 @@ class _TargetdialogState extends State<Targetdialog> {
                       ),
                     ),
                     onPressed: () {
-                      if (!formKey.currentState!.validate()) {
-                        return;
-                      }
-
+                      if (!formKey.currentState!.validate()) return;
                       if (startDate == null || endDate == null) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -149,7 +147,6 @@ class _TargetdialogState extends State<Targetdialog> {
                         );
                         return;
                       }
-
                       context.read<TargetCubit>().setTarget(
                         target: double.parse(targetController.text),
                         commission: double.parse(commissionController.text),
@@ -157,12 +154,11 @@ class _TargetdialogState extends State<Targetdialog> {
                         endDate: endDate!,
                         activityCubit: context.read<ActivityCubit>(),
                       );
-
                       Navigator.pop(context);
                     },
                     child: Text(
                       "Save".tr(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -176,14 +172,24 @@ class _TargetdialogState extends State<Targetdialog> {
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15),
+                      side: BorderSide(
+                        color: isDark
+                            ? Colors.white24
+                            : const Color(0xFF5B5F97),
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-
                     onPressed: () => Navigator.pop(context),
-
-                    child: Text("Cancel".tr()),
+                    child: Text(
+                      "Cancel".tr(),
+                      style: TextStyle(
+                        color: isDark
+                            ? Colors.white70
+                            : const Color(0xFF5B5F97),
+                      ),
+                    ),
                   ),
                 ),
               ],

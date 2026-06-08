@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:targetly/data/hive/hive_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:targetly/logic/user/cubit/user_cubit.dart';
 
 class ProfileDialog extends StatelessWidget {
   final String currentUsername;
@@ -56,16 +57,11 @@ class ProfileDialog extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            HiveManager.saveUser(
+            context.read<UserCubit>().saveUser(
               username: nameController.text.trim(),
               jobTitle: jobController.text.trim(),
             );
-
             Navigator.pop(context);
-
-            if (onSaved != null) {
-              onSaved!();
-            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF7F73E6),

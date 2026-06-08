@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/ui/shared/dialog.dart';
 import 'package:targetly/ui/shared/text_field.dart';
@@ -25,13 +25,14 @@ class _ClientdialogState extends State<Clientdialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SharedDialog(
       child: Form(
         key: formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            /// HEADER
             Row(
               children: [
                 Container(
@@ -48,9 +49,10 @@ class _ClientdialogState extends State<Clientdialog> {
                 const SizedBox(width: 12),
                 Text(
                   'Add Client'.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : const Color(0xff2B1E5E),
                   ),
                 ),
               ],
@@ -62,7 +64,10 @@ class _ClientdialogState extends State<Clientdialog> {
               controller: clientname,
               hintText: 'Client Name'.tr(),
               obscureText: false,
-              prefixIcon: const Icon(Icons.person),
+              prefixIcon: Icon(
+                Icons.person,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
               validator: (name) {
                 if (name == null || name.isEmpty) {
                   return 'Enter client name'.tr();
@@ -77,7 +82,10 @@ class _ClientdialogState extends State<Clientdialog> {
               controller: clientphone,
               hintText: 'Client Phone'.tr(),
               obscureText: false,
-              prefixIcon: const Icon(Icons.phone),
+              prefixIcon: Icon(
+                Icons.phone,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (phone) {
@@ -94,7 +102,10 @@ class _ClientdialogState extends State<Clientdialog> {
               controller: clientid,
               hintText: 'Client ID'.tr(),
               obscureText: false,
-              prefixIcon: const Icon(Icons.badge),
+              prefixIcon: Icon(
+                Icons.badge,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
             ),
 
             const SizedBox(height: 16),
@@ -103,7 +114,10 @@ class _ClientdialogState extends State<Clientdialog> {
               controller: clientfees,
               hintText: 'Client Fees'.tr(),
               obscureText: false,
-              prefixIcon: const Icon(Icons.attach_money),
+              prefixIcon: Icon(
+                Icons.attach_money,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ),
@@ -114,7 +128,6 @@ class _ClientdialogState extends State<Clientdialog> {
 
             const SizedBox(height: 28),
 
-            /// BUTTONS
             Row(
               children: [
                 Expanded(
@@ -139,7 +152,6 @@ class _ClientdialogState extends State<Clientdialog> {
                               : clientid.text.trim(),
                           activityCubit: context.read<ActivityCubit>(),
                         );
-
                         Navigator.pop(context);
                       }
                     },
@@ -159,12 +171,24 @@ class _ClientdialogState extends State<Clientdialog> {
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
+                      side: BorderSide(
+                        color: isDark
+                            ? Colors.white24
+                            : const Color(0xff9367FA),
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     onPressed: () => Navigator.pop(context),
-                    child: Text('Cancel'.tr()),
+                    child: Text(
+                      'Cancel'.tr(),
+                      style: TextStyle(
+                        color: isDark
+                            ? Colors.white70
+                            : const Color(0xff9367FA),
+                      ),
+                    ),
                   ),
                 ),
               ],

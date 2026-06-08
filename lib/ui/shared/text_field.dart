@@ -29,6 +29,8 @@ class SharedTextFeild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return TextFormField(
       inputFormatters: inputFormatters,
       keyboardType: keyboardType,
@@ -36,26 +38,36 @@ class SharedTextFeild extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       onChanged: onChanged,
+      style: TextStyle(color: isDark ? Colors.white : const Color(0xff2B1E5E)),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: hintStyle,
+        hintStyle:
+            hintStyle ??
+            TextStyle(color: isDark ? Colors.white38 : const Color(0xff8F92C2)),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
-
         filled: true,
-        fillColor: Color(0xffF3F3FC),
-
+        fillColor: isDark ? const Color(0xFF1A1A2E) : const Color(0xffF3F3FC),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: Color.fromARGB(255, 171, 171, 253),
+            color: isDark
+                ? Colors.white24
+                : const Color.fromARGB(255, 171, 171, 253),
             width: 1,
           ),
         ),
-
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: Color(0xFF5B5F97), width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
         ),
       ),
     );

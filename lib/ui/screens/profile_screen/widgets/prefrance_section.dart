@@ -1,3 +1,4 @@
+// PrefranceSection
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ class PrefranceSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentLocale = context.locale;
 
     return Column(
@@ -19,10 +21,8 @@ class PrefranceSection extends StatelessWidget {
         BuildTile(
           icon: Icons.dark_mode,
           title: "Dark Mode".tr(),
-          subtitle: "Coming soon".tr(),
-          onTap: () {
-            context.read<ThemsCubit>().toggleTheme();
-          },
+          subtitle: "Switch theme".tr(),
+          onTap: () => context.read<ThemsCubit>().toggleTheme(),
           trailing: Switch(
             value: context.watch<ThemsCubit>().currentTheme == ThemeMode.dark,
             onChanged: (_) => context.read<ThemsCubit>().toggleTheme(),
@@ -36,6 +36,7 @@ class PrefranceSection extends StatelessWidget {
           onTap: () {
             showModalBottomSheet(
               context: context,
+              backgroundColor: isDark ? const Color(0xFF1A1A2E) : Colors.white,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
@@ -50,6 +51,9 @@ class PrefranceSection extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          color: isDark
+                              ? Colors.white
+                              : const Color(0xff2B1E5E),
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -58,7 +62,14 @@ class PrefranceSection extends StatelessWidget {
                           "🇺🇸",
                           style: TextStyle(fontSize: 24),
                         ),
-                        title: const Text("English"),
+                        title: Text(
+                          "English",
+                          style: TextStyle(
+                            color: isDark
+                                ? Colors.white
+                                : const Color(0xff2B1E5E),
+                          ),
+                        ),
                         trailing: currentLocale == const Locale('en')
                             ? const Icon(Icons.check, color: Color(0xFF7F73E6))
                             : null,
@@ -79,7 +90,14 @@ class PrefranceSection extends StatelessWidget {
                           "🇪🇬",
                           style: TextStyle(fontSize: 24),
                         ),
-                        title: const Text("العربية"),
+                        title: Text(
+                          "العربية",
+                          style: TextStyle(
+                            color: isDark
+                                ? Colors.white
+                                : const Color(0xff2B1E5E),
+                          ),
+                        ),
                         trailing: currentLocale == const Locale('ar')
                             ? const Icon(Icons.check, color: Color(0xFF7F73E6))
                             : null,
@@ -108,19 +126,16 @@ class PrefranceSection extends StatelessWidget {
           title: "Clear Data".tr(),
           subtitle: 'Clear Data'.tr(),
           iconColor: Colors.redAccent,
-          onTap: () {
-            showDialog(context: context, builder: (_) => ClearDialog());
-          },
+          onTap: () =>
+              showDialog(context: context, builder: (_) => ClearDialog()),
         ),
         BuildTile(
           icon: Icons.refresh,
           title: 'reset period'.tr(),
           subtitle: "Start new target".tr(),
-
           iconColor: Colors.orange,
-          onTap: () {
-            showDialog(context: context, builder: (_) => ResetDialog());
-          },
+          onTap: () =>
+              showDialog(context: context, builder: (_) => ResetDialog()),
         ),
       ],
     );

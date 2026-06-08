@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/data/models/client_model.dart';
-import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
 import 'package:targetly/ui/shared/dialog.dart';
 import 'package:targetly/ui/shared/text_field.dart';
 
@@ -24,7 +25,6 @@ class _EditClientdialogState extends State<EditClientdialog> {
   @override
   void initState() {
     super.initState();
-
     nameController = TextEditingController(text: widget.client.clinetname);
     phoneController = TextEditingController(text: widget.client.clinetphone);
     feesController = TextEditingController(text: widget.client.clinetfees);
@@ -33,13 +33,14 @@ class _EditClientdialogState extends State<EditClientdialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SharedDialog(
       child: Form(
         key: formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            /// HEADER
             Row(
               children: [
                 Container(
@@ -51,68 +52,75 @@ class _EditClientdialogState extends State<EditClientdialog> {
                   child: const Icon(Icons.edit, color: Color(0xff9367FA)),
                 ),
                 const SizedBox(width: 12),
-                const Text(
-                  'Edit Client',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                Text(
+                  'Edit Client'.tr(),
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : const Color(0xff2B1E5E),
+                  ),
                 ),
               ],
             ),
 
             const SizedBox(height: 24),
 
-            /// NAME
             SharedTextFeild(
               obscureText: false,
               controller: nameController,
-              hintText: 'Client Name',
-              prefixIcon: const Icon(Icons.person),
+              hintText: 'Client Name'.tr(),
+              prefixIcon: Icon(
+                Icons.person,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Enter client name";
-                }
+                if (value == null || value.isEmpty) return "Enter client name";
                 return null;
               },
             ),
 
             const SizedBox(height: 16),
 
-            /// PHONE
             SharedTextFeild(
               obscureText: false,
               controller: phoneController,
-              hintText: 'Client Phone',
-              prefixIcon: const Icon(Icons.phone),
+              hintText: 'Client Phone'.tr(),
+              prefixIcon: Icon(
+                Icons.phone,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Enter client phone";
-                }
+                if (value == null || value.isEmpty) return "Enter client phone";
                 return null;
               },
             ),
 
             const SizedBox(height: 16),
 
-            /// ID
             SharedTextFeild(
               obscureText: false,
               controller: idController,
-              hintText: 'Client ID',
-              prefixIcon: const Icon(Icons.badge),
+              hintText: 'Client ID'.tr(),
+              prefixIcon: Icon(
+                Icons.badge,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
             ),
 
             const SizedBox(height: 16),
 
-            /// FEES
             SharedTextFeild(
               obscureText: false,
               controller: feesController,
-              hintText: 'Client Fees',
-              prefixIcon: const Icon(Icons.attach_money),
+              hintText: 'Client Fees'.tr(),
+              prefixIcon: Icon(
+                Icons.attach_money,
+                color: isDark ? Colors.white54 : const Color(0xff969ACA),
+              ),
             ),
 
             const SizedBox(height: 28),
 
-            /// BUTTONS
             Row(
               children: [
                 Expanded(
@@ -130,15 +138,13 @@ class _EditClientdialogState extends State<EditClientdialog> {
                         widget.client.clinetphone = phoneController.text.trim();
                         widget.client.clinetfees = feesController.text.trim();
                         widget.client.clinetid = idController.text.trim();
-
                         widget.client.save();
-
                         context.read<ClinetCubit>().fetchClients();
                         Navigator.pop(context);
                       }
                     },
-                    child: const Text(
-                      'Save',
+                    child: Text(
+                      'Save'.tr(),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -153,12 +159,24 @@ class _EditClientdialogState extends State<EditClientdialog> {
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
+                      side: BorderSide(
+                        color: isDark
+                            ? Colors.white24
+                            : const Color(0xff9367FA),
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel'),
+                    child: Text(
+                      'Cancel'.tr(),
+                      style: TextStyle(
+                        color: isDark
+                            ? Colors.white70
+                            : const Color(0xff9367FA),
+                      ),
+                    ),
                   ),
                 ),
               ],

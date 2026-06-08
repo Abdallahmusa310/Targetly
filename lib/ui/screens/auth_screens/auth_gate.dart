@@ -1,8 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/core/routing/routs.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
+import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
+import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
+import 'package:targetly/logic/thems/cubit/thems_cubit.dart';
+import 'package:targetly/logic/user/cubit/user_cubit.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/sign_in_screen.dart';
 
 class AuthGate extends StatelessWidget {
@@ -13,7 +19,6 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        // لو لسه بيحمل - مش بيروح لأي مكان
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -42,17 +47,31 @@ class AuthGate extends StatelessWidget {
             ),
           );
         }
+
         if (snapshot.hasData) {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             await HiveManager.openUserBoxes();
             if (context.mounted) {
+              final userCubit = context.read<UserCubit>();
+              final themsCubit = context.read<ThemsCubit>();
+              final targetCubit = context.read<TargetCubit>(); // ← أضفها
+              final clientCubit = context.read<ClinetCubit>(); // ← أضفها
+              final activityCubit = context.read<ActivityCubit>();
+
+              userCubit.loadUser();
+              themsCubit.loadTheme();
+              targetCubit.fetchTarget(); // ← أضفها
+              clientCubit.fetchClients(); // ← أضفها
+              activityCubit.fetchActivities();
+
+              final isNewUser = HiveManager.getUser() == null;
+
               Navigator.of(
                 context,
               ).pushReplacementNamed(AppRoutes.navigationScreen);
 
-              // لو مفيش اسم يفتح dialog
-              if (HiveManager.getUser() == null) {
-                _showUsernameDialog(context);
+              if (isNewUser && context.mounted) {
+                _showUsernameDialog(context, userCubit);
               }
             }
           });
@@ -61,21 +80,20 @@ class AuthGate extends StatelessWidget {
           );
         }
 
-        // مفيش يوزر - روح للـ SignIn
         return const SignInScreen();
       },
     );
   }
 }
 
-void _showUsernameDialog(BuildContext context) {
+void _showUsernameDialog(BuildContext context, UserCubit userCubit) {
   final nameController = TextEditingController();
   final jobController = TextEditingController();
 
   showDialog(
     context: context,
-    barrierDismissible: false, // مينفعش يقفله من غير ما يحط اسم
-    builder: (context) => AlertDialog(
+    barrierDismissible: false,
+    builder: (dialogContext) => AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       title: Text('welcome'.tr()),
       content: Column(
@@ -89,7 +107,7 @@ void _showUsernameDialog(BuildContext context) {
           TextField(
             controller: nameController,
             decoration: InputDecoration(
-              labelText: 'name'.tr(),
+              labelText: 'Name'.tr(),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -111,13 +129,13 @@ void _showUsernameDialog(BuildContext context) {
         ElevatedButton(
           onPressed: () {
             if (nameController.text.trim().isEmpty) return;
-            HiveManager.saveUser(
+            userCubit.saveUser(
               username: nameController.text.trim(),
               jobTitle: jobController.text.trim().isEmpty
                   ? 'Sales Manager'
                   : jobController.text.trim(),
             );
-            Navigator.pop(context);
+            Navigator.pop(dialogContext);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF7F73E6),

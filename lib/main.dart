@@ -2,15 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:targetly/core/routing/app_router.dart';
 import 'package:targetly/core/routing/routs.dart';
+import 'package:targetly/core/theme/app_theme.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
 import 'package:targetly/firebase_options.dart';
-import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/logic/thems/cubit/thems_cubit.dart';
+import 'package:targetly/logic/user/cubit/user_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => TargetCubit()),
         BlocProvider(create: (context) => ActivityCubit()),
         BlocProvider(create: (context) => ThemsCubit()),
+        BlocProvider(create: (context) => UserCubit()),
       ],
       child: BlocBuilder<ThemsCubit, ThemsState>(
         builder: (context, themeState) {
@@ -51,16 +53,8 @@ class MyApp extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             themeMode: themeMode,
-            theme: ThemeData.light().copyWith(
-              textTheme: isArabic
-                  ? GoogleFonts.cairoTextTheme()
-                  : GoogleFonts.poppinsTextTheme(),
-            ),
-            darkTheme: ThemeData.dark().copyWith(
-              textTheme: isArabic
-                  ? GoogleFonts.cairoTextTheme(ThemeData.dark().textTheme)
-                  : GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
-            ),
+            theme: AppTheme.lightTheme(isArabic),
+            darkTheme: AppTheme.darkTheme(isArabic),
             initialRoute: AppRoutes.splashScreen,
             onGenerateRoute: AppRouter().ongenerateRoute,
           );

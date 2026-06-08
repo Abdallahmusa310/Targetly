@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/core/animations/homescreenanimation.dart';
-import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
 import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/header.dart';
-
 import 'package:targetly/ui/screens/home_screen/widgets/recent_activity.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/stat_list.dart';
 import 'package:targetly/ui/screens/home_screen/widgets/target_card.dart';
@@ -31,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider.of<ActivityCubit>(context).fetchActivities();
 
     if (!_hasAnimatedBefore) {
-      hasanimated = true; // ← على طول من غير postFrameCallback
+      hasanimated = true;
       _hasAnimatedBefore = true;
     } else {
       hasanimated = true;
@@ -40,17 +39,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F7FB),
+      backgroundColor: isDark
+          ? const Color(0xFF0F0F1A)
+          : const Color(0xFFF6F7FB),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            title: const Text(
+            title: Text(
               'Targetly',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : const Color(0xff2B1E5E),
+              ),
             ),
             centerTitle: true,
-            backgroundColor: Colors.white.withValues(alpha: 0.8),
+            backgroundColor: isDark
+                ? const Color(0xFF0F0F1A).withOpacity(0.9)
+                : Colors.white.withOpacity(0.8),
             elevation: 0,
             floating: true,
             snap: true,
@@ -72,19 +81,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     animate: hasanimated,
                     child: BuildTargetCard(),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Staggeredwidget(
                     index: 2,
                     animate: hasanimated,
                     child: StatList(),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Staggeredwidget(
                     index: 4,
                     animate: hasanimated,
                     child: BuildRecentActivity(),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Staggeredwidget(
                     index: 5,
                     animate: hasanimated,

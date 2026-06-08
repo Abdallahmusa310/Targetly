@@ -41,6 +41,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
     ];
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+
       body: IndexedStack(index: currentIndex, children: screen),
 
       bottomNavigationBar: ClipRRect(

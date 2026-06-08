@@ -1,8 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:targetly/core/animations/homescreenanimation.dart';
 import 'package:targetly/data/firebase/auth_service.dart';
 import 'package:targetly/data/hive/hive_manager.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
+import 'package:targetly/logic/activity/cubit/recentactivity_cubit.dart';
+import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
+import 'package:targetly/logic/user/cubit/user_cubit.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/sign_in_body.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/sign_in_form.dart';
 import 'package:targetly/ui/screens/auth_screens/sign_in_screen/widgets/sign_in_prompt.dart';
@@ -65,9 +70,14 @@ class _SignInScreenState extends State<SignInScreen> {
 
                                 if (user != null) {
                                   await HiveManager.openUserBoxes();
+                                  if (!context.mounted) return;
 
-                                  if (!context.mounted)
-                                    return; // ← أضفها هنا برضه
+                                  context.read<UserCubit>().loadUser();
+                                  context.read<TargetCubit>().fetchTarget();
+                                  context.read<ClinetCubit>().fetchClients();
+                                  context
+                                      .read<ActivityCubit>()
+                                      .fetchActivities();
 
                                   Navigator.pushReplacementNamed(
                                     context,

@@ -42,30 +42,30 @@ class _SharedDialogState extends State<SharedDialog>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return FadeTransition(
       opacity: opacity,
       child: SlideTransition(
         position: offset,
         child: Dialog(
-          backgroundColor: Colors.white,
-
+          backgroundColor: isDark ? const Color(0xFF1A1A2E) : Colors.white,
           insetPadding: const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 24,
           ),
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(28),
           ),
-
           child: Container(
             constraints: const BoxConstraints(maxHeight: 700),
-
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF1A1A2E) : Colors.white,
+              borderRadius: BorderRadius.circular(28),
+            ),
             child: SingleChildScrollView(
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
-
               child: Padding(
                 padding: const EdgeInsets.all(24),
                 child: widget.child,

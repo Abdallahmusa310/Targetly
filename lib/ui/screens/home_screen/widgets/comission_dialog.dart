@@ -21,6 +21,7 @@ class ComissionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final now = DateTime.now();
     final daysRemaining = end != null
         ? end!.difference(now).inDays.clamp(0, double.infinity).toInt()
@@ -47,21 +48,23 @@ class ComissionDialog extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 'Commission'.tr(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : const Color(0xff2B1E5E),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 20),
-          const Divider(),
+          Divider(color: isDark ? Colors.white12 : Colors.grey.shade300),
           const SizedBox(height: 12),
           _commissionRow(
             icon: Icons.percent,
             title: 'Commission rate'.tr(),
             value: '$commissionPercent%',
             color: const Color(0xFF5B5F97),
+            isDark: isDark,
           ),
           const SizedBox(height: 12),
           _commissionRow(
@@ -69,6 +72,7 @@ class ComissionDialog extends StatelessWidget {
             title: 'Total sales'.tr(),
             value: totalFees.toLocalizedString(context),
             color: const Color.fromARGB(255, 13, 157, 201),
+            isDark: isDark,
           ),
           const SizedBox(height: 12),
           _commissionRow(
@@ -76,6 +80,7 @@ class ComissionDialog extends StatelessWidget {
             title: 'Commission earned'.tr(),
             value: commissionValue.toLocalizedString(context),
             color: Colors.green,
+            isDark: isDark,
           ),
           const SizedBox(height: 12),
           _commissionRow(
@@ -83,9 +88,10 @@ class ComissionDialog extends StatelessWidget {
             title: 'Days remaining'.tr(),
             value: daysRemaining.toLocalizedString(context),
             color: daysRemaining <= 5 ? Colors.red : const Color(0xFF5B5F97),
+            isDark: isDark,
           ),
           const SizedBox(height: 20),
-          const Divider(),
+          Divider(color: isDark ? Colors.white12 : Colors.grey.shade300),
           const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
@@ -93,11 +99,19 @@ class ComissionDialog extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),
+                side: BorderSide(
+                  color: isDark ? Colors.white24 : const Color(0xFF7F73E6),
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: Text('Close'.tr()),
+              child: Text(
+                'Close'.tr(),
+                style: TextStyle(
+                  color: isDark ? Colors.white70 : const Color(0xFF7F73E6),
+                ),
+              ),
             ),
           ),
         ],
@@ -110,6 +124,7 @@ class ComissionDialog extends StatelessWidget {
     required String title,
     required String value,
     required Color color,
+    required bool isDark,
   }) {
     return Row(
       children: [
@@ -122,7 +137,10 @@ class ComissionDialog extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: const TextStyle(color: Colors.grey, fontSize: 14),
+            style: TextStyle(
+              color: isDark ? Colors.white54 : Colors.grey,
+              fontSize: 14,
+            ),
           ),
         ),
         Text(

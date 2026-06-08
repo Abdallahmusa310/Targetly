@@ -6,22 +6,42 @@ class DateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade300),
+        color: isDark ? const Color(0xFF1A1A2E) : Colors.white,
+        border: Border.all(
+          color: isDark ? Colors.white12 : Colors.grey.shade300,
+        ),
       ),
       child: Column(
         children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : const Color(0xff2B1E5E),
+            ),
+          ),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.calendar_today, size: 18),
+              Icon(
+                Icons.calendar_today,
+                size: 18,
+                color: isDark ? Colors.white70 : const Color(0xff2B1E5E),
+              ),
               const SizedBox(width: 6),
-              Text(date),
+              Text(
+                date,
+                style: TextStyle(
+                  color: isDark ? Colors.white70 : const Color(0xff2B1E5E),
+                ),
+              ),
             ],
           ),
         ],

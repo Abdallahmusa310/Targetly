@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-
-import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/screens/reports_screen/widgets/report_card.dart';
 import 'package:targetly/ui/shared/formate_numpers.dart';
@@ -15,6 +14,8 @@ class ReportSummry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     if (start == null || end == null) {
       return Center(
         child: Text(
@@ -31,10 +32,8 @@ class ReportSummry extends StatelessWidget {
 
         if (targetstate is TargetSuccess) {
           final targetModel = targetstate.target;
-
           final hasTargetRange =
               targetModel?.startDate != null && targetModel?.endDate != null;
-
           final isInTargetRange =
               hasTargetRange &&
               !start!.isAfter(targetModel!.endDate) &&
@@ -56,7 +55,6 @@ class ReportSummry extends StatelessWidget {
                 start!,
                 end!,
               );
-
               achieved = stats.achieved;
               totalClients = stats.totalClients;
             }
@@ -69,9 +67,9 @@ class ReportSummry extends StatelessWidget {
               children: [
                 Text(
                   "report_summary_title".tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xff8F92C2),
+                    color: isDark ? Colors.white54 : const Color(0xff8F92C2),
                   ),
                 ),
 
@@ -98,17 +96,14 @@ class ReportSummry extends StatelessWidget {
                       title: "clients_title".tr(),
                       value: totalClients.toLocalizedString(context),
                     ),
-
                     Reportcard(
                       title: "remaining_title".tr(),
                       value: remaining.toLocalizedString(context),
                     ),
-
                     Reportcard(
                       title: "sales_title".tr(),
                       value: achieved.toLocalizedString(context),
                     ),
-
                     Reportcard(
                       title: "commission_title".tr(),
                       value: commissionValue.toLocalizedString(context),

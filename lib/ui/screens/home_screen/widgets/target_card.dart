@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
 import 'package:targetly/logic/target/target_cubit/cubit/target_cubit.dart';
 import 'package:targetly/ui/shared/formate_numpers.dart';
 
@@ -155,7 +155,7 @@ class BuildTargetCard extends StatelessWidget {
                             ),
 
                             Text(
-                              '${'Commission:'.tr()} ${targetModel?.commission.toLocalizedString(context) ?? 0}%',
+                              '${'Commission:'.tr()} ${(targetModel?.commission ?? 0).toLocalizedString(context)}%',
                               style: const TextStyle(color: Colors.white),
                             ),
                           ],

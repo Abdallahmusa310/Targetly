@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:targetly/logic/Clients/client_cubit/clinet_cubit.dart';
+import 'package:targetly/logic/Clients/cubit/client_cubit.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/client_dialog.dart';
 import 'package:targetly/ui/screens/clintes_screen/widgets/clients_list.dart';
 import 'package:targetly/ui/shared/boutton.dart';
