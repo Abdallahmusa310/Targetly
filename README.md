@@ -3,7 +3,6 @@ A Flutter-based sales tracking and commission management app built with Flutter.
 
 ## Project Structure
 ![App Architecture](assets/docs/architecture.png)
-
 ## Tech Stack
 - Flutter & Dart
 - BLoC / Cubit (State Management)
