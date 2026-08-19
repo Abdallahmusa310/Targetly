@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,7 +39,7 @@ class CallClient extends StatelessWidget {
               );
             }
           },
-          icon: const Icon(FontAwesomeIcons.whatsapp, color: Colors.green),
+          icon: SvgPicture.asset('assets/whatsapp.svg'),
         ),
       ],
     );

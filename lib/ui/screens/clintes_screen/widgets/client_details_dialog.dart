@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:targetly/data/models/client_model.dart';
 import 'package:targetly/ui/shared/dialog.dart';
@@ -103,10 +103,10 @@ class ClinetDetailsDialog extends StatelessWidget {
                   onPressed: () async {
                     await launchUrl(whatsapp);
                   },
-                  icon: const FaIcon(
-                    FontAwesomeIcons.whatsapp,
-                    color: Colors.white,
-                    size: 18,
+                  icon: SvgPicture.asset(
+                    'assets/whatsapp.svg',
+                    width: 24,
+                    height: 24,
                   ),
                   label: Text(
                     'WhatsApp'.tr(),

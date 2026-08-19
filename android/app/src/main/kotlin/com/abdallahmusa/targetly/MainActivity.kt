@@ -1,4 +1,4 @@
-package com.example.targetly
+package com.abdallahmusa.targetly
 
 import io.flutter.embedding.android.FlutterActivity
 

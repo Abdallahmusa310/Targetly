@@ -24,6 +24,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,15 +60,18 @@ class _SignInScreenState extends State<SignInScreen> {
                         animate: true,
                         child: Sharedboutton(
                           text: 'Sign In'.tr(),
+                          isLoading: isLoading,
                           onTap: () async {
                             try {
                               if (formKey.currentState!.validate()) {
+                                setState(() => isLoading = true);
+
                                 final user = await AuthService().signIn(
                                   email: emailController.text.trim(),
                                   password: passwordController.text.trim(),
                                 );
 
-                                if (!context.mounted) return; // ← مهم
+                                if (!context.mounted) return;
 
                                 if (user != null) {
                                   await HiveManager.openUserBoxes();
@@ -83,10 +88,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                     context,
                                     '/navigation',
                                   );
+                                } else {
+                                  setState(() => isLoading = false);
                                 }
                               }
                             } catch (e) {
                               if (!context.mounted) return;
+                              setState(() => isLoading = false);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(e.toString())),
                               );

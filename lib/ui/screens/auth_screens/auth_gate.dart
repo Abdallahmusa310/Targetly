@@ -54,14 +54,14 @@ class AuthGate extends StatelessWidget {
             if (context.mounted) {
               final userCubit = context.read<UserCubit>();
               final themsCubit = context.read<ThemsCubit>();
-              final targetCubit = context.read<TargetCubit>(); // ← أضفها
-              final clientCubit = context.read<ClinetCubit>(); // ← أضفها
+              final targetCubit = context.read<TargetCubit>();
+              final clientCubit = context.read<ClinetCubit>();
               final activityCubit = context.read<ActivityCubit>();
 
               userCubit.loadUser();
               themsCubit.loadTheme();
-              targetCubit.fetchTarget(); // ← أضفها
-              clientCubit.fetchClients(); // ← أضفها
+              targetCubit.fetchTarget();
+              clientCubit.fetchClients();
               activityCubit.fetchActivities();
 
               final isNewUser = HiveManager.getUser() == null;
@@ -70,8 +70,11 @@ class AuthGate extends StatelessWidget {
                 context,
               ).pushReplacementNamed(AppRoutes.navigationScreen);
 
-              if (isNewUser && context.mounted) {
-                _showUsernameDialog(context, userCubit);
+              if (isNewUser) {
+                await Future.delayed(const Duration(milliseconds: 300));
+                if (context.mounted) {
+                  _showUsernameDialog(context, userCubit);
+                }
               }
             }
           });

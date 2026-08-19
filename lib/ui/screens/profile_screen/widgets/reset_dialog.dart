@@ -55,7 +55,7 @@ class ResetDialog extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text('cancel'.tr()),
+                  child: Text('Cancel'.tr()),
                 ),
               ),
 

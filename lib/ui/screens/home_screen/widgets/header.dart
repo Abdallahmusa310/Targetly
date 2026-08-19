@@ -101,19 +101,48 @@ class _BuildheaderState extends State<Buildheader> {
                 context: context,
                 builder: (_) => const ProfileDialog(),
               ),
-              child: Container(
-                width: 50,
-                height: 50,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xFF7F73E6),
-                      Color.fromARGB(255, 13, 157, 201),
-                    ],
+              child: Stack(
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF7F73E6),
+                          Color.fromARGB(255, 13, 157, 201),
+                        ],
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.person,
+                      size: 30,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                child: const Icon(Icons.person, size: 30, color: Colors.white),
+
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: const Color(0xFF7F73E6),
+                          width: 1.5,
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.edit,
+                        size: 12,
+                        color: Color(0xFF7F73E6),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

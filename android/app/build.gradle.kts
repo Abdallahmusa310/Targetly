@@ -1,23 +1,16 @@
 plugins {
     id("com.android.application")
-    // START: FlutterFire Configuration
     id("com.google.gms.google-services")
-    // END: FlutterFire Configuration
     id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-dependencies {
-    // Temporarily removing Play Core to test build
-    // implementation("com.google.android.play:core-common:2.0.3")
-    // implementation("com.google.android.play:core:1.10.3")
-}
+dependencies {}
 
 android {
-    namespace = "com.example.targetly"
-    compileSdk = 35
-    ndkVersion = "27.0.12077973"
+    namespace = "com.abdallahmusa.targetly"
+    compileSdk = 36
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -28,17 +21,26 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = "targetly"
+            keyPassword = "102004"
+            storeFile = file("targetly.jks")
+            storePassword = "102004"
+        }
+    }
+
     defaultConfig {
-        applicationId = "com.example.targetly"
-        minSdk = 23
-        targetSdk = 35  // ← مش 34 عشان Android 8.1
+        applicationId = "com.abdallahmusa.targetly"
+        minSdk = flutter.minSdkVersion
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             isShrinkResources = false
         }
